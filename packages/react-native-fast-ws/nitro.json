@@ -1,0 +1,15 @@
+{
+  "cxxNamespace": ["grabbou"],
+  "ios": {
+    "iosModulename": "ReactNativeFastWS"
+  },
+  "android": {
+    "androidNamespace": ["grabbou"],
+    "androidCxxLibName": "ReactNativeFastWS"
+  },
+  "autolinking": {
+    "WebSocketManager": {
+      "swift": "HybridWebSocketManager"
+    }
+  }
+}
