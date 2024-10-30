@@ -13,6 +13,11 @@ const manager = NitroModules.createHybridObject<WebSocketManager>('WebSocketMana
 
 type CustomEvent<T> = Event & T
 
+export type OpenEvent = Event
+export type MessageEvent = CustomEvent<{ message: string | ArrayBuffer }>
+export type ErrorEvent = CustomEvent<WebSocketError>
+export type CloseEvent = CustomEvent<WebSocketClosed>
+
 enum WebSocketReadyState {
   CONNECTING = 0,
   OPEN = 1,
@@ -27,10 +32,10 @@ const ABNORMAL_CLOSURE = 1006
 
 export class WebSocket extends EventTarget<
   {
-    open: Event
-    message: CustomEvent<{ message: string | ArrayBuffer }>
-    error: CustomEvent<WebSocketError>
-    close: CustomEvent<WebSocketClosed>
+    open: OpenEvent
+    message: MessageEvent
+    error: ErrorEvent
+    close: CloseEvent
   },
   {},
   'loose'
