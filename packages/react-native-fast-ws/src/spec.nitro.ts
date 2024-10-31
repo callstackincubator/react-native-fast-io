@@ -1,18 +1,5 @@
 import { HybridObject } from 'react-native-nitro-modules'
 
-export interface WebSocketOpen {
-  proto: string
-}
-
-export interface WebSocketClosed {
-  code: number
-  reason: string
-}
-
-export interface WebSocketError {
-  message: string
-}
-
 export interface WebSocket extends HybridObject<{ ios: 'swift' }> {
   send(message: string): void
   sendArrayBuffer(buffer: ArrayBuffer): void
@@ -22,8 +9,8 @@ export interface WebSocket extends HybridObject<{ ios: 'swift' }> {
   ping(): void
 
   onOpen(callback: (selectedProtocol: string) => void): void
-  onClose(callback: (event: WebSocketClosed) => void): void
-  onError(callback: (event: WebSocketError) => void): void
+  onClose(callback: (code: number, reason: string) => void): void
+  onError(callback: (error: string) => void): void
 
   onMessage(callback: (message: string) => void): void
   onArrayBuffer(callback: (buffer: ArrayBuffer) => void): void

@@ -13,15 +13,9 @@
 namespace NitroModules { class ArrayBuffer; }
 // Forward declaration of `HybridWebSocketSpec` to properly resolve imports.
 namespace margelo::nitro::grabbou { class HybridWebSocketSpec; }
-// Forward declaration of `WebSocketClosed` to properly resolve imports.
-namespace margelo::nitro::grabbou { struct WebSocketClosed; }
-// Forward declaration of `WebSocketError` to properly resolve imports.
-namespace margelo::nitro::grabbou { struct WebSocketError; }
 
 // Include C++ defined types
 #include "HybridWebSocketSpec.hpp"
-#include "WebSocketClosed.hpp"
-#include "WebSocketError.hpp"
 #include <NitroModules/ArrayBuffer.hpp>
 #include <functional>
 #include <memory>

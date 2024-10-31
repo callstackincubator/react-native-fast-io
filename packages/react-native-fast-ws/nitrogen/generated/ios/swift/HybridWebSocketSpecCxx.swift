@@ -135,12 +135,12 @@ public final class HybridWebSocketSpecCxx {
   }
   
   @inline(__always)
-  public func onClose(callback: bridge.Func_void_WebSocketClosed) -> Void {
+  public func onClose(callback: bridge.Func_void_double_std__string) -> Void {
     do {
-      try self.implementation.onClose(callback: { () -> ((WebSocketClosed) -> Void) in
-        let shared = bridge.share_Func_void_WebSocketClosed(callback)
-        return { (event: WebSocketClosed) -> Void in
-          shared.pointee.call(event)
+      try self.implementation.onClose(callback: { () -> ((Double, String) -> Void) in
+        let shared = bridge.share_Func_void_double_std__string(callback)
+        return { (code: Double, reason: String) -> Void in
+          shared.pointee.call(code, std.string(reason))
         }
       }())
       return 
@@ -151,12 +151,12 @@ public final class HybridWebSocketSpecCxx {
   }
   
   @inline(__always)
-  public func onError(callback: bridge.Func_void_WebSocketError) -> Void {
+  public func onError(callback: bridge.Func_void_std__string) -> Void {
     do {
-      try self.implementation.onError(callback: { () -> ((WebSocketError) -> Void) in
-        let shared = bridge.share_Func_void_WebSocketError(callback)
-        return { (event: WebSocketError) -> Void in
-          shared.pointee.call(event)
+      try self.implementation.onError(callback: { () -> ((String) -> Void) in
+        let shared = bridge.share_Func_void_std__string(callback)
+        return { (error: String) -> Void in
+          shared.pointee.call(std.string(error))
         }
       }())
       return 

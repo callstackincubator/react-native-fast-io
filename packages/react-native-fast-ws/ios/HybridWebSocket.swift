@@ -9,8 +9,8 @@ import NitroModules
 
 class HybridWebSocket : HybridWebSocketSpec {
   var onOpen: ((String) -> Void)?
-  var onClose: ((WebSocketClosed) -> Void)?
-  var onError: ((WebSocketError) -> Void)?
+  var onClose: ((Double, String) -> Void)?
+  var onError: ((String) -> Void)?
   
   var onMessage: ((String) -> Void)?
   var onArrayBuffer: ((ArrayBufferHolder) -> Void)?
@@ -35,7 +35,7 @@ class HybridWebSocket : HybridWebSocketSpec {
         ""
       }
       
-      self?.onClose?(WebSocketClosed(code: Double(closeCode.rawValue), reason: data))
+      self?.onClose?(Double(closeCode.rawValue), data)
     }
     
     
@@ -62,11 +62,11 @@ class HybridWebSocket : HybridWebSocketSpec {
           case .data(let content):
             self.processArrayBuffer(content)
           @unknown default:
-            self.onError?(WebSocketError(message: "Unknown message type received - \(message)"))
+            self.onError?("Unknown message type received - \(message)")
           }
         }
       } catch {
-        self?.onError?(WebSocketError(message: error.localizedDescription))
+        self?.onError?(error.localizedDescription)
       }
     }
   }
@@ -85,7 +85,7 @@ class HybridWebSocket : HybridWebSocketSpec {
   func send(message: String) {
     ws.send(URLSessionWebSocketTask.Message.string(message)) { error in
       if let error {
-        self.onError?(WebSocketError(message: error.localizedDescription))
+        self.onError?(error.localizedDescription)
       }
     }
   }
@@ -94,7 +94,7 @@ class HybridWebSocket : HybridWebSocketSpec {
     let data = Data(bytes: buffer.data, count: buffer.size)
     ws.send(.data(data)) { error in
       if let error {
-        self.onError?(WebSocketError(message: error.localizedDescription))
+        self.onError?(error.localizedDescription)
       }
     }
   }
@@ -102,7 +102,7 @@ class HybridWebSocket : HybridWebSocketSpec {
   func ping() {
     ws.sendPing { error in
       if let error {
-        self.onError?(WebSocketError(message: error.localizedDescription))
+        self.onError?(error.localizedDescription)
       }
     }
   }
@@ -111,7 +111,7 @@ class HybridWebSocket : HybridWebSocketSpec {
     onOpen = callback
   }
   
-  func onClose(callback: @escaping ((WebSocketClosed) -> Void)) {
+  func onClose(callback: @escaping ((Double, String) -> Void)) {
     onClose = callback
   }
   
@@ -123,7 +123,7 @@ class HybridWebSocket : HybridWebSocketSpec {
     onArrayBuffer = callback
   }
   
-  func onError(callback: @escaping ((WebSocketError) -> Void)) {
+  func onError(callback: @escaping ((String) -> Void)) {
     onError = callback
   }
   

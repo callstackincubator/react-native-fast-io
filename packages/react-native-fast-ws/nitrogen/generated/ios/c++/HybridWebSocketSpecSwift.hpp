@@ -17,17 +17,11 @@ namespace ReactNativeFastWS { class HybridWebSocketSpecCxx; }
 namespace NitroModules { class ArrayBuffer; }
 // Forward declaration of `ArrayBufferHolder` to properly resolve imports.
 namespace NitroModules { class ArrayBufferHolder; }
-// Forward declaration of `WebSocketClosed` to properly resolve imports.
-namespace margelo::nitro::grabbou { struct WebSocketClosed; }
-// Forward declaration of `WebSocketError` to properly resolve imports.
-namespace margelo::nitro::grabbou { struct WebSocketError; }
 
 #include <string>
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/ArrayBufferHolder.hpp>
 #include <functional>
-#include "WebSocketClosed.hpp"
-#include "WebSocketError.hpp"
 
 #if __has_include(<NitroModules/HybridContext.hpp>)
 #include <NitroModules/HybridContext.hpp>
@@ -90,10 +84,10 @@ namespace margelo::nitro::grabbou {
     inline void onOpen(const std::function<void(const std::string& /* selectedProtocol */)>& callback) override {
       _swiftPart.onOpen(callback);
     }
-    inline void onClose(const std::function<void(const WebSocketClosed& /* event */)>& callback) override {
+    inline void onClose(const std::function<void(double /* code */, const std::string& /* reason */)>& callback) override {
       _swiftPart.onClose(callback);
     }
-    inline void onError(const std::function<void(const WebSocketError& /* event */)>& callback) override {
+    inline void onError(const std::function<void(const std::string& /* error */)>& callback) override {
       _swiftPart.onError(callback);
     }
     inline void onMessage(const std::function<void(const std::string& /* message */)>& callback) override {

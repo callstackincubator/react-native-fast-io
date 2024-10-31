@@ -39,8 +39,8 @@ public protocol HybridWebSocketSpec: HybridObjectSpec {
   func close() throws -> Void
   func ping() throws -> Void
   func onOpen(callback: @escaping ((_ selectedProtocol: String) -> Void)) throws -> Void
-  func onClose(callback: @escaping ((_ event: WebSocketClosed) -> Void)) throws -> Void
-  func onError(callback: @escaping ((_ event: WebSocketError) -> Void)) throws -> Void
+  func onClose(callback: @escaping ((_ code: Double, _ reason: String) -> Void)) throws -> Void
+  func onError(callback: @escaping ((_ error: String) -> Void)) throws -> Void
   func onMessage(callback: @escaping ((_ message: String) -> Void)) throws -> Void
   func onArrayBuffer(callback: @escaping ((_ buffer: ArrayBufferHolder) -> Void)) throws -> Void
 }

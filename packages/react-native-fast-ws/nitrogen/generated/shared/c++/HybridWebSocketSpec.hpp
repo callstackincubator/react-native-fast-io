@@ -16,16 +16,10 @@
 
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
-// Forward declaration of `WebSocketClosed` to properly resolve imports.
-namespace margelo::nitro::grabbou { struct WebSocketClosed; }
-// Forward declaration of `WebSocketError` to properly resolve imports.
-namespace margelo::nitro::grabbou { struct WebSocketError; }
 
 #include <string>
 #include <NitroModules/ArrayBuffer.hpp>
 #include <functional>
-#include "WebSocketClosed.hpp"
-#include "WebSocketError.hpp"
 
 namespace margelo::nitro::grabbou {
 
@@ -61,8 +55,8 @@ namespace margelo::nitro::grabbou {
       virtual void close() = 0;
       virtual void ping() = 0;
       virtual void onOpen(const std::function<void(const std::string& /* selectedProtocol */)>& callback) = 0;
-      virtual void onClose(const std::function<void(const WebSocketClosed& /* event */)>& callback) = 0;
-      virtual void onError(const std::function<void(const WebSocketError& /* event */)>& callback) = 0;
+      virtual void onClose(const std::function<void(double /* code */, const std::string& /* reason */)>& callback) = 0;
+      virtual void onError(const std::function<void(const std::string& /* error */)>& callback) = 0;
       virtual void onMessage(const std::function<void(const std::string& /* message */)>& callback) = 0;
       virtual void onArrayBuffer(const std::function<void(const std::shared_ptr<ArrayBuffer>& /* buffer */)>& callback) = 0;
 

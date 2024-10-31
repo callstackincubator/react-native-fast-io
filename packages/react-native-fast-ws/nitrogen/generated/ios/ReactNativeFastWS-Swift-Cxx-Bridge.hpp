@@ -13,18 +13,8 @@
 namespace NitroModules { class ArrayBufferHolder; }
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
-// Forward declaration of `WebSocketClosed` to properly resolve imports.
-namespace margelo::nitro::grabbou { struct WebSocketClosed; }
-// Forward declaration of `WebSocketError` to properly resolve imports.
-namespace margelo::nitro::grabbou { struct WebSocketError; }
 
 // Include C++ defined types
-#if __has_include("WebSocketClosed.hpp")
- #include "WebSocketClosed.hpp"
-#endif
-#if __has_include("WebSocketError.hpp")
- #include "WebSocketError.hpp"
-#endif
 #if __has_include(<NitroModules/ArrayBuffer.hpp>)
  #include <NitroModules/ArrayBuffer.hpp>
 #endif
@@ -79,59 +69,31 @@ namespace margelo::nitro::grabbou::bridge::swift {
   }
   
   /**
-   * Specialized version of `std::function<void(const WebSocketClosed&)>`.
+   * Specialized version of `std::function<void(double, const std::string&)>`.
    */
-  using Func_void_WebSocketClosed = std::function<void(const WebSocketClosed& /* event */)>;
+  using Func_void_double_std__string = std::function<void(double /* code */, const std::string& /* reason */)>;
   /**
-   * Wrapper class for a `std::function<void(const WebSocketClosed& / * event * /)>`, this can be used from Swift.
+   * Wrapper class for a `std::function<void(double / * code * /, const std::string& / * reason * /)>`, this can be used from Swift.
    */
-  class Func_void_WebSocketClosed_Wrapper {
+  class Func_void_double_std__string_Wrapper {
   public:
-    explicit Func_void_WebSocketClosed_Wrapper(const std::function<void(const WebSocketClosed& /* event */)>& func): function(func) {}
-    explicit Func_void_WebSocketClosed_Wrapper(std::function<void(const WebSocketClosed& /* event */)>&& func): function(std::move(func)) {}
+    explicit Func_void_double_std__string_Wrapper(const std::function<void(double /* code */, const std::string& /* reason */)>& func): function(func) {}
+    explicit Func_void_double_std__string_Wrapper(std::function<void(double /* code */, const std::string& /* reason */)>&& func): function(std::move(func)) {}
   
-    void call(WebSocketClosed event) const {
-      function(event);
+    void call(double code, std::string reason) const {
+      function(code, reason);
     }
   
-    std::function<void(const WebSocketClosed& /* event */)> function;
+    std::function<void(double /* code */, const std::string& /* reason */)> function;
   };
-  inline Func_void_WebSocketClosed create_Func_void_WebSocketClosed(void* closureHolder, void(*call)(void* /* closureHolder */, WebSocketClosed), void(*destroy)(void*)) {
+  inline Func_void_double_std__string create_Func_void_double_std__string(void* closureHolder, void(*call)(void* /* closureHolder */, double, std::string), void(*destroy)(void*)) {
     std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
-    return Func_void_WebSocketClosed([sharedClosureHolder, call](const WebSocketClosed& event) -> void {
-      call(sharedClosureHolder.get(), event);
+    return Func_void_double_std__string([sharedClosureHolder, call](double code, const std::string& reason) -> void {
+      call(sharedClosureHolder.get(), code, reason);
     });
   }
-  inline std::shared_ptr<Func_void_WebSocketClosed_Wrapper> share_Func_void_WebSocketClosed(const Func_void_WebSocketClosed& value) {
-    return std::make_shared<Func_void_WebSocketClosed_Wrapper>(value);
-  }
-  
-  /**
-   * Specialized version of `std::function<void(const WebSocketError&)>`.
-   */
-  using Func_void_WebSocketError = std::function<void(const WebSocketError& /* event */)>;
-  /**
-   * Wrapper class for a `std::function<void(const WebSocketError& / * event * /)>`, this can be used from Swift.
-   */
-  class Func_void_WebSocketError_Wrapper {
-  public:
-    explicit Func_void_WebSocketError_Wrapper(const std::function<void(const WebSocketError& /* event */)>& func): function(func) {}
-    explicit Func_void_WebSocketError_Wrapper(std::function<void(const WebSocketError& /* event */)>&& func): function(std::move(func)) {}
-  
-    void call(WebSocketError event) const {
-      function(event);
-    }
-  
-    std::function<void(const WebSocketError& /* event */)> function;
-  };
-  inline Func_void_WebSocketError create_Func_void_WebSocketError(void* closureHolder, void(*call)(void* /* closureHolder */, WebSocketError), void(*destroy)(void*)) {
-    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
-    return Func_void_WebSocketError([sharedClosureHolder, call](const WebSocketError& event) -> void {
-      call(sharedClosureHolder.get(), event);
-    });
-  }
-  inline std::shared_ptr<Func_void_WebSocketError_Wrapper> share_Func_void_WebSocketError(const Func_void_WebSocketError& value) {
-    return std::make_shared<Func_void_WebSocketError_Wrapper>(value);
+  inline std::shared_ptr<Func_void_double_std__string_Wrapper> share_Func_void_double_std__string(const Func_void_double_std__string& value) {
+    return std::make_shared<Func_void_double_std__string_Wrapper>(value);
   }
   
   /**

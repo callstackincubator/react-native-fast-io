@@ -15,6 +15,7 @@ npm install react-native-fast-ws react-native-nitro-modules
 ### TODOs
 
 - Provide Android support
+- Document things not implemented in spec, or different from spec
 - Fix outstanding (and known) issues
 - Figure out a better name and logo
 - Stable release at [React Native London Conf](https://www.reactnativelondon.co.uk)

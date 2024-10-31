@@ -19,10 +19,10 @@
     "web-streams-polyfill": "^4.0.0"
   },
   "dependencies": {
-    "event-target-shim": "^5.0.1"
+    "event-target-shim": "^6.0.2"
   },
   "devDependencies": {
-    "event-target-shim": "^5.0.1",
+    "event-target-shim": "^6.0.2",
     "web-streams-polyfill": "^4.0.0"
   }
 }
