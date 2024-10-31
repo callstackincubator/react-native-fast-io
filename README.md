@@ -15,7 +15,6 @@ npm install react-native-fast-ws react-native-nitro-modules
 ### TODOs
 
 - Provide Android support
-- Upgrade dependencies to latest (yeah, I've been working on this for waaaay to long)
 - Fix outstanding (and known) issues
 - Figure out a better name and logo
 - Stable release at [React Native London Conf](https://www.reactnativelondon.co.uk)
@@ -36,3 +35,17 @@ If you want to contribute, please reach out (you can find me on [X/Twitter](http
 **Websockets**
 - On iOS, uses built-in APIs for WebSockets (available on iOS 13+). React Native uses `SocketRocket` instead
 - Does not use `EventEmitter` to communicate new messages back to the JavaScript. With Nitro, we can call callbacks directly 
+
+### Developing
+
+Run the example app to test changes:
+
+```bash
+// Start the demo server
+bun server.ts
+
+// Run the app
+cd example && npm run ios
+```
+
+You can also start the app from Xcode, in case you want to make changes to the native code. In that case, open `example/ios/NitroPlayground.xcworkspace` and hit run.

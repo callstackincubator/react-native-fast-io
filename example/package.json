@@ -4,23 +4,23 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
-    "deps": "bundle install && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install"
+    "start": "react-native start"
   },
   "dependencies": {
     "@bacons/text-decoder": "^0.0.0",
     "cli-table3": "^0.6.5",
     "react": "18.3.1",
-    "react-native": "0.75.3",
+    "react-native": "0.76.0",
     "react-native-fast-ws": "0.0.1",
-    "react-native-nitro-modules": "^0.9.2"
+    "react-native-nitro-modules": "^0.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "@react-native/babel-preset": "0.75.3",
-    "@react-native/metro-config": "0.75.3",
+    "@react-native-community/cli": "^15.0.1",
+    "@react-native/babel-preset": "0.76.0",
+    "@react-native/metro-config": "0.76.0",
     "@types/react": "^18.2.6",
     "eslint": "^8.19.0",
     "nitro-codegen": "^0.8.0"
