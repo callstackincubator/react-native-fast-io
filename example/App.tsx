@@ -1,17 +1,13 @@
-import '@bacons/text-decoder/install'
-
 import { useCallback, useState } from 'react'
-import { AppRegistry } from 'react-native'
 import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native'
 import { WebSocket as FastWebSocket } from 'react-native-fast-ws'
 
 type Result = {
   outgoingTime: number
   incomingTime: number
-  incomingFirstMessageTime: number
 }
 
-function App() {
+export function App() {
   return (
     <View style={styles.container}>
       <TestCase payload="Hello World" title="Test String" />
@@ -44,11 +40,6 @@ function Results({
         title="Received (ms)"
         fastResult={fastResults.incomingTime}
         wsResult={wsResults.incomingTime}
-      />
-      <ResultsRow
-        title="TFM (ms)"
-        fastResult={fastResults.incomingFirstMessageTime}
-        wsResult={wsResults.incomingFirstMessageTime}
       />
     </View>
   )
@@ -127,19 +118,16 @@ const testWebsocketMessages = async (opts: {
 }): Promise<{
   outgoingTime: number
   incomingTime: number
-  incomingFirstMessageTime: number
 }> =>
   new Promise((resolve) => {
     const inst = new opts.Ws('ws://localhost:3000')
 
     let outgoingTime: number
     let incomingTime: number
-    let incomingFirstMessageTime: number
     let received = 0
 
     inst.addEventListener('message', () => {
       if (received === 0) {
-        incomingFirstMessageTime = performance.now() - incomingFirstMessageTime
         incomingTime = performance.now()
       }
 
@@ -154,7 +142,6 @@ const testWebsocketMessages = async (opts: {
       resolve({
         outgoingTime,
         incomingTime: performance.now() - incomingTime,
-        incomingFirstMessageTime,
       })
     })
 
@@ -166,8 +153,6 @@ const testWebsocketMessages = async (opts: {
       }
 
       outgoingTime = performance.now() - start
-
-      incomingFirstMessageTime = performance.now()
 
       inst.send(JSON.stringify({ count: opts.incoming, binary: typeof opts.payload !== 'string' }))
     })
@@ -194,5 +179,3 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
 })
-
-AppRegistry.registerComponent('NitroPlayground', () => App)
