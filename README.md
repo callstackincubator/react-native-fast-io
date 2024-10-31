@@ -27,15 +27,29 @@ If you want to contribute, please reach out (you can find me on [X/Twitter](http
 ### Differences with React Native
 
 **Blob**
-- Fully [W3C compliant](https://w3c.github.io/FileAPI/#blob-section)
 - Can create `Blob` from `ArrayBuffer`, `ArrayBufferView`, `Blob`, or `string`. With React Native, [you can only create Blob from string or another Blob](https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Blob/BlobManager.js#L69-L73)
 - Has `text()`, `arrayBuffer()`, and `stream()` methods. With React Native, you can only access the contents of `Blob` via [custom `data` field](https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Blob/Blob.js#L75-L82)
 - Does not depend on a native module. Uses `ArrayBuffer`s natively, thanks to Nitro Modules. With React Native, [Blob uses `RCTBlobManager` under the hood](https://github.com/facebook/react-native/blob/bd323929dc5be5666ee36043babec7d981a095dc/packages/react-native/Libraries/Blob/RCTBlobManager.h#L15) to create and hold references to the data
 - Automatically deallocated when no longer in use. [You don't have to `close()` it manually](https://github.com/facebook/react-native/blob/bd323929dc5be5666ee36043babec7d981a095dc/packages/react-native/Libraries/Blob/Blob.js#L122-L138)
 
 **Websockets**
+- Emits events (`open`, `message`, `error`, `close`) that extend from [`Event`](https://dom.spec.whatwg.org/#event)
 - On iOS, uses built-in APIs for WebSockets (available on iOS 13+). React Native uses `SocketRocket` instead
-- Does not use `EventEmitter` to communicate new messages back to the JavaScript. With Nitro, we can call callbacks directly 
+- Uses callbacks instead of `RCTEventEmitter` to communicate new messages back to the JavaScript
+
+### Compatibility table
+
+The table below compares the features and APIs available in react-native-fast-ws against the [WebSocket specification](https://websockets.spec.whatwg.org/) and React Native's built-in WebSocket implementation. A ✅ indicates full support, ⚠️ indicates partial support with limitations, and ❌ indicates no support.
+
+#### WebSocket
+
+| Feature | Specification | FastWS | React Native |
+|---------|--------------|-----------------------|------------------------|
+
+#### Blob
+
+| Feature | Specification | FastWS | React Native |
+|---------|--------------|-----------------------|------------------------|
 
 ### Developing
 
