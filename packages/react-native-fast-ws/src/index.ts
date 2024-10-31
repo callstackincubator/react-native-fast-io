@@ -1,4 +1,4 @@
-import { Event, EventTarget } from 'event-target-shim'
+import { defineEventAttribute, Event, EventTarget } from 'event-target-shim'
 import { NitroModules } from 'react-native-nitro-modules'
 
 import { Blob } from './blob'
@@ -164,3 +164,8 @@ export class WebSocket extends EventTarget<
     this.ws.ping()
   }
 }
+
+defineEventAttribute(WebSocket.prototype, 'open')
+defineEventAttribute(WebSocket.prototype, 'message')
+defineEventAttribute(WebSocket.prototype, 'error')
+defineEventAttribute(WebSocket.prototype, 'close')
