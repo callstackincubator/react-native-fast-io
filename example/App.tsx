@@ -7,11 +7,13 @@ type Result = {
   incomingTime: number
 }
 
+const encoder = new TextEncoder()
+
 export function App() {
   return (
     <View style={styles.container}>
       <TestCase payload="Hello World" title="Test String" />
-      <TestCase payload={new TextEncoder().encode('Hello World')} title="Test Binary" />
+      <TestCase payload={encoder.encode('Hello World')} title="Test Binary" />
     </View>
   )
 }
@@ -28,8 +30,8 @@ function Results({
     <View>
       <View style={styles.resultRowContainer}>
         <Text style={styles.resultItem}> </Text>
-        <Text style={styles.resultItem}>{`FastWS`}</Text>
-        <Text style={styles.resultItem}>{`WebSocket`}</Text>
+        <Text style={styles.resultItem}>FastWS</Text>
+        <Text style={styles.resultItem}>WebSocket</Text>
       </View>
       <ResultsRow
         title="Sending (ms)"
