@@ -19,16 +19,16 @@ export interface WebSocket extends HybridObject<{ ios: 'swift' }> {
 
   connect(): void
   close(): void
+  ping(): void
 
-  onOpen(callback: () => void): void
+  onOpen(callback: (selectedProtocol: string) => void): void
   onClose(callback: (event: WebSocketClosed) => void): void
   onError(callback: (event: WebSocketError) => void): void
 
-  // Currently variants are not supported, so we have dedicated method for each
   onMessage(callback: (message: string) => void): void
   onArrayBuffer(callback: (buffer: ArrayBuffer) => void): void
 }
 
 export interface WebSocketManager extends HybridObject<{ ios: 'swift' }> {
-  create(url: string): WebSocket
+  create(url: string, protocols: string[]): WebSocket
 }

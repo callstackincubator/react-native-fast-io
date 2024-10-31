@@ -8,7 +8,7 @@
 import NitroModules
 
 class HybridWebSocket : HybridWebSocketSpec {
-  var onOpen: (() -> Void)?
+  var onOpen: ((String) -> Void)?
   var onClose: ((WebSocketClosed) -> Void)?
   var onError: ((WebSocketError) -> Void)?
   
@@ -18,14 +18,14 @@ class HybridWebSocket : HybridWebSocketSpec {
   let ws: URLSessionWebSocketTask
   let urlSession: URLSession
   
-  public init (url: String) {
+  public init (url: String, protocols: [String]) {
     let delegate = WebSocketDelegate()
         
     urlSession = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
-    ws = urlSession.webSocketTask(with: URL(string: url)!)
+    ws = urlSession.webSocketTask(with: URL(string: url)!, protocols: protocols)
     
-    delegate.onOpen = { [weak self] in
-      self?.onOpen?()
+    delegate.onOpen = { [weak self] selectedProtocol in
+      self?.onOpen?(selectedProtocol ?? "")
     }
     
     delegate.onClose = { [weak self] closeCode, reason in
@@ -37,6 +37,7 @@ class HybridWebSocket : HybridWebSocketSpec {
       
       self?.onClose?(WebSocketClosed(code: Double(closeCode.rawValue), reason: data))
     }
+    
     
     listen()
   }
@@ -98,7 +99,15 @@ class HybridWebSocket : HybridWebSocketSpec {
     }
   }
   
-  func onOpen(callback: @escaping (() -> Void)) {
+  func ping() {
+    ws.sendPing { error in
+      if let error {
+        self.onError?(WebSocketError(message: error.localizedDescription))
+      }
+    }
+  }
+  
+  func onOpen(callback: @escaping ((String) -> Void)) {
     onOpen = callback
   }
   

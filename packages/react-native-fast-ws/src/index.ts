@@ -30,6 +30,9 @@ enum WebSocketReadyState {
  */
 const ABNORMAL_CLOSURE = 1006
 
+/**
+ * https://websockets.spec.whatwg.org/#interface-definition
+ */
 export class WebSocket extends EventTarget<
   {
     open: OpenEvent
@@ -40,29 +43,49 @@ export class WebSocket extends EventTarget<
   {},
   'loose'
 > {
-  /**
-   * https://websockets.spec.whatwg.org/#ref-for-dom-websocket-url①
-   */
-  static readonly CONNECTING = WebSocketReadyState.CONNECTING
-  static readonly OPEN = WebSocketReadyState.OPEN
-  static readonly CLOSING = WebSocketReadyState.CLOSING
-  static readonly CLOSED = WebSocketReadyState.CLOSED
+  readonly CONNECTING = WebSocketReadyState.CONNECTING
+  readonly OPEN = WebSocketReadyState.OPEN
+  readonly CLOSING = WebSocketReadyState.CLOSING
+  readonly CLOSED = WebSocketReadyState.CLOSED
 
   readonly url: string
 
   binaryType: 'arraybuffer' | 'blob' = 'blob'
-  readyState: WebSocketReadyState = WebSocketReadyState.CONNECTING
+
+  private _readyState: WebSocketReadyState = WebSocketReadyState.CONNECTING
+  get readyState() {
+    return this._readyState
+  }
+
+  get bufferedAmount() {
+    throw new Error('Not implemented')
+  }
+
+  get extensions() {
+    throw new Error('Not implemented')
+  }
+
+  private _protocol = ''
+  get protocol() {
+    return this._protocol
+  }
+
+  onopen: ((event: OpenEvent) => void) | null = null
+  onmessage: ((event: MessageEvent) => void) | null = null
+  onerror: ((event: ErrorEvent) => void) | null = null
+  onclose: ((event: CloseEvent) => void) | null = null
 
   private readonly ws: HybridWebSocket
 
-  constructor(url: string) {
+  constructor(url: string, protocols: string | string[] = []) {
     super()
 
     this.url = url
-    this.ws = manager.create(url)
+    this.ws = manager.create(url, Array.isArray(protocols) ? protocols : [protocols])
 
-    this.ws.onOpen(() => {
-      this.readyState = WebSocketReadyState.OPEN
+    this.ws.onOpen((protocol) => {
+      this._readyState = WebSocketReadyState.OPEN
+      this._protocol = protocol
       this.dispatchEvent({ type: 'open' })
     })
 
@@ -85,14 +108,14 @@ export class WebSocket extends EventTarget<
        * Sending `close` frame before proceeding to close the connection
        * https://datatracker.ietf.org/doc/html/rfc6455#section-7.1.7
        */
-      this.readyState = WebSocketReadyState.CLOSED
+      this._readyState = WebSocketReadyState.CLOSED
       this.dispatchEvent({ type: 'close', code: ABNORMAL_CLOSURE })
 
       this.close()
     })
 
     this.ws.onClose((event) => {
-      this.readyState = WebSocketReadyState.CLOSED
+      this._readyState = WebSocketReadyState.CLOSED
       this.dispatchEvent({ type: 'close', ...event })
     })
 
@@ -127,13 +150,17 @@ export class WebSocket extends EventTarget<
    */
   close() {
     if (
-      this.readyState === WebSocketReadyState.CLOSING ||
-      this.readyState === WebSocketReadyState.CLOSED
+      this._readyState === WebSocketReadyState.CLOSING ||
+      this._readyState === WebSocketReadyState.CLOSED
     ) {
       return
     }
 
-    this.readyState = WebSocketReadyState.CLOSING
+    this._readyState = WebSocketReadyState.CLOSING
     this.ws.close()
+  }
+
+  ping() {
+    this.ws.ping()
   }
 }

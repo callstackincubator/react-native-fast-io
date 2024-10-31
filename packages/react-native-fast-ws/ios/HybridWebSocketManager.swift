@@ -8,8 +8,8 @@
 import NitroModules
 
 class HybridWebSocketManager : HybridWebSocketManagerSpec {
-  func create(url: String) throws -> any HybridWebSocketSpec {
-    return HybridWebSocket(url: url)
+  func create(url: String, protocols: [String]) throws -> any HybridWebSocketSpec {
+    return HybridWebSocket(url: url, protocols: protocols)
   }
   
   var hybridContext = margelo.nitro.HybridContext()
