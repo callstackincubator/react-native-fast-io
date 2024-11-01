@@ -1764,7 +1764,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: 1dca942403ed9342f98334bf4c3621f011aa7946
   DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
-  FastWebSocket: be78a04cb9bbcccb36447b0771c7068c4fe29282
+  FastWebSocket: f3a9f040b80d07f0d1f059651aa08b57a48323b9
   FBLazyVector: aa59bef5c46e93168bffcf3dc37ee1e176de799a
   fmt: 10c6e61f4be25dc963c36bd73fc7b1705fe975be
   glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a

@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "event-target-shim": "^6.0.2",
-    "web-streams-polyfill": "^4.0.0"
+    "web-streams-polyfill": "^4.0.0",
+    "nitro-codegen": "^0.14.0"
   }
 }

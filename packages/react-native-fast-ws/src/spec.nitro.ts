@@ -16,6 +16,6 @@ export interface WebSocket extends HybridObject<{ ios: 'swift'; android: 'kotlin
   onArrayBuffer(callback: (buffer: ArrayBuffer) => void): void
 }
 
-export interface WebSocketManager extends HybridObject<{ ios: 'swift' }> {
+export interface WebSocketManager extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
   create(url: string, protocols: string[]): WebSocket
 }
