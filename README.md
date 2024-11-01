@@ -15,15 +15,47 @@ npm install react-native-fast-ws --save
 > [!NOTE]
 > This package requires React Native 0.76 and New Architecture. You must also install and configure [Nitro Modules](https://github.com/mrousavy/nitro) to use this package.
 
+### Usage
+
+This library implements the [WebSocket Web API](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket). If you've used WebSockets in the browser, you'll feel right at home:
+
+```ts
+// Create a new WebSocket instance
+const ws = new WebSocket('wss://echo.websocket.org');
+
+// Using event listeners (recommended)
+ws.addEventListener('open', (event) => {
+  console.log('Connected to server');
+  ws.send('Hello Server!');
+});
+
+// Or using event handlers
+ws.onopen = (event) => {
+  console.log('Connected to server');
+};
+
+// Listen to messages
+ws.addEventListener('message', (event) => {
+  console.log('Received:', event.data);
+});
+
+// Send different types of data
+ws.send('Plain text message');
+ws.send(new Blob(['Binary data']));
+ws.send(new Uint8Array([1, 2, 3, 4]));
+
+// Close the connection when done
+ws.close();
+```
+
+For more detailed information about the WebSocket API, check out the [MDN WebSocket documentation](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
+
 ### TODOs
 
 - Provide Android support
 - Document things not implemented in spec, or different from spec
-- Fix outstanding (and known) issues
-- Figure out a better name and logo
 - Stable release at [React Native London Conf](https://www.reactnativelondon.co.uk)
 - Extract Blob to a separate package
-- Documentation
 
 If you want to contribute, please reach out (you can find me on [X/Twitter](https://x.com/grabbou)).
 
@@ -84,6 +116,8 @@ These benchmarks are provided to demonstrate theoretical performance benefits an
 | Receive 10k ArrayBuffers | x | x | x |
 
 All tests were performed with local WebSocket server to minimize network variance. Each test was run 5 times and averaged.
+
+In the future, we would like to add benchmarks for CPU and memory usage, since that's where FastWS should shine. Your contributions are welcome!
 
 ### Developing
 
