@@ -47,8 +47,14 @@ cd ./example && npm run ios
 
 or on Android:
 ```bash
-cd example && npm run android
+cd ./example && npm run android
 ```
 
 You can also open the example project directly in Xcode (`example/ios/NitroPlayground.xcworkspace`) or Android Studio (`example/android`) for native development.
 
+Make sure to run the WebSocket server in the background:
+```bash
+cd ./example && bun server.ts
+```
+
+Otherwise, the app will not be able to connect to the server and will fail with a connection error.

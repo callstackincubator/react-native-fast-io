@@ -1,3 +1,10 @@
+/// <reference types="bun-types" />
+
+/**
+ * This file is a simple WebSocket server that sends back messages to the client.
+ * It is meant to be run directly with Bun.
+ */
+
 Bun.serve({
   fetch(req, server) {
     // upgrade the request to a WebSocket
