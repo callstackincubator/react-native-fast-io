@@ -1,6 +1,6 @@
-<p align="center">
+<div align="center">
   <h1>react-native-fast-ws</h1>
-</p>
+</div>
 
 <p align="center">
   <img src="https://media1.tenor.com/m/7Ienx0j5cqoAAAAC/fast-and.gif" />
