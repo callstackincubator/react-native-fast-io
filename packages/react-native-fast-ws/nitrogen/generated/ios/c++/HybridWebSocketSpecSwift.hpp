@@ -74,8 +74,8 @@ namespace margelo::nitro::websocket {
     inline void connect() override {
       _swiftPart.connect();
     }
-    inline void close() override {
-      _swiftPart.close();
+    inline void close(double code, const std::string& reason) override {
+      _swiftPart.close(std::forward<decltype(code)>(code), reason);
     }
     inline void ping() override {
       _swiftPart.ping();

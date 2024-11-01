@@ -55,7 +55,7 @@ abstract class HybridWebSocketSpec: HybridObject() {
   
   @DoNotStrip
   @Keep
-  abstract fun close(): Unit
+  abstract fun close(code: Double, reason: String): Unit
   
   @DoNotStrip
   @Keep

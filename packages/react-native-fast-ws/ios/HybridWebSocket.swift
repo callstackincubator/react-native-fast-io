@@ -7,6 +7,10 @@
 
 import NitroModules
 
+private extension URLSessionWebSocketTaskCloseCode {
+  
+}
+
 class HybridWebSocket : HybridWebSocketSpec {
   var onOpen: ((String) -> Void)?
   var onClose: ((Double, String) -> Void)?
@@ -46,8 +50,8 @@ class HybridWebSocket : HybridWebSocketSpec {
     ws.resume()
   }
   
-  func close() {
-    ws.cancel()
+  func close(code: Double, reason: String) {
+    ws.cancel(with: .normalClosure, reason: reason.data(using: .utf8))
   }
   
   func listen()  {

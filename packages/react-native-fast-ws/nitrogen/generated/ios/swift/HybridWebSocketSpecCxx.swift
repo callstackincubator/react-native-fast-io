@@ -132,9 +132,9 @@ public class HybridWebSocketSpecCxx {
   }
   
   @inline(__always)
-  public func close() -> Void {
+  public func close(code: Double, reason: std.string) -> Void {
     do {
-      try self.__implementation.close()
+      try self.__implementation.close(code: code, reason: String(reason))
       return 
     } catch {
       let __message = "\(error.localizedDescription)"
