@@ -62,8 +62,8 @@ The table below compares the features and APIs available in react-native-fast-ws
 > - Network conditions and latency
 > - Message payload size and type
 > - Application state and concurrent operations
-> 
-> These benchmarks are provided to demonstrate theoretical performance benefits and should be used as a general reference rather than absolute performance indicators.
+
+These benchmarks are provided to demonstrate theoretical performance benefits and should be used as a general reference rather than absolute performance indicators.
 
 #### iOS (iPhone 16 Pro, iOS 18.0)
 
@@ -83,7 +83,7 @@ The table below compares the features and APIs available in react-native-fast-ws
 | Send 10k ArrayBuffers | x | x | x |
 | Receive 10k ArrayBuffers | x | x | x |
 
-_All tests were performed with local WebSocket server to minimize network variance. Each test was run 5 times and averaged._
+All tests were performed with local WebSocket server to minimize network variance. Each test was run 5 times and averaged.
 
 ### Developing
 
