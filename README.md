@@ -1,7 +1,9 @@
-`react-native-fast-ws`
+<p align="center">
+  <h1>react-native-fast-ws</h1>
+</p>
 
 <p align="center">
-<img src="https://media1.tenor.com/m/7Ienx0j5cqoAAAAC/fast-and.gif" />
+  <img src="https://media1.tenor.com/m/7Ienx0j5cqoAAAAC/fast-and.gif" />
 </p>
 
 <p align="center">
