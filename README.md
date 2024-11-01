@@ -1,7 +1,15 @@
 `react-native-fast-ws`
-======
 
-Blazing fast WebSocket client for React Native built on top of [Nitro](https://mrousavy.github.io/nitro).
+<p align="center">
+<img src="https://media1.tenor.com/m/7Ienx0j5cqoAAAAC/fast-and.gif" />
+</p>
+
+<p align="center">
+  When your WebSockets hit the Nitro boost 🏎️💨
+</p>
+
+
+---
 
 > [!WARNING]
 > This library is still under development. Use at your own risk. The API is experimental and subject to change. This project explores new ideas and approaches to WebSocket and Blob APIs, thanks to Nitro, and its scope may change.
@@ -119,3 +127,8 @@ All tests were performed with local WebSocket server to minimize network varianc
 
 In the future, we would like to add benchmarks for CPU and memory usage, since that's where FastWS should shine. Your contributions are welcome!
 
+## Made with ❤️ at Callstack
+
+React Native FastWS is an open source project and will always remain free to use. If you think it's cool, please star it 🌟. [Callstack](https://callstack.com) is a group of React and React Native geeks, contact us at [hello@callstack.com](mailto:hello@callstack.com) if you need any help with these or just want to say hi!
+
+Like the project? ⚛️ [Join the team](https://callstack.com/careers/?utm_campaign=Senior_RN&utm_source=github&utm_medium=readme) who does amazing stuff for clients and drives React Native Open Source! 🔥
