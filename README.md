@@ -119,16 +119,3 @@ All tests were performed with local WebSocket server to minimize network varianc
 
 In the future, we would like to add benchmarks for CPU and memory usage, since that's where FastWS should shine. Your contributions are welcome!
 
-### Developing
-
-Run the example app to test changes:
-
-```bash
-// Start the demo server
-bun server.ts
-
-// Run the app
-cd example && npm run ios
-```
-
-You can also start the app from Xcode, in case you want to make changes to the native code. In that case, open `example/ios/NitroPlayground.xcworkspace` and hit run.
