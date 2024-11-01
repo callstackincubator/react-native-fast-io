@@ -27,7 +27,7 @@ npm install react-native-fast-ws --save
 
 ### Usage
 
-This library implements the [WebSocket Web API](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket). If you've used WebSockets in the browser, you'll feel right at home:
+This library implements the [WebSocket Web API](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) and is meant to be a drop-in replacement for React Native's WebSocket implementation.
 
 ```ts
 // Create a new WebSocket instance
@@ -62,30 +62,11 @@ For more detailed information about the WebSocket API, check out the [MDN WebSoc
 
 ### Differences with React Native
 
-**Blob**
-- Can create `Blob` from `ArrayBuffer`, `ArrayBufferView`, `Blob`, or `string`. With React Native, [you can only create Blob from string or another Blob](https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Blob/BlobManager.js#L69-L73)
-- Has `text()`, `arrayBuffer()`, and `stream()` methods. With React Native, you can only access the contents of `Blob` via [custom `data` field](https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Blob/Blob.js#L75-L82)
-- Does not depend on a native module. Uses `ArrayBuffer`s natively, thanks to Nitro Modules. With React Native, [Blob uses `RCTBlobManager` under the hood](https://github.com/facebook/react-native/blob/bd323929dc5be5666ee36043babec7d981a095dc/packages/react-native/Libraries/Blob/RCTBlobManager.h#L15) to create and hold references to the data
+- Can create `Blob`s from `ArrayBuffer`, `ArrayBufferView` too. With React Native, [you can only create Blob from string or another Blob](https://github.com/facebook/react-native/blob/af384a914a4e9ef6a5d25b00bc14b0483e5af879/packages/react-native/Libraries/Blob/BlobManager.js#L69-L73)
+- Has `text()`, `arrayBuffer()`, and `stream()` methods. With React Native, you can only access the contents of `Blob` via [custom `data` field](https://github.com/facebook/react-native/blob/af384a914a4e9ef6a5d25b00bc14b0483e5af879/packages/react-native/Libraries/Blob/Blob.js#L75-L82)
+- Does not depend on a native module. Uses `ArrayBuffer`s natively, thanks to Nitro Modules. With React Native, [Blob uses `RCTBlobManager` under the hood](https://github.com/facebook/react-native/blob/bd323929dc5be5666ee36043babec7d981a095dc/packages/react-native/Libraries/Blob/RCTBlobManager.h#L15) to create and hold references to the data.
 - Automatically deallocated when no longer in use. [You don't have to `close()` it manually](https://github.com/facebook/react-native/blob/bd323929dc5be5666ee36043babec7d981a095dc/packages/react-native/Libraries/Blob/Blob.js#L122-L138)
-
-**Websockets**
-- Emits events (`open`, `message`, `error`, `close`) that extend from [`Event`](https://dom.spec.whatwg.org/#event)
-- On iOS, uses built-in APIs for WebSockets (available on iOS 13+). React Native uses `SocketRocket` instead
-- Uses callbacks instead of `RCTEventEmitter` to communicate new messages back to the JavaScript
-
-### Compatibility table
-
-The table below compares the features and APIs available in react-native-fast-ws against the [WebSocket specification](https://websockets.spec.whatwg.org/) and React Native's built-in WebSocket implementation. A ✅ indicates full support, ⚠️ indicates partial support with limitations, and ❌ indicates no support.
-
-#### WebSocket
-
-| Feature | Specification | FastWS | React Native |
-|---------|--------------|-----------------------|------------------------|
-
-#### Blob
-
-| Feature | Specification | FastWS | React Native |
-|---------|--------------|-----------------------|------------------------|
+- You can send `Blob`, `ArrayBuffer`, and `ArrayBufferView` objects directly. [With React Native, they are serialized and sent as base64 strings](https://github.com/facebook/react-native/blob/af384a914a4e9ef6a5d25b00bc14b0483e5af879/packages/react-native/Libraries/WebSocket/WebSocket.js#L201-L203)
 
 ### Benchmarks
 
