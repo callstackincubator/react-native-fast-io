@@ -7,10 +7,6 @@
 
 import NitroModules
 
-private extension URLSessionWebSocketTaskCloseCode {
-  
-}
-
 class HybridWebSocket : HybridWebSocketSpec {
   var onOpen: ((String) -> Void)?
   var onClose: ((Double, String) -> Void)?
