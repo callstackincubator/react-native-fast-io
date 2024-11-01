@@ -5,7 +5,7 @@ import com.facebook.proguard.annotations.DoNotStrip
 @DoNotStrip
 class HybridWebSocketManager : HybridWebSocketManagerSpec() {
     override fun create(url: String, protocols: Array<String>): HybridWebSocketSpec {
-        throw Error("Unimplemented")
+        return HybridWebSocket(url, protocols)
     }
 
     override val memorySize: Long
