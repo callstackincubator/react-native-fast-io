@@ -60,12 +60,16 @@ export class CloseEvent extends Event {
 /**
  * https://websockets.spec.whatwg.org/#interface-definition
  */
-export class WebSocket extends EventTarget<{
-  open: OpenEvent
-  message: MessageEvent
-  error: ErrorEvent
-  close: CloseEvent
-}> {
+export class WebSocket
+  extends EventTarget
+  implements
+    EventTarget<{
+      open: OpenEvent
+      message: MessageEvent
+      error: ErrorEvent
+      close: CloseEvent
+    }>
+{
   readonly CONNECTING = WebSocketReadyState.CONNECTING
   readonly OPEN = WebSocketReadyState.OPEN
   readonly CLOSING = WebSocketReadyState.CLOSING
