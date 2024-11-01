@@ -182,10 +182,6 @@ export class WebSocket
       throw new Error('Invalid close code. Must be 1000 or in range 3000-4999.')
     }
 
-    if (code !== 1000) {
-      console.warn('Non-standard close code is not supported on iOS and will be ignored.')
-    }
-
     this._readyState = WebSocketReadyState.CLOSING
     this.ws.close(code, reason)
   }
