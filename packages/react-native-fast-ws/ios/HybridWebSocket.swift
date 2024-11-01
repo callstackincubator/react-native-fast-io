@@ -6,6 +6,7 @@
 //
 
 import NitroModules
+import Network
 
 class HybridWebSocket : HybridWebSocketSpec {
   var onOpen: ((String) -> Void)?
@@ -15,62 +16,122 @@ class HybridWebSocket : HybridWebSocketSpec {
   var onMessage: ((String) -> Void)?
   var onArrayBuffer: ((ArrayBufferHolder) -> Void)?
   
-  let ws: URLSessionWebSocketTask
-  let urlSession: URLSession
+  private var connection: NWConnection
+  private var isConnected = false
   
-  public init (url: String, protocols: [String]) {
-    let delegate = WebSocketDelegate()
-        
-    urlSession = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
-    ws = urlSession.webSocketTask(with: URL(string: url)!, protocols: protocols)
-    
-    delegate.onOpen = { [weak self] selectedProtocol in
-      self?.onOpen?(selectedProtocol ?? "")
+  public init(url: String, protocols: [String]) {
+    guard let url = URL(string: url) else {
+      fatalError("Invalid URL provided")
     }
     
-    delegate.onClose = { [weak self] closeCode, reason in
-      let data = if let reason {
-        String(bytes: reason, encoding: .utf8) ?? ""
-      } else {
-        ""
+    // Setup WebSocket parameters
+    let parameters: NWParameters
+    if url.scheme == "wss" {
+      parameters = NWParameters.tls
+    } else {
+      parameters = NWParameters.tcp // For ws:// connections
+    }
+    
+    let wsOptions = NWProtocolWebSocket.Options()
+    wsOptions.autoReplyPing = true
+//    if !protocols.isEmpty {
+//      wsOptions.subprotocols = protocols
+//    }
+    parameters.defaultProtocolStack.applicationProtocols.insert(wsOptions, at: 0)
+    
+    connection = NWConnection(to: .url(url), using: parameters)
+    setupConnection()
+  }
+  
+  private func setupConnection() {
+    connection.stateUpdateHandler = { [weak self] state in
+      switch state {
+      case .ready:
+        self?.isConnected = true
+        self?.onOpen?("")
+        self?.receiveMessage()
+      case .failed(let error):
+        self?.isConnected = false
+        self?.onError?(error.localizedDescription)
+      case .cancelled:
+        self?.isConnected = false
+        self?.onClose?(1000, "Connection cancelled")
+      default:
+        break
       }
-      
-      self?.onClose?(Double(closeCode.rawValue), data)
     }
-    
-    
-    listen()
   }
   
   func connect() {
-    ws.resume()
+    connection.start(queue: .main)
   }
   
   func close(code: Double, reason: String) {
-    ws.cancel(with: .init(rawValue: Int(code)) ?? .invalid, reason: reason.data(using: .utf8))
+    let metadata = NWProtocolWebSocket.Metadata(opcode: .close)
+    let context = NWConnection.ContentContext(identifier: "close",
+                                            metadata: [metadata])
+    
+    connection.send(content: reason.data(using: .utf8),
+                   contentContext: context,
+                   isComplete: true,
+                   completion: .idempotent)
+    connection.cancel()
   }
   
-  func listen()  {
-    let stream = WebSocketStream(ws: ws)
-    Task { [weak self] in
-      do {
-        for try await message in stream {
-          guard let self else { return }
-          switch message {
-          case .string(let text):
-            self.onMessage?(text)
-          case .data(let content):
-            self.processArrayBuffer(content)
-          @unknown default:
-            self.onError?("Unknown message type received - \(message)")
+  private func receiveMessage() {
+    connection.receive(minimumIncompleteLength: 1, maximumLength: 65536) { [weak self] content, context, isComplete, error in
+      guard let self = self else { return }
+      
+      if let error {
+        self.onError?(error.localizedDescription)
+        return
+      }
+      
+      if let context = context,
+         let metadata = context.protocolMetadata.first as? NWProtocolWebSocket.Metadata {
+        switch metadata.opcode {
+        case .text:
+          if let content = content,
+             let string = String(data: content, encoding: .utf8) {
+            self.onMessage?(string)
           }
+        case .binary:
+          if let content = content {
+            self.processArrayBuffer(content)
+          }
+        case .ping:
+          self.handlePing(content: content)
+        case .close:
+          self.handleClose(content: content)
+        default:
+          break
         }
-      } catch {
-        self?.onError?(error.localizedDescription)
+      }
+      
+      if self.isConnected {
+        self.receiveMessage()
       }
     }
   }
-
+  
+  private func handlePing(content: Data?) {
+    let metadata = NWProtocolWebSocket.Metadata(opcode: .pong)
+    let context = NWConnection.ContentContext(identifier: "pong",
+                                            metadata: [metadata])
+    
+    connection.send(content: content,
+                   contentContext: context,
+                   isComplete: true,
+                   completion: .idempotent)
+  }
+  
+  private func handleClose(content: Data?) {
+    isConnected = false
+    let reason = content.flatMap { String(data: $0, encoding: .utf8) } ?? ""
+    onClose?(1000, reason)
+    connection.cancel()
+  }
+  
   func processArrayBuffer(_ other: Data) {
     let data = UnsafeMutablePointer<UInt8>.allocate(capacity: other.count)
     other.copyBytes(to: data, count: other.count)
@@ -83,28 +144,51 @@ class HybridWebSocket : HybridWebSocketSpec {
   }
   
   func send(message: String) {
-    ws.send(URLSessionWebSocketTask.Message.string(message)) { error in
+    guard let data = message.data(using: .utf8) else { return }
+    
+    let metadata = NWProtocolWebSocket.Metadata(opcode: .text)
+    let context = NWConnection.ContentContext(identifier: "message",
+                                            metadata: [metadata])
+    
+    connection.send(content: data,
+                   contentContext: context,
+                   isComplete: true,
+                   completion: .contentProcessed { [weak self] error in
       if let error {
-        self.onError?(error.localizedDescription)
+        self?.onError?(error.localizedDescription)
       }
-    }
+    })
   }
   
   func sendArrayBuffer(buffer: ArrayBufferHolder) throws {
     let data = Data(bytes: buffer.data, count: buffer.size)
-    ws.send(.data(data)) { error in
+    let metadata = NWProtocolWebSocket.Metadata(opcode: .binary)
+    let context = NWConnection.ContentContext(identifier: "binary",
+                                            metadata: [metadata])
+    
+    connection.send(content: data,
+                   contentContext: context,
+                   isComplete: true,
+                   completion: .contentProcessed { [weak self] error in
       if let error {
-        self.onError?(error.localizedDescription)
+        self?.onError?(error.localizedDescription)
       }
-    }
+    })
   }
   
   func ping() {
-    ws.sendPing { error in
+    let metadata = NWProtocolWebSocket.Metadata(opcode: .ping)
+    let context = NWConnection.ContentContext(identifier: "ping",
+                                            metadata: [metadata])
+    
+    connection.send(content: nil,
+                   contentContext: context,
+                   isComplete: true,
+                   completion: .contentProcessed { [weak self] error in
       if let error {
-        self.onError?(error.localizedDescription)
+        self?.onError?(error.localizedDescription)
       }
-    }
+    })
   }
   
   func onOpen(callback: @escaping ((String) -> Void)) {
@@ -133,6 +217,6 @@ class HybridWebSocket : HybridWebSocketSpec {
   }
   
   deinit {
-    urlSession.invalidateAndCancel()
+    connection.cancel()
   }
 }
