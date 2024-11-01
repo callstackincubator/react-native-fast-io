@@ -1,6 +1,6 @@
 import { HybridObject } from 'react-native-nitro-modules'
 
-export interface WebSocket extends HybridObject<{ ios: 'swift' }> {
+export interface WebSocket extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
   send(message: string): void
   sendArrayBuffer(buffer: ArrayBuffer): void
 

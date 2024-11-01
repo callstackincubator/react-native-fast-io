@@ -12,7 +12,10 @@
 #include <fbjni/fbjni.h>
 #include <NitroModules/HybridObjectRegistry.hpp>
 
-
+#include "JHybridWebSocketSpec.hpp"
+#include "JFunc_void_std__string.hpp"
+#include "JFunc_void_double_std__string.hpp"
+#include "JFunc_void_std__shared_ptr_ArrayBuffer_.hpp"
 
 namespace margelo::nitro::grabbou {
 
@@ -23,7 +26,12 @@ int initialize(JavaVM* vm) {
 
   return facebook::jni::initialize(vm, [] {
     // Register native JNI methods
-    
+    margelo::nitro::grabbou::JHybridWebSocketSpec::registerNatives();
+    margelo::nitro::grabbou::JFunc_void_std__string::registerNatives();
+    margelo::nitro::grabbou::JFunc_void_double_std__string::registerNatives();
+    margelo::nitro::grabbou::JFunc_void_std__string::registerNatives();
+    margelo::nitro::grabbou::JFunc_void_std__string::registerNatives();
+    margelo::nitro::grabbou::JFunc_void_std__shared_ptr_ArrayBuffer_::registerNatives();
 
     // Register Nitro Hybrid Objects
     

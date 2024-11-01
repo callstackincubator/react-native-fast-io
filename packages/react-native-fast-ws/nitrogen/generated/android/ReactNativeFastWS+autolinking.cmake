@@ -31,7 +31,7 @@ target_sources(
   ../nitrogen/generated/shared/c++/HybridWebSocketSpec.cpp
   ../nitrogen/generated/shared/c++/HybridWebSocketManagerSpec.cpp
   # Android-specific Nitrogen C++ sources
-  
+  ../nitrogen/generated/android/c++/JHybridWebSocketSpec.cpp
 )
 
 # Add all libraries required by the generated specs
