@@ -60,15 +60,6 @@ ws.close();
 
 For more detailed information about the WebSocket API, check out the [MDN WebSocket documentation](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
 
-### TODOs
-
-- Provide Android support
-- Document things not implemented in spec, or different from spec
-- Stable release at [React Native London Conf](https://www.reactnativelondon.co.uk)
-- Extract Blob to a separate package
-
-If you want to contribute, please reach out (you can find me on [X/Twitter](https://x.com/grabbou)).
-
 ### Differences with React Native
 
 **Blob**
