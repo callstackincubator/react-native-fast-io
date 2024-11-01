@@ -11,7 +11,7 @@
 #include "HybridWebSocketSpec.hpp"
 
 // Forward declaration of `HybridWebSocketSpecCxx` to properly resolve imports.
-namespace ReactNativeFastWS { class HybridWebSocketSpecCxx; }
+namespace FastWebSocket { class HybridWebSocketSpecCxx; }
 
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
@@ -29,9 +29,9 @@ namespace NitroModules { class ArrayBufferHolder; }
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-#include "ReactNativeFastWS-Swift-Cxx-Umbrella.hpp"
+#include "FastWebSocket-Swift-Cxx-Umbrella.hpp"
 
-namespace margelo::nitro::grabbou {
+namespace margelo::nitro::websocket {
 
   /**
    * The C++ part of HybridWebSocketSpecCxx.swift.
@@ -46,13 +46,13 @@ namespace margelo::nitro::grabbou {
   class HybridWebSocketSpecSwift final: public HybridWebSocketSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridWebSocketSpecSwift(const ReactNativeFastWS::HybridWebSocketSpecCxx& swiftPart):
+    explicit HybridWebSocketSpecSwift(const FastWebSocket::HybridWebSocketSpecCxx& swiftPart):
       HybridObject(HybridWebSocketSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline ReactNativeFastWS::HybridWebSocketSpecCxx getSwiftPart() noexcept { return _swiftPart; }
+    inline FastWebSocket::HybridWebSocketSpecCxx getSwiftPart() noexcept { return _swiftPart; }
 
   public:
     // Get memory pressure
@@ -98,7 +98,7 @@ namespace margelo::nitro::grabbou {
     }
 
   private:
-    ReactNativeFastWS::HybridWebSocketSpecCxx _swiftPart;
+    FastWebSocket::HybridWebSocketSpecCxx _swiftPart;
   };
 
-} // namespace margelo::nitro::grabbou
+} // namespace margelo::nitro::websocket

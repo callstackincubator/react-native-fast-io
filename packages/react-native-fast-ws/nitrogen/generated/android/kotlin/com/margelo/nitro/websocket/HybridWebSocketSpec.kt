@@ -6,7 +6,7 @@
 /// Copyright © 2024 Marc Rousavy @ Margelo
 ///
 
-package com.margelo.nitro.grabbou
+package com.margelo.nitro.websocket
 
 import android.util.Log
 import androidx.annotation.Keep
@@ -118,11 +118,11 @@ abstract class HybridWebSocketSpec: HybridObject() {
     private const val TAG = "HybridWebSocketSpec"
     init {
       try {
-        Log.i(TAG, "Loading ReactNativeFastWS C++ library...")
-        System.loadLibrary("ReactNativeFastWS")
-        Log.i(TAG, "Successfully loaded ReactNativeFastWS C++ library!")
+        Log.i(TAG, "Loading FastWebSocket C++ library...")
+        System.loadLibrary("FastWebSocket")
+        Log.i(TAG, "Successfully loaded FastWebSocket C++ library!")
       } catch (e: Error) {
-        Log.e(TAG, "Failed to load ReactNativeFastWS C++ library! Is it properly installed and linked? " +
+        Log.e(TAG, "Failed to load FastWebSocket C++ library! Is it properly installed and linked? " +
                     "Is the name correct? (see `CMakeLists.txt`, at `add_library(...)`)", e)
         throw e
       }

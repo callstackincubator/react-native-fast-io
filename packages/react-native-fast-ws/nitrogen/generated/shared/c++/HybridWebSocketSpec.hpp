@@ -21,7 +21,7 @@ namespace NitroModules { class ArrayBuffer; }
 #include <NitroModules/ArrayBuffer.hpp>
 #include <functional>
 
-namespace margelo::nitro::grabbou {
+namespace margelo::nitro::websocket {
 
   using namespace margelo::nitro;
 
@@ -69,4 +69,4 @@ namespace margelo::nitro::grabbou {
       static constexpr auto TAG = "WebSocket";
   };
 
-} // namespace margelo::nitro::grabbou
+} // namespace margelo::nitro::websocket

@@ -15,14 +15,14 @@
 #endif
 
 // Forward declaration of `HybridWebSocketSpec` to properly resolve imports.
-namespace margelo::nitro::grabbou { class HybridWebSocketSpec; }
+namespace margelo::nitro::websocket { class HybridWebSocketSpec; }
 
 #include <memory>
 #include "HybridWebSocketSpec.hpp"
 #include <string>
 #include <vector>
 
-namespace margelo::nitro::grabbou {
+namespace margelo::nitro::websocket {
 
   using namespace margelo::nitro;
 
@@ -50,7 +50,7 @@ namespace margelo::nitro::grabbou {
 
     public:
       // Methods
-      virtual std::shared_ptr<margelo::nitro::grabbou::HybridWebSocketSpec> create(const std::string& url, const std::vector<std::string>& protocols) = 0;
+      virtual std::shared_ptr<margelo::nitro::websocket::HybridWebSocketSpec> create(const std::string& url, const std::vector<std::string>& protocols) = 0;
 
     protected:
       // Hybrid Setup
@@ -61,4 +61,4 @@ namespace margelo::nitro::grabbou {
       static constexpr auto TAG = "WebSocketManager";
   };
 
-} // namespace margelo::nitro::grabbou
+} // namespace margelo::nitro::websocket

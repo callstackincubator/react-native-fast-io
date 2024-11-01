@@ -19,7 +19,7 @@ namespace NitroModules { class ArrayBuffer; }
 #include "JFunc_void_double_std__string.hpp"
 #include "JFunc_void_std__shared_ptr_ArrayBuffer_.hpp"
 
-namespace margelo::nitro::grabbou {
+namespace margelo::nitro::websocket {
 
   jni::local_ref<JHybridWebSocketSpec::jhybriddata> JHybridWebSocketSpec::initHybrid(jni::alias_ref<jhybridobject> jThis) {
     return makeCxxInstance(jThis);
@@ -81,4 +81,4 @@ namespace margelo::nitro::grabbou {
     method(_javaPart, JFunc_void_std__shared_ptr_ArrayBuffer_::fromCpp(callback));
   }
 
-} // namespace margelo::nitro::grabbou
+} // namespace margelo::nitro::websocket

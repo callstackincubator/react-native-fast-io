@@ -6,7 +6,7 @@
 /// Copyright © 2024 Marc Rousavy @ Margelo
 ///
 
-package com.margelo.nitro.grabbou
+package com.margelo.nitro.websocket
 
 import androidx.annotation.Keep
 import com.facebook.jni.HybridData

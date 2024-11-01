@@ -12,14 +12,14 @@
 #include <fbjni/fbjni.h>
 #include "HybridWebSocketSpec.hpp"
 
-namespace margelo::nitro::grabbou {
+namespace margelo::nitro::websocket {
 
   using namespace facebook;
 
   class JHybridWebSocketSpec final: public jni::HybridClass<JHybridWebSocketSpec, JHybridObject>,
                                     public HybridWebSocketSpec {
   public:
-    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/grabbou/HybridWebSocketSpec;";
+    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/websocket/HybridWebSocketSpec;";
     static jni::local_ref<jhybriddata> initHybrid(jni::alias_ref<jhybridobject> jThis);
     static void registerNatives();
 
@@ -60,4 +60,4 @@ namespace margelo::nitro::grabbou {
     jni::global_ref<JHybridWebSocketSpec::javaobject> _javaPart;
   };
 
-} // namespace margelo::nitro::grabbou
+} // namespace margelo::nitro::websocket

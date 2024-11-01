@@ -11,12 +11,12 @@
 #include "HybridWebSocketManagerSpec.hpp"
 
 // Forward declaration of `HybridWebSocketManagerSpecCxx` to properly resolve imports.
-namespace ReactNativeFastWS { class HybridWebSocketManagerSpecCxx; }
+namespace FastWebSocket { class HybridWebSocketManagerSpecCxx; }
 
 // Forward declaration of `HybridWebSocketSpec` to properly resolve imports.
-namespace margelo::nitro::grabbou { class HybridWebSocketSpec; }
+namespace margelo::nitro::websocket { class HybridWebSocketSpec; }
 // Forward declaration of `HybridWebSocketSpecSwift` to properly resolve imports.
-namespace margelo::nitro::grabbou { class HybridWebSocketSpecSwift; }
+namespace margelo::nitro::websocket { class HybridWebSocketSpecSwift; }
 
 #include <memory>
 #include "HybridWebSocketSpec.hpp"
@@ -30,9 +30,9 @@ namespace margelo::nitro::grabbou { class HybridWebSocketSpecSwift; }
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-#include "ReactNativeFastWS-Swift-Cxx-Umbrella.hpp"
+#include "FastWebSocket-Swift-Cxx-Umbrella.hpp"
 
-namespace margelo::nitro::grabbou {
+namespace margelo::nitro::websocket {
 
   /**
    * The C++ part of HybridWebSocketManagerSpecCxx.swift.
@@ -47,13 +47,13 @@ namespace margelo::nitro::grabbou {
   class HybridWebSocketManagerSpecSwift final: public HybridWebSocketManagerSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridWebSocketManagerSpecSwift(const ReactNativeFastWS::HybridWebSocketManagerSpecCxx& swiftPart):
+    explicit HybridWebSocketManagerSpecSwift(const FastWebSocket::HybridWebSocketManagerSpecCxx& swiftPart):
       HybridObject(HybridWebSocketManagerSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline ReactNativeFastWS::HybridWebSocketManagerSpecCxx getSwiftPart() noexcept { return _swiftPart; }
+    inline FastWebSocket::HybridWebSocketManagerSpecCxx getSwiftPart() noexcept { return _swiftPart; }
 
   public:
     // Get memory pressure
@@ -67,13 +67,13 @@ namespace margelo::nitro::grabbou {
 
   public:
     // Methods
-    inline std::shared_ptr<margelo::nitro::grabbou::HybridWebSocketSpec> create(const std::string& url, const std::vector<std::string>& protocols) override {
+    inline std::shared_ptr<margelo::nitro::websocket::HybridWebSocketSpec> create(const std::string& url, const std::vector<std::string>& protocols) override {
       auto __result = _swiftPart.create(url, protocols);
       return HybridContext::getOrCreate<HybridWebSocketSpecSwift>(__result);
     }
 
   private:
-    ReactNativeFastWS::HybridWebSocketManagerSpecCxx _swiftPart;
+    FastWebSocket::HybridWebSocketManagerSpecCxx _swiftPart;
   };
 
-} // namespace margelo::nitro::grabbou
+} // namespace margelo::nitro::websocket

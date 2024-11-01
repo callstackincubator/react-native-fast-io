@@ -8,7 +8,7 @@
 
 #include "HybridWebSocketSpec.hpp"
 
-namespace margelo::nitro::grabbou {
+namespace margelo::nitro::websocket {
 
   void HybridWebSocketSpec::loadHybridMethods() {
     // load base methods/properties
@@ -28,4 +28,4 @@ namespace margelo::nitro::grabbou {
     });
   }
 
-} // namespace margelo::nitro::grabbou
+} // namespace margelo::nitro::websocket

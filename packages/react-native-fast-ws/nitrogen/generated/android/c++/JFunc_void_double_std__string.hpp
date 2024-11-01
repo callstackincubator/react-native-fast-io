@@ -14,7 +14,7 @@
 #include <functional>
 #include <string>
 
-namespace margelo::nitro::grabbou {
+namespace margelo::nitro::websocket {
 
   using namespace facebook;
 
@@ -34,7 +34,7 @@ namespace margelo::nitro::grabbou {
     }
 
   public:
-    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/grabbou/Func_void_double_std__string;";
+    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/websocket/Func_void_double_std__string;";
     static void registerNatives() {
       registerHybrid({makeNativeMethod("call", JFunc_void_double_std__string::call)});
     }
@@ -47,4 +47,4 @@ namespace margelo::nitro::grabbou {
     std::function<void(double /* code */, const std::string& /* reason */)> _func;
   };
 
-} // namespace margelo::nitro::grabbou
+} // namespace margelo::nitro::websocket

@@ -20,11 +20,11 @@ import NitroModules
  */
 public final class HybridWebSocketManagerSpecCxx {
   /**
-   * The Swift <> C++ bridge's namespace (`margelo::nitro::grabbou::bridge::swift`)
-   * from `ReactNativeFastWS-Swift-Cxx-Bridge.hpp`.
+   * The Swift <> C++ bridge's namespace (`margelo::nitro::websocket::bridge::swift`)
+   * from `FastWebSocket-Swift-Cxx-Bridge.hpp`.
    * This contains specialized C++ templates, and C++ helper functions that can be accessed from Swift.
    */
-  public typealias bridge = margelo.nitro.grabbou.bridge.swift
+  public typealias bridge = margelo.nitro.websocket.bridge.swift
 
   /**
    * Holds an instance of the `HybridWebSocketManagerSpec` Swift protocol.

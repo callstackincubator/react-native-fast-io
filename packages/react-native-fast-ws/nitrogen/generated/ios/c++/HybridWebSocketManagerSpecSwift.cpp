@@ -8,5 +8,5 @@
 
 #include "HybridWebSocketManagerSpecSwift.hpp"
 
-namespace margelo::nitro::grabbou {
-} // namespace margelo::nitro::grabbou
+namespace margelo::nitro::websocket {
+} // namespace margelo::nitro::websocket

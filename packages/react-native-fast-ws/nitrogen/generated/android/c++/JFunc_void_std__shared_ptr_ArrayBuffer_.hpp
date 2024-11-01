@@ -15,7 +15,7 @@
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/JArrayBuffer.hpp>
 
-namespace margelo::nitro::grabbou {
+namespace margelo::nitro::websocket {
 
   using namespace facebook;
 
@@ -35,7 +35,7 @@ namespace margelo::nitro::grabbou {
     }
 
   public:
-    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/grabbou/Func_void_std__shared_ptr_ArrayBuffer_;";
+    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/websocket/Func_void_std__shared_ptr_ArrayBuffer_;";
     static void registerNatives() {
       registerHybrid({makeNativeMethod("call", JFunc_void_std__shared_ptr_ArrayBuffer_::call)});
     }
@@ -48,4 +48,4 @@ namespace margelo::nitro::grabbou {
     std::function<void(const std::shared_ptr<ArrayBuffer>& /* buffer */)> _func;
   };
 
-} // namespace margelo::nitro::grabbou
+} // namespace margelo::nitro::websocket

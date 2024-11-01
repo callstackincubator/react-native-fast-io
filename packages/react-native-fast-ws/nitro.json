@@ -1,11 +1,11 @@
 {
-  "cxxNamespace": ["grabbou"],
+  "cxxNamespace": ["websocket"],
   "ios": {
-    "iosModulename": "ReactNativeFastWS"
+    "iosModulename": "FastWebSocket"
   },
   "android": {
-    "androidNamespace": ["grabbou"],
-    "androidCxxLibName": "ReactNativeFastWS"
+    "androidNamespace": ["websocket"],
+    "androidCxxLibName": "FastWebSocket"
   },
   "autolinking": {
     "WebSocketManager": {
