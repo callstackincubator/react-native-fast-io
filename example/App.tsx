@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Alert, Button, StyleSheet, Text, View } from 'react-native'
 import { WebSocket as FastWebSocket } from 'react-native-fast-ws'
 
 type Result = {
