@@ -84,6 +84,7 @@ function TestCase({ payload, title }: { payload: string | ArrayBuffer; title: st
     }
     setLoading(true)
     const fastRes = await testWebsocketMessages({
+      // @ts-ignore
       Ws: FastWebSocket,
       outgoing: OUTGOING,
       incoming: INCOMING,
