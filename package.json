@@ -1,6 +1,7 @@
 {
   "name": "react-native-module",
   "private": true,
+  "license": "MIT",
   "workspaces": [
     "./packages/*",
     "./example"
