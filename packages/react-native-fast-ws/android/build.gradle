@@ -35,7 +35,7 @@ def getExtOrIntegerDefault(name) {
 }
 
 android {
-  namespace "com.callstack.websocket"
+  namespace "com.margelo.nitro.websocket"
 
   ndkVersion getExtOrDefault("ndkVersion")
   compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
@@ -132,6 +132,6 @@ if (isNewArchitectureEnabled()) {
   react {
     jsRootDir = file("../src/")
     libraryName = "FastWebSocket"
-    codegenJavaPackageName = "com.callstack.websocket"
+    codegenJavaPackageName = "com.margelo.nitro.websocket"
   }
 }

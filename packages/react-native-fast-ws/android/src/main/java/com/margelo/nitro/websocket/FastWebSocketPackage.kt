@@ -1,4 +1,4 @@
-package com.callstack.websocket;
+package com.margelo.nitro.websocket;
 
 import android.util.Log;
 

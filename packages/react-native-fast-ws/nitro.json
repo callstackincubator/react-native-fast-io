@@ -9,7 +9,8 @@
   },
   "autolinking": {
     "WebSocketManager": {
-      "swift": "HybridWebSocketManager"
+      "swift": "HybridWebSocketManager",
+      "kotlin": "HybridWebSocketManager"
     }
   }
 }

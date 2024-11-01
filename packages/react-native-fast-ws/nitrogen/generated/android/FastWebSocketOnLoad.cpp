@@ -16,6 +16,8 @@
 #include "JFunc_void_std__string.hpp"
 #include "JFunc_void_double_std__string.hpp"
 #include "JFunc_void_std__shared_ptr_ArrayBuffer_.hpp"
+#include "JHybridWebSocketManagerSpec.hpp"
+#include <NitroModules/JNISharedPtr.hpp>
 
 namespace margelo::nitro::websocket {
 
@@ -34,7 +36,17 @@ int initialize(JavaVM* vm) {
     margelo::nitro::websocket::JFunc_void_std__shared_ptr_ArrayBuffer_::registerNatives();
 
     // Register Nitro Hybrid Objects
+    HybridObjectRegistry::registerHybridObjectConstructor(
+      "WebSocketManager",
+      []() -> std::shared_ptr<HybridObject> {
+        static auto javaClass = jni::findClassLocal("com/margelo/nitro/websocket/HybridWebSocketManager");
+        static auto defaultConstructor = javaClass->getConstructor<JHybridWebSocketManagerSpec::javaobject()>();
     
+        auto instance = javaClass->newObject(defaultConstructor);
+        auto globalRef = jni::make_global(instance);
+        return JNISharedPtr::make_shared_from_jni<JHybridWebSocketManagerSpec>(globalRef);
+      }
+    );
   });
 }
 
