@@ -1,6 +1,6 @@
 {
   "name": "react-native-fast-ws",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "A modern WebSocket implementation for React Native, built with Nitro",
   "main": "src/index.ts",
   "scripts": {
@@ -11,6 +11,9 @@
   "files": [
     "src",
     "android",
+    "!android/build",
+    "!android/.cxx",
+    "nitrogen",
     "ios",
     "nitro.json"
   ],
@@ -25,5 +28,12 @@
   },
   "devDependencies": {
     "nitro-codegen": "^0.14.0"
-  }
+  },
+  "keywords": [
+    "react-native",
+    "websocket",
+    "nitro",
+    "react-native-nitro-modules",
+    "nitrogen"
+  ]
 }
