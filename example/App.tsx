@@ -122,9 +122,7 @@ const testWebsocketMessages = async (opts: {
   incomingTime: number
 }> =>
   new Promise((resolve) => {
-    const inst = new opts.Ws(
-      Platform.OS === 'android' ? 'ws://10.0.2.2:3000' : 'ws://localhost:3000'
-    )
+    const inst = new opts.Ws(WS_URL)
 
     let outgoingTime: number
     let incomingTime: number
@@ -164,6 +162,7 @@ const testWebsocketMessages = async (opts: {
 
 const INCOMING = 10000
 const OUTGOING = 10000
+const WS_URL = Platform.OS === 'android' ? 'ws://10.0.2.2:3000' : 'ws://localhost:3000'
 
 const styles = StyleSheet.create({
   container: {
