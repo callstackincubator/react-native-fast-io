@@ -9,8 +9,11 @@ Blazing fast WebSocket client for React Native built on top of [Nitro](https://m
 ### Getting started
 
 ```
-npm install react-native-fast-ws react-native-nitro-modules
+npm install react-native-fast-ws --save
 ```
+
+> [!NOTE]
+> This package requires React Native 0.76 and New Architecture. You must also install and configure [Nitro Modules](https://github.com/mrousavy/nitro) to use this package.
 
 ### TODOs
 
