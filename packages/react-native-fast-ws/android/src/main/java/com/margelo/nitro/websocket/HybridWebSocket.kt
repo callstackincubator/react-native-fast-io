@@ -37,6 +37,9 @@ class HybridWebSocket(url: String, protocols: Array<String>) : HybridWebSocketSp
 
         override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
             onCloseCallback?.invoke(code.toDouble(), reason)
+        }
+
+        override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
             webSocket.close(code, reason)
         }
 
