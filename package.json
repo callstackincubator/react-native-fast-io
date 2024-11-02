@@ -6,7 +6,7 @@
     "./example"
   ],
   "scripts": {
-    "codegen": "(cd ./packages/react-native-fast-ws && npm run codegen) && (cd ./example/ios && RCT_NEW_ARCH_ENABLED=1 pod install)",
+    "codegen": "(cd ./packages/react-native-fast-ws && npm run codegen) && (cd ./example/ios && pod install)",
     "test": "vitest"
   },
   "devDependencies": {

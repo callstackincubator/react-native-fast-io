@@ -7,7 +7,7 @@ import {
 import { NitroModules } from 'react-native-nitro-modules'
 
 import { Blob } from './blob'
-import { WebSocket as HybridWebSocket, WebSocketManager } from './spec.nitro'
+import { WebSocket as HybridWebSocket, WebSocketManager } from './WebSocket.nitro'
 
 const manager = NitroModules.createHybridObject<WebSocketManager>('WebSocketManager')
 

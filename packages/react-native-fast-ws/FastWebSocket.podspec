@@ -3,7 +3,7 @@ require "json"
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 
 Pod::Spec.new do |s|
-  s.name         = "ReactNativeFastWS"
+  s.name         = "FastWebSocket"
   s.version      = package["version"]
   s.summary      = package["description"]
   s.homepage     = package["homepage"]
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
     "ios/**/*.{swift}"
   ]
 
-  load 'nitrogen/generated/ios/ReactNativeFastWS+autolinking.rb'
+  load 'nitrogen/generated/ios/FastWebSocket+autolinking.rb'
   add_nitrogen_files(s)
 
   install_modules_dependencies(s)

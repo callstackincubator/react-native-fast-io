@@ -19,11 +19,12 @@
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "^15.0.1",
+    "@react-native-community/cli-platform-android": "^15.0.1",
+    "@react-native-community/cli-platform-ios": "^15.0.1",
     "@react-native/babel-preset": "0.76.0",
     "@react-native/metro-config": "0.76.0",
     "@types/react": "^18.2.6",
-    "eslint": "^8.19.0",
-    "nitro-codegen": "^0.8.0"
+    "eslint": "^8.19.0"
   },
   "engines": {
     "node": ">=18"
