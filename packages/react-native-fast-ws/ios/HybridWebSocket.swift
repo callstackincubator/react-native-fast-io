@@ -8,9 +8,9 @@
 import NitroModules
 
 class HybridWebSocket : HybridWebSocketSpec {
-  var onOpen: (() -> Void)?
-  var onClose: ((WebSocketClosed) -> Void)?
-  var onError: ((WebSocketError) -> Void)?
+  var onOpen: ((String) -> Void)?
+  var onClose: ((Double, String) -> Void)?
+  var onError: ((String) -> Void)?
   
   var onMessage: ((String) -> Void)?
   var onArrayBuffer: ((ArrayBufferHolder) -> Void)?
@@ -18,14 +18,14 @@ class HybridWebSocket : HybridWebSocketSpec {
   let ws: URLSessionWebSocketTask
   let urlSession: URLSession
   
-  public init (url: String) {
+  public init (url: String, protocols: [String]) {
     let delegate = WebSocketDelegate()
         
     urlSession = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
-    ws = urlSession.webSocketTask(with: URL(string: url)!)
+    ws = urlSession.webSocketTask(with: URL(string: url)!, protocols: protocols)
     
-    delegate.onOpen = { [weak self] in
-      self?.onOpen?()
+    delegate.onOpen = { [weak self] selectedProtocol in
+      self?.onOpen?(selectedProtocol ?? "")
     }
     
     delegate.onClose = { [weak self] closeCode, reason in
@@ -35,8 +35,9 @@ class HybridWebSocket : HybridWebSocketSpec {
         ""
       }
       
-      self?.onClose?(WebSocketClosed(code: Double(closeCode.rawValue), reason: data))
+      self?.onClose?(Double(closeCode.rawValue), data)
     }
+    
     
     listen()
   }
@@ -61,11 +62,11 @@ class HybridWebSocket : HybridWebSocketSpec {
           case .data(let content):
             self.processArrayBuffer(content)
           @unknown default:
-            self.onError?(WebSocketError(message: "Unknown message type received - \(message)"))
+            self.onError?("Unknown message type received - \(message)")
           }
         }
       } catch {
-        self?.onError?(WebSocketError(message: error.localizedDescription))
+        self?.onError?(error.localizedDescription)
       }
     }
   }
@@ -84,7 +85,7 @@ class HybridWebSocket : HybridWebSocketSpec {
   func send(message: String) {
     ws.send(URLSessionWebSocketTask.Message.string(message)) { error in
       if let error {
-        self.onError?(WebSocketError(message: error.localizedDescription))
+        self.onError?(error.localizedDescription)
       }
     }
   }
@@ -93,16 +94,24 @@ class HybridWebSocket : HybridWebSocketSpec {
     let data = Data(bytes: buffer.data, count: buffer.size)
     ws.send(.data(data)) { error in
       if let error {
-        self.onError?(WebSocketError(message: error.localizedDescription))
+        self.onError?(error.localizedDescription)
       }
     }
   }
   
-  func onOpen(callback: @escaping (() -> Void)) {
+  func ping() {
+    ws.sendPing { error in
+      if let error {
+        self.onError?(error.localizedDescription)
+      }
+    }
+  }
+  
+  func onOpen(callback: @escaping ((String) -> Void)) {
     onOpen = callback
   }
   
-  func onClose(callback: @escaping ((WebSocketClosed) -> Void)) {
+  func onClose(callback: @escaping ((Double, String) -> Void)) {
     onClose = callback
   }
   
@@ -114,7 +123,7 @@ class HybridWebSocket : HybridWebSocketSpec {
     onArrayBuffer = callback
   }
   
-  func onError(callback: @escaping ((WebSocketError) -> Void)) {
+  func onError(callback: @escaping ((String) -> Void)) {
     onError = callback
   }
   

@@ -128,7 +128,7 @@ const testWebsocketMessages = async (opts: {
     let incomingTime: number
     let received = 0
 
-    inst.addEventListener('message', () => {
+    inst.onmessage = () => {
       if (received === 0) {
         incomingTime = performance.now()
       }
@@ -138,16 +138,16 @@ const testWebsocketMessages = async (opts: {
       if (received === opts.incoming) {
         inst.close()
       }
-    })
+    }
 
-    inst.addEventListener('close', () => {
+    inst.onclose = () => {
       resolve({
         outgoingTime,
         incomingTime: performance.now() - incomingTime,
       })
-    })
+    }
 
-    inst.addEventListener('open', () => {
+    inst.onopen = () => {
       const start = performance.now()
 
       for (let i = 0; i < opts.outgoing; i++) {
@@ -157,7 +157,7 @@ const testWebsocketMessages = async (opts: {
       outgoingTime = performance.now() - start
 
       inst.send(JSON.stringify({ count: opts.incoming, binary: typeof opts.payload !== 'string' }))
-    })
+    }
   })
 
 const INCOMING = 10000

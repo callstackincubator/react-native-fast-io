@@ -15,9 +15,11 @@
   ],
   "author": "Mike Grabowski <grabbou@gmail.com>",
   "peerDependencies": {
-    "event-target-shim": "^6.0.2",
     "react-native-nitro-modules": "^0.14.0",
     "web-streams-polyfill": "^4.0.0"
+  },
+  "dependencies": {
+    "event-target-shim": "^6.0.2"
   },
   "devDependencies": {
     "event-target-shim": "^6.0.2",

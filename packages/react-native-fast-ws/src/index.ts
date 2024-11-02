@@ -1,22 +1,15 @@
-import { Event, EventTarget } from 'event-target-shim'
+import {
+  Event,
+  EventTarget,
+  getEventAttributeValue,
+  setEventAttributeValue,
+} from 'event-target-shim'
 import { NitroModules } from 'react-native-nitro-modules'
 
 import { Blob } from './blob'
-import {
-  WebSocket as HybridWebSocket,
-  WebSocketClosed,
-  WebSocketError,
-  WebSocketManager,
-} from './spec.nitro'
+import { WebSocket as HybridWebSocket, WebSocketManager } from './spec.nitro'
 
 const manager = NitroModules.createHybridObject<WebSocketManager>('WebSocketManager')
-
-type CustomEvent<T> = Event & T
-
-export type OpenEvent = Event
-export type MessageEvent = CustomEvent<{ message: string | ArrayBuffer }>
-export type ErrorEvent = CustomEvent<WebSocketError>
-export type CloseEvent = CustomEvent<WebSocketClosed>
 
 enum WebSocketReadyState {
   CONNECTING = 0,
@@ -30,70 +23,122 @@ enum WebSocketReadyState {
  */
 const ABNORMAL_CLOSURE = 1006
 
-export class WebSocket extends EventTarget<
-  {
-    open: OpenEvent
-    message: MessageEvent
-    error: ErrorEvent
-    close: CloseEvent
-  },
-  {},
-  'loose'
-> {
-  /**
-   * https://websockets.spec.whatwg.org/#ref-for-dom-websocket-url①
-   */
-  static readonly CONNECTING = WebSocketReadyState.CONNECTING
-  static readonly OPEN = WebSocketReadyState.OPEN
-  static readonly CLOSING = WebSocketReadyState.CLOSING
-  static readonly CLOSED = WebSocketReadyState.CLOSED
+/**
+ * Events
+ */
+export type OpenEvent = Event
+
+export class MessageEvent extends Event {
+  readonly data: string | Blob | ArrayBuffer
+  constructor(data: string | Blob | ArrayBuffer) {
+    super('message')
+    this.data = data
+  }
+}
+
+export class ErrorEvent extends Event {
+  readonly error: string
+  constructor(error: string) {
+    super('error')
+    this.error = error
+  }
+}
+
+export class CloseEvent extends Event {
+  readonly code: number
+  readonly reason: string
+  constructor(code: number = 0, reason: string = '') {
+    super('close')
+    this.code = code
+    this.reason = reason
+  }
+  get wasClean() {
+    throw new Error('Not implemented')
+  }
+}
+
+/**
+ * https://websockets.spec.whatwg.org/#interface-definition
+ */
+export class WebSocket
+  extends EventTarget
+  implements
+    EventTarget<{
+      open: OpenEvent
+      message: MessageEvent
+      error: ErrorEvent
+      close: CloseEvent
+    }>
+{
+  readonly CONNECTING = WebSocketReadyState.CONNECTING
+  readonly OPEN = WebSocketReadyState.OPEN
+  readonly CLOSING = WebSocketReadyState.CLOSING
+  readonly CLOSED = WebSocketReadyState.CLOSED
 
   readonly url: string
 
   binaryType: 'arraybuffer' | 'blob' = 'blob'
-  readyState: WebSocketReadyState = WebSocketReadyState.CONNECTING
+
+  private _readyState: WebSocketReadyState = WebSocketReadyState.CONNECTING
+  get readyState() {
+    return this._readyState
+  }
+
+  get bufferedAmount() {
+    throw new Error('Not implemented')
+  }
+
+  get extensions() {
+    throw new Error('Not implemented')
+  }
+
+  private _protocol = ''
+  get protocol() {
+    return this._protocol
+  }
 
   private readonly ws: HybridWebSocket
 
-  constructor(url: string) {
+  constructor(url: string, protocols: string | string[] = []) {
     super()
 
     this.url = url
-    this.ws = manager.create(url)
+    this.ws = manager.create(url, Array.isArray(protocols) ? protocols : [protocols])
 
-    this.ws.onOpen(() => {
-      this.readyState = WebSocketReadyState.OPEN
-      this.dispatchEvent({ type: 'open' })
+    this.ws.onOpen((protocol) => {
+      this._readyState = WebSocketReadyState.OPEN
+      this._protocol = protocol
+      this.dispatchEvent(new Event('open'))
     })
 
-    this.ws.onMessage((message) => {
-      this.dispatchEvent({ type: 'message', message })
+    this.ws.onMessage((data) => {
+      this.dispatchEvent(new MessageEvent(data))
     })
 
     this.ws.onArrayBuffer((buffer) => {
       if (this.binaryType === 'blob') {
-        this.dispatchEvent({ type: 'message', message: new Blob([buffer]) })
+        this.dispatchEvent(new MessageEvent(new Blob([buffer])))
         return
       }
-      this.dispatchEvent({ type: 'message', message: buffer })
+      this.dispatchEvent(new MessageEvent(buffer))
     })
 
-    this.ws.onError((event) => {
-      this.dispatchEvent({ type: 'error', ...event })
+    this.ws.onError((message) => {
+      this.dispatchEvent(new ErrorEvent(message))
 
       /**
        * Sending `close` frame before proceeding to close the connection
        * https://datatracker.ietf.org/doc/html/rfc6455#section-7.1.7
        */
-      this.readyState = WebSocketReadyState.CLOSED
-      this.dispatchEvent({ type: 'close', code: ABNORMAL_CLOSURE })
+      this._readyState = WebSocketReadyState.CLOSED
+      this.dispatchEvent(new CloseEvent(ABNORMAL_CLOSURE))
 
       this.close()
     })
 
-    this.ws.onClose((event) => {
-      this.readyState = WebSocketReadyState.CLOSED
-      this.dispatchEvent({ type: 'close', ...event })
+    this.ws.onClose((code, reason) => {
+      this._readyState = WebSocketReadyState.CLOSED
+      this.dispatchEvent(new CloseEvent(code, reason))
     })
 
     this.ws.connect()
@@ -127,13 +172,45 @@ export class WebSocket extends EventTarget<
    */
   close() {
     if (
-      this.readyState === WebSocketReadyState.CLOSING ||
-      this.readyState === WebSocketReadyState.CLOSED
+      this._readyState === WebSocketReadyState.CLOSING ||
+      this._readyState === WebSocketReadyState.CLOSED
     ) {
       return
     }
 
-    this.readyState = WebSocketReadyState.CLOSING
+    this._readyState = WebSocketReadyState.CLOSING
     this.ws.close()
+  }
+
+  ping() {
+    this.ws.ping()
+  }
+
+  get onopen() {
+    return getEventAttributeValue(this, 'open')
+  }
+  set onopen(value) {
+    setEventAttributeValue(this, 'open', value)
+  }
+
+  get onmessage() {
+    return getEventAttributeValue(this, 'message')
+  }
+  set onmessage(value) {
+    setEventAttributeValue(this, 'message', value)
+  }
+
+  get onerror() {
+    return getEventAttributeValue(this, 'error')
+  }
+  set onerror(value) {
+    setEventAttributeValue(this, 'error', value)
+  }
+
+  get onclose() {
+    return getEventAttributeValue(this, 'close')
+  }
+  set onclose(value) {
+    setEventAttributeValue(this, 'close', value)
   }
 }
