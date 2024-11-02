@@ -10,7 +10,6 @@ package com.margelo.nitro.websocket
 import androidx.annotation.Keep
 import com.facebook.jni.HybridData
 import com.facebook.proguard.annotations.DoNotStrip
-import com.margelo.nitro.core.ArrayBuffer
 import dalvik.annotation.optimization.FastNative
 
 /**

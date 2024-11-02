@@ -35,7 +35,7 @@ public protocol HybridWebSocketSpec: AnyObject, HybridObjectSpec {
   func send(message: String) throws -> Void
   func sendArrayBuffer(buffer: ArrayBufferHolder) throws -> Void
   func connect() throws -> Void
-  func close() throws -> Void
+  func close(code: Double, reason: String) throws -> Void
   func ping() throws -> Void
   func onOpen(callback: @escaping ((_ selectedProtocol: String) -> Void)) throws -> Void
   func onClose(callback: @escaping ((_ code: Double, _ reason: String) -> Void)) throws -> Void

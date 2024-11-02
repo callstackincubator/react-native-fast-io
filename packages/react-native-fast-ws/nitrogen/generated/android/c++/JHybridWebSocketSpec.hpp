@@ -48,7 +48,7 @@ namespace margelo::nitro::websocket {
     void send(const std::string& message) override;
     void sendArrayBuffer(const std::shared_ptr<ArrayBuffer>& buffer) override;
     void connect() override;
-    void close() override;
+    void close(double code, const std::string& reason) override;
     void ping() override;
     void onOpen(const std::function<void(const std::string& /* selectedProtocol */)>& callback) override;
     void onClose(const std::function<void(double /* code */, const std::string& /* reason */)>& callback) override;

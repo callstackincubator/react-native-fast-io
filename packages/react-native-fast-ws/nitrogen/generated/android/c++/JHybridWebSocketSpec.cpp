@@ -51,9 +51,9 @@ namespace margelo::nitro::websocket {
     static const auto method = _javaPart->getClass()->getMethod<void()>("connect");
     method(_javaPart);
   }
-  void JHybridWebSocketSpec::close() {
-    static const auto method = _javaPart->getClass()->getMethod<void()>("close");
-    method(_javaPart);
+  void JHybridWebSocketSpec::close(double code, const std::string& reason) {
+    static const auto method = _javaPart->getClass()->getMethod<void(double /* code */, jni::alias_ref<jni::JString> /* reason */)>("close");
+    method(_javaPart, code, jni::make_jstring(reason));
   }
   void JHybridWebSocketSpec::ping() {
     static const auto method = _javaPart->getClass()->getMethod<void()>("ping");

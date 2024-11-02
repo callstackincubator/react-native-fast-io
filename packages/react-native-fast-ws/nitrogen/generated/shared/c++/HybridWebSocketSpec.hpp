@@ -54,7 +54,7 @@ namespace margelo::nitro::websocket {
       virtual void send(const std::string& message) = 0;
       virtual void sendArrayBuffer(const std::shared_ptr<ArrayBuffer>& buffer) = 0;
       virtual void connect() = 0;
-      virtual void close() = 0;
+      virtual void close(double code, const std::string& reason) = 0;
       virtual void ping() = 0;
       virtual void onOpen(const std::function<void(const std::string& /* selectedProtocol */)>& callback) = 0;
       virtual void onClose(const std::function<void(double /* code */, const std::string& /* reason */)>& callback) = 0;
