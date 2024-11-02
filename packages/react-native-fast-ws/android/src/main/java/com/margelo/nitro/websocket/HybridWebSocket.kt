@@ -61,8 +61,8 @@ class HybridWebSocket(url: String, protocols: Array<String>) : HybridWebSocketSp
         webSocket = client.newWebSocket(request, listener)
     }
 
-    override fun close() {
-        webSocket?.close(1000, null)
+    override fun close(code: Double, reason: String) {
+        webSocket?.close(code.toInt(), reason)
     }
 
     override fun send(message: String) {

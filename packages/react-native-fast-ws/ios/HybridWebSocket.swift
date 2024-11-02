@@ -46,8 +46,8 @@ class HybridWebSocket : HybridWebSocketSpec {
     ws.resume()
   }
   
-  func close() {
-    ws.cancel()
+  func close(code: Double, reason: String) {
+    ws.cancel(with: .init(rawValue: Int(code)) ?? .invalid, reason: reason.data(using: .utf8))
   }
   
   func listen()  {

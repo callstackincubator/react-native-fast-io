@@ -170,7 +170,7 @@ export class WebSocket
   /**
    * https://websockets.spec.whatwg.org/#dom-websocket-close
    */
-  close() {
+  close(code: number = 1000, reason: string = '') {
     if (
       this._readyState === WebSocketReadyState.CLOSING ||
       this._readyState === WebSocketReadyState.CLOSED
@@ -178,8 +178,12 @@ export class WebSocket
       return
     }
 
+    if (code !== 1000 && (code < 3000 || code > 4999)) {
+      throw new Error('Invalid close code. Must be 1000 or in range 3000-4999.')
+    }
+
     this._readyState = WebSocketReadyState.CLOSING
-    this.ws.close()
+    this.ws.close(code, reason)
   }
 
   ping() {

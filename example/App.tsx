@@ -74,7 +74,13 @@ function ResultItem({ result, isBetter }: { result: number; isBetter: boolean })
   )
 }
 
-function TestCase({ payload, title }: { payload: string | ArrayBuffer; title: string }) {
+function TestCase({
+  payload,
+  title,
+}: {
+  payload: string | ArrayBuffer | Uint8Array
+  title: string
+}) {
   const [fastResult, setFastResult] = useState<Result | null>(null)
   const [wsResult, setWsResult] = useState<Result | null>(null)
   const [loading, setLoading] = useState(false)
@@ -116,7 +122,7 @@ const testWebsocketMessages = async (opts: {
   Ws: new (uri: string) => WebSocket
   outgoing: number
   incoming: number
-  payload: string | ArrayBuffer
+  payload: string | ArrayBuffer | Uint8Array
 }): Promise<{
   outgoingTime: number
   incomingTime: number
