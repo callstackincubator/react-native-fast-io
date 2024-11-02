@@ -1,15 +1,16 @@
 {
   "name": "react-native-fast-ws",
   "version": "0.0.1",
-  "description": "A modern WebSocket implementation for React Native, built with Nitro Modules",
+  "description": "A modern WebSocket implementation for React Native, built with Nitro",
   "main": "src/index.ts",
   "scripts": {
     "codegen": "npx nitro-codegen"
   },
-  "homepage": "https://github.com/grabbou/react-native-fast-ws",
+  "homepage": "https://github.com/callstackincubator/react-native-fast-ws",
   "license": "MIT",
   "files": [
     "src",
+    "android",
     "ios",
     "nitro.json"
   ],
