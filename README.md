@@ -17,7 +17,6 @@ npm install react-native-fast-ws --save
 
 ### TODOs
 
-- Provide Android support
 - Document things not implemented in spec, or different from spec
 - Fix outstanding (and known) issues
 - Figure out a better name and logo

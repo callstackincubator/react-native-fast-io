@@ -126,6 +126,9 @@ dependencies {
 
   // Add a dependency on NitroModules
   implementation project(":react-native-nitro-modules")
+
+  // Let's use whatever React Native uses right now to avoid duplicates
+  implementation "com.squareup.okhttp3:okhttp:+"
 }
 
 if (isNewArchitectureEnabled()) {
