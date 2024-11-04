@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import {
   ActivityIndicator,
   Platform,
@@ -37,6 +37,11 @@ type TestCase = {
   messageCount: number
   testCase: string
   payload?: string | ArrayBuffer | Uint8Array
+}
+
+type TestResults = {
+  fast: TestResult
+  native: TestResult
 }
 
 const TESTS = [
@@ -96,10 +101,8 @@ function TestSection({ test }: { test: (typeof TESTS)[0] }) {
 }
 
 function TestCase({ test, messageCount }: { test: (typeof TESTS)[0]; messageCount: number }) {
-  const [results, setResults] = useState<{
-    fast: TestResult
-    native: TestResult
-  } | null>(null)
+  const [latestResults, setLatestResults] = useState<TestResults | null>(null)
+  const [allResults, setAllResults] = useState<TestResults[]>([])
   const [loading, setLoading] = useState(false)
 
   const runTest = useCallback(async () => {
@@ -122,11 +125,38 @@ function TestCase({ test, messageCount }: { test: (typeof TESTS)[0]; messageCoun
         payload: test.payload,
       })
 
-      setResults({ fast: fastResult, native: wsResult })
+      const results = { fast: fastResult, native: wsResult }
+      setLatestResults(results)
+      setAllResults((prev) => [...prev, results])
     } finally {
       setLoading(false)
     }
   }, [test, messageCount])
+
+  const averageResults = useMemo(() => {
+    if (allResults.length === 0) return null
+
+    const average = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length
+
+    return {
+      fast: {
+        outgoingTime: average(allResults.map((r) => r.fast.outgoingTime)),
+        incomingTime: average(allResults.map((r) => r.fast.incomingTime)),
+        totalTime: average(allResults.map((r) => r.fast.totalTime)),
+        messageCount,
+        implementation: 'FastWS' as const,
+        testCase: test.name,
+      },
+      native: {
+        outgoingTime: average(allResults.map((r) => r.native.outgoingTime)),
+        incomingTime: average(allResults.map((r) => r.native.incomingTime)),
+        totalTime: average(allResults.map((r) => r.native.totalTime)),
+        messageCount,
+        implementation: 'WebSocket' as const,
+        testCase: test.name,
+      },
+    }
+  }, [allResults, messageCount, test.name])
 
   return (
     <View style={styles.testCase}>
@@ -138,8 +168,18 @@ function TestCase({ test, messageCount }: { test: (typeof TESTS)[0]; messageCoun
 
       {loading && <ActivityIndicator style={styles.loader} />}
 
-      {results && !loading && (
-        <ResultsTable fastResults={results.fast} wsResults={results.native} />
+      {latestResults && (
+        <>
+          <Text style={styles.resultLabel}>Latest Run</Text>
+          <ResultsTable fastResults={latestResults.fast} wsResults={latestResults.native} />
+        </>
+      )}
+
+      {averageResults && allResults.length > 1 && (
+        <>
+          <Text style={styles.resultLabel}>Average ({allResults.length} runs)</Text>
+          <ResultsTable fastResults={averageResults.fast} wsResults={averageResults.native} />
+        </>
       )}
     </View>
   )
@@ -309,5 +349,12 @@ const styles = StyleSheet.create({
   worseResult: {
     backgroundColor: '#FFEBEE',
     color: '#C62828',
+  },
+  resultLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginTop: 16,
+    marginBottom: 8,
+    color: '#666',
   },
 })
