@@ -166,9 +166,6 @@ function ResultsTable({
         wsValue={wsResults.incomingTime}
       />
       <ResultRow label="Total" fastValue={fastResults.totalTime} wsValue={wsResults.totalTime} />
-      <ImprovementRow
-        improvement={((wsResults.totalTime - fastResults.totalTime) / wsResults.totalTime) * 100}
-      />
     </View>
   )
 }
@@ -201,24 +198,6 @@ function ResultRow({
       </Text>
       <Text style={[styles.resultCell, !isFastBetter ? styles.betterResult : styles.worseResult]}>
         {wsValue.toFixed(2)}ms
-      </Text>
-    </View>
-  )
-}
-
-function ImprovementRow({ improvement }: { improvement: number }) {
-  return (
-    <View style={styles.improvementRow}>
-      <Text style={styles.improvementText}>
-        Performance improvement:{' '}
-        <Text
-          style={[
-            improvement > 0 ? styles.betterResult : styles.worseResult,
-            styles.improvementValue,
-          ]}
-        >
-          {improvement.toFixed(2)}%
-        </Text>
       </Text>
     </View>
   )
@@ -330,17 +309,5 @@ const styles = StyleSheet.create({
   worseResult: {
     backgroundColor: '#FFEBEE',
     color: '#C62828',
-  },
-  improvementRow: {
-    padding: 8,
-    backgroundColor: '#F5F5F5',
-  },
-  improvementText: {
-    textAlign: 'center',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  improvementValue: {
-    fontWeight: 'bold',
   },
 })
