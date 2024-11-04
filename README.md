@@ -20,7 +20,7 @@ npm install react-native-fast-ws --save
 ```
 
 > [!NOTE]
-> This package requires React Native 0.76 and New Architecture. You must also install and configure [Nitro Modules](https://github.com/mrousavy/nitro) to use this package.
+> This package requires React Native 0.76 or higher. You must also install and configure [Nitro Modules](https://github.com/mrousavy/nitro) to use this package.
 
 > [!WARNING]
 > This library is still under development. Use at your own risk. The API is experimental and subject to change. This project explores new ideas and approaches to WebSocket and Blob APIs, thanks to Nitro, and its scope may change.
