@@ -5,7 +5,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "server": "bun server.ts"
+    "server": "bun server/index.ts"
   },
   "dependencies": {
     "@bacons/text-decoder": "^0.0.0",
