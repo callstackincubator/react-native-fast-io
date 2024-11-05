@@ -49,7 +49,7 @@ ws.addEventListener('message', (event) => {
   console.log('Received:', event.data);
 });
 
-// Send different types of data
+// Send erent types of data
 ws.send('Plain text message');
 ws.send(new Blob(['Binary data']));
 ws.send(new Uint8Array([1, 2, 3, 4]));
@@ -60,7 +60,7 @@ ws.close();
 
 For more detailed information about the WebSocket API, check out the [MDN WebSocket documentation](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
 
-### Differences with React Native
+### erences with React Native
 
 - Can create `Blob`s from `ArrayBuffer`, `ArrayBufferView` too. With React Native, [you can only create Blob from string or another Blob](https://github.com/facebook/react-native/blob/af384a914a4e9ef6a5d25b00bc14b0483e5af879/packages/react-native/Libraries/Blob/BlobManager.js#L69-L73)
 - Each `Blob` has `text()`, `arrayBuffer()`, and `stream()` methods. With React Native, you can only access the contents of `Blob` via [custom `data` field](https://github.com/facebook/react-native/blob/af384a914a4e9ef6a5d25b00bc14b0483e5af879/packages/react-native/Libraries/Blob/Blob.js#L75-L82)
@@ -98,7 +98,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>100x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -118,7 +118,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>10000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -138,7 +138,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>10000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -160,7 +160,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>100x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -180,7 +180,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>1000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -200,7 +200,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>10000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -233,7 +233,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>100x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -253,7 +253,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>1000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -273,7 +273,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>10000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -295,7 +295,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>100x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -315,7 +315,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>1000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -335,7 +335,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>10000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -368,7 +368,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>100x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -388,7 +388,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>1000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -408,7 +408,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>10000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -430,7 +430,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>100x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -450,7 +450,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>1000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -470,7 +470,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>10000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -503,7 +503,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>100x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -523,7 +523,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>1000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -543,7 +543,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>10000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -565,7 +565,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>100x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -585,7 +585,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>1000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -605,7 +605,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>10000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -638,7 +638,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th></th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>Out</td>
@@ -660,7 +660,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th>100x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
           <td>In</td>
