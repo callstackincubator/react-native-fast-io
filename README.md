@@ -378,12 +378,12 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>In</td>
-          <td>1.43ms</td>
-          <td>24.53ms</td>
-          <td>17.17x</td>
+          <td>3.36ms</td>
+          <td>21.15ms</td>
+          <td>6.30x</td>
         </tr>
       </table>
-      <table>
+     <table>
         <tr>
           <th>1000x</th>
           <th>FastWS</th>
@@ -391,16 +391,16 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th></th>
         </tr>
         <tr>
-          <td>Out</td>
-          <td>14.80ms</td>
-          <td>18.66ms</td>
-          <td>1.26x</td>
+          <td>Out </td>
+          <td>9.83ms</td>
+          <td>21.67ms</td>
+          <td>2.20x</td>
         </tr>
         <tr>
           <td>In</td>
-          <td>17.60ms</td>
-          <td>207.00ms</td>
-          <td>11.76x</td>
+          <td>18.00ms</td>
+          <td>210.93ms</td>
+          <td>11.72x</td>
         </tr>
       </table>
       <table>
@@ -507,15 +507,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out</td>
-          <td>3.02ms</td>
-          <td>10.50ms</td>
-          <td>3.48x</td>
+          <td>1.94ms</td>
+          <td>11.36ms</td>
+          <td>5.85x</td>
         </tr>
         <tr>
           <td>In</td>
-          <td>1.59ms</td>
-          <td>27.96ms</td>
-          <td>17.58x</td>
+          <td>2.64ms</td>
+          <td>27.02ms</td>
+          <td>10.23x</td>
         </tr>
       </table>
       <table>
@@ -673,6 +673,16 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
   </tr>
 </table>
 
+### Key Insights
+
+- Both libraries show better baseline performance on iOS 
+- React Native shows exponential slowdown with message count, while FastWS scales more linearly
+- React Native shows overhead for binary message type, likely due to RCTBlobManager, whereas FastWS shows consistent performance similar with string payloads
+- _Smallest improvements_: Small message counts
+- _Largest improvements_: Binary data and high message counts
+
+### Methodology
+
 All tests were performed with local WebSocket server to minimize network variance. Each test was run enough times to have 10 samples, after removing outliers.
 
 In the future, we would like to add benchmarks for:
@@ -683,6 +693,8 @@ In the future, we would like to add benchmarks for:
 - Message latency under high load
 
 Your contributions are welcome! Check out our [contributing guidelines](CONTRIBUTING.md) to help improve these benchmarks.
+
+
 
 ## Made with ❤️ at Callstack
 

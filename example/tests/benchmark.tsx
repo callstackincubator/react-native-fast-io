@@ -332,19 +332,19 @@ function removeOutliers(numbers: number[]): number[] {
 function formatTableAsMarkdown({ fast, native }: { fast: TestResult; native: TestResult }): string {
   return `<table>
     <tr>
-      <th></th>
+      <th>${fast.messageCount}x</th>
       <th>FastWS</th>
       <th>RN</th>
-      <th>Improvement</th>
+      <th></th>
     </tr>
     <tr>
-      <td>Out ${fast.messageCount}x</td>
+      <td>Out </td>
       <td>${fast.outgoingTime.toFixed(2)}ms</td>
       <td>${native.outgoingTime.toFixed(2)}ms</td>
       <td>${(native.outgoingTime / fast.outgoingTime).toFixed(2)}x</td>
     </tr>
     <tr>
-      <td>In ${fast.messageCount}x</td>
+      <td>In</td>
       <td>${fast.incomingTime.toFixed(2)}ms</td>
       <td>${native.incomingTime.toFixed(2)}ms</td>
       <td>${(native.incomingTime / fast.incomingTime).toFixed(2)}x</td>
