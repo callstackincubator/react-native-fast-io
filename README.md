@@ -378,9 +378,9 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>In</td>
-          <td>1.43ms</td>
-          <td>24.53ms</td>
-          <td>17.17x</td>
+          <td>3.36ms</td>
+          <td>21.15ms</td>
+          <td>6.30x</td>
         </tr>
       </table>
      <table>
