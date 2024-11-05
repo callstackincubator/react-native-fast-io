@@ -148,7 +148,11 @@ export class WebSocket
    * https://websockets.spec.whatwg.org/#dom-websocket-send
    */
 
-  send(message: string | ArrayBuffer | ArrayBufferView) {
+  send(message: string | ArrayBuffer | ArrayBufferView | Blob) {
+    if (this._readyState === WebSocketReadyState.CONNECTING) {
+      throw new Error('InvalidStateError')
+    }
+
     if (typeof message === 'string') {
       this.ws.send(message)
       return
@@ -163,6 +167,11 @@ export class WebSocket
       this.ws.sendArrayBuffer(message.buffer)
       return
     }
+
+    // tbd: Blob support
+    // if (message instanceof Blob) {
+    //   return
+    // }
 
     throw new TypeError('Invalid message type')
   }

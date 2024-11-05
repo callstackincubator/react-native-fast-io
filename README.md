@@ -30,6 +30,8 @@ npm install react-native-fast-ws --save
 This library implements the [WebSocket Web API](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) and is meant to be a drop-in replacement for React Native's WebSocket implementation.
 
 ```ts
+import { WebSocket, Blob } from 'react-native-fast-ws';
+
 // Create a new WebSocket instance
 const ws = new WebSocket('wss://echo.websocket.org');
 
@@ -58,9 +60,12 @@ ws.send(new Uint8Array([1, 2, 3, 4]));
 ws.close();
 ```
 
+> [!NOTE]
+> When setting `binaryType` to `'blob'`, the library will dispatch `MessageEvent`s with `Blob` objects. This is experimental and incompatible with React Native's `Blob`. We're working on a more comprehensive API for this and other networking modules. If you would like to stay informed, let us know.
+
 For more detailed information about the WebSocket API, check out the [MDN WebSocket documentation](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
 
-### erences with React Native
+### Differences with React Native
 
 - Can create `Blob`s from `ArrayBuffer`, `ArrayBufferView` too. With React Native, [you can only create Blob from string or another Blob](https://github.com/facebook/react-native/blob/af384a914a4e9ef6a5d25b00bc14b0483e5af879/packages/react-native/Libraries/Blob/BlobManager.js#L69-L73)
 - Each `Blob` has `text()`, `arrayBuffer()`, and `stream()` methods. With React Native, you can only access the contents of `Blob` via [custom `data` field](https://github.com/facebook/react-native/blob/af384a914a4e9ef6a5d25b00bc14b0483e5af879/packages/react-native/Libraries/Blob/Blob.js#L75-L82)
