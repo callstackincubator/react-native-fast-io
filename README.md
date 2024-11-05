@@ -673,14 +673,6 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
   </tr>
 </table>
 
-### Key Insights
-
-- Both libraries show better baseline performance on iOS 
-- React Native shows exponential slowdown with message count, while FastWS scales more linearly
-- React Native shows overhead for binary message type, likely due to RCTBlobManager, whereas FastWS shows consistent performance similar with string payloads
-- _Smallest improvements_: Small message counts
-- _Largest improvements_: Binary data and high message counts
-
 ### Methodology
 
 All tests were performed with local WebSocket server to minimize network variance. Each test was run enough times to have 10 samples, after removing outliers.
