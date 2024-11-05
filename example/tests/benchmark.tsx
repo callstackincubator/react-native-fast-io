@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import {
   ActivityIndicator,
+  Clipboard,
   Platform,
   ScrollView,
   StyleSheet,
@@ -133,30 +134,53 @@ function TestCase({ test, messageCount }: { test: (typeof TESTS)[0]; messageCoun
     }
   }, [test, messageCount])
 
-  const averageResults = useMemo(() => {
-    if (allResults.length === 0) return null
+  const cleanedResults = useMemo(() => {
+    if (allResults.length < 3) return null // Need at least 3 results for meaningful outlier removal
+
+    const fastOutgoing = removeOutliers(allResults.map((r) => r.fast.outgoingTime))
+    const fastIncoming = removeOutliers(allResults.map((r) => r.fast.incomingTime))
+    const wsOutgoing = removeOutliers(allResults.map((r) => r.native.outgoingTime))
+    const wsIncoming = removeOutliers(allResults.map((r) => r.native.incomingTime))
 
     const average = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length
 
     return {
       fast: {
-        outgoingTime: average(allResults.map((r) => r.fast.outgoingTime)),
-        incomingTime: average(allResults.map((r) => r.fast.incomingTime)),
-        totalTime: average(allResults.map((r) => r.fast.totalTime)),
+        outgoingTime: average(fastOutgoing),
+        incomingTime: average(fastIncoming),
+        totalTime: average(fastOutgoing) + average(fastIncoming),
         messageCount,
         implementation: 'FastWS' as const,
         testCase: test.name,
       },
       native: {
-        outgoingTime: average(allResults.map((r) => r.native.outgoingTime)),
-        incomingTime: average(allResults.map((r) => r.native.incomingTime)),
-        totalTime: average(allResults.map((r) => r.native.totalTime)),
+        outgoingTime: average(wsOutgoing),
+        incomingTime: average(wsIncoming),
+        totalTime: average(wsOutgoing) + average(wsIncoming),
         messageCount,
         implementation: 'WebSocket' as const,
         testCase: test.name,
       },
+      samplesUsed: {
+        fastOutgoing: fastOutgoing.length,
+        fastIncoming: fastIncoming.length,
+        wsOutgoing: wsOutgoing.length,
+        wsIncoming: wsIncoming.length,
+        total: allResults.length,
+      },
     }
   }, [allResults, messageCount, test.name])
+
+  const handleCopyTable = useCallback(() => {
+    if (!cleanedResults) return
+
+    const table = formatTableAsMarkdown({
+      fast: cleanedResults.fast,
+      native: cleanedResults.native,
+    })
+
+    Clipboard.setString(table)
+  }, [cleanedResults])
 
   return (
     <View style={styles.testCase}>
@@ -175,10 +199,22 @@ function TestCase({ test, messageCount }: { test: (typeof TESTS)[0]; messageCoun
         </>
       )}
 
-      {averageResults && allResults.length > 1 && (
+      {cleanedResults && allResults.length >= 3 && (
         <>
-          <Text style={styles.resultLabel}>Average ({allResults.length} runs)</Text>
-          <ResultsTable fastResults={averageResults.fast} wsResults={averageResults.native} />
+          <Text style={styles.resultLabel}>
+            Cleaned Average (using {cleanedResults.samplesUsed.total} runs, outliers removed)
+          </Text>
+          <ResultsTable fastResults={cleanedResults.fast} wsResults={cleanedResults.native} />
+          <Text style={styles.sampleInfo}>
+            Samples used after outlier removal:{'\n'}
+            FastWS: {cleanedResults.samplesUsed.fastOutgoing}/
+            {cleanedResults.samplesUsed.fastIncoming} (out/in){'\n'}
+            WebSocket: {cleanedResults.samplesUsed.wsOutgoing}/
+            {cleanedResults.samplesUsed.wsIncoming} (out/in)
+          </Text>
+          <TouchableOpacity style={styles.copyButton} onPress={handleCopyTable}>
+            <Text style={styles.copyButtonText}>Copy Table</Text>
+          </TouchableOpacity>
         </>
       )}
     </View>
@@ -196,15 +232,11 @@ function ResultsTable({
     <View style={styles.results}>
       <ResultsHeader />
       <ResultRow
-        label="Sending"
+        label="Out"
         fastValue={fastResults.outgoingTime}
         wsValue={wsResults.outgoingTime}
       />
-      <ResultRow
-        label="Receiving"
-        fastValue={fastResults.incomingTime}
-        wsValue={wsResults.incomingTime}
-      />
+      <ResultRow label="In" fastValue={fastResults.incomingTime} wsValue={wsResults.incomingTime} />
       <ResultRow label="Total" fastValue={fastResults.totalTime} wsValue={wsResults.totalTime} />
     </View>
   )
@@ -286,6 +318,40 @@ async function runSingleTest(opts: TestCase): Promise<TestResult> {
   })
 }
 
+// Add helper function for outlier removal using IQR method
+function removeOutliers(numbers: number[]): number[] {
+  const sorted = [...numbers].sort((a, b) => a - b)
+  const q1 = sorted[Math.floor(sorted.length * 0.25)]
+  const q3 = sorted[Math.floor(sorted.length * 0.75)]
+  const iqr = q3 - q1
+  const lowerBound = q1 - 1.5 * iqr
+  const upperBound = q3 + 1.5 * iqr
+  return numbers.filter((x) => x >= lowerBound && x <= upperBound)
+}
+
+function formatTableAsMarkdown({ fast, native }: { fast: TestResult; native: TestResult }): string {
+  return `<table>
+    <tr>
+      <th></th>
+      <th>FastWS</th>
+      <th>RN</th>
+      <th>Improvement</th>
+    </tr>
+    <tr>
+      <td>Out ${fast.messageCount}x</td>
+      <td>${fast.outgoingTime.toFixed(2)}ms</td>
+      <td>${native.outgoingTime.toFixed(2)}ms</td>
+      <td>${(native.outgoingTime / fast.outgoingTime).toFixed(2)}x</td>
+    </tr>
+    <tr>
+      <td>In ${fast.messageCount}x</td>
+      <td>${fast.incomingTime.toFixed(2)}ms</td>
+      <td>${native.incomingTime.toFixed(2)}ms</td>
+      <td>${(native.incomingTime / fast.incomingTime).toFixed(2)}x</td>
+    </tr>
+  </table>`
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -356,5 +422,23 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 8,
     color: '#666',
+  },
+  sampleInfo: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 4,
+    marginLeft: 8,
+  },
+  copyButton: {
+    marginTop: 8,
+    padding: 8,
+    backgroundColor: '#666',
+    borderRadius: 4,
+    alignItems: 'center',
+  },
+  copyButtonText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '500',
   },
 })
