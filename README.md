@@ -673,6 +673,21 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
   </tr>
 </table>
 
+### Key Insights
+
+**Platform Behavior**
+- iOS shows better baseline performance than Android with React Native's WebSocket
+- FastWS performs consistently across both platforms
+- Most dramatic improvements seen in binary data handling
+
+**Performance Patterns**
+- Smallest improvements: Small message counts
+- Largest improvements: Binary data and high message counts
+- React Native shows exponential slowdown with message count, while FastWS scales more linearly
+- Binary format shows advantages for large payloads, especially at higher message counts
+
+### Methodology
+
 All tests were performed with local WebSocket server to minimize network variance. Each test was run enough times to have 10 samples, after removing outliers.
 
 In the future, we would like to add benchmarks for:
@@ -683,6 +698,8 @@ In the future, we would like to add benchmarks for:
 - Message latency under high load
 
 Your contributions are welcome! Check out our [contributing guidelines](CONTRIBUTING.md) to help improve these benchmarks.
+
+
 
 ## Made with ❤️ at Callstack
 
