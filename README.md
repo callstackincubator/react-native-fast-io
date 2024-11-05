@@ -164,15 +164,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out 100x</td>
-          <td>0.18ms</td>
+          <td>0.20ms</td>
           <td>0.66ms</td>
-          <td>3.67x</td>
+          <td>3.34x</td>
         </tr>
         <tr>
           <td>In 100x</td>
-          <td>4.49ms</td>
-          <td>12.01ms</td>
-          <td>2.67x</td>
+          <td>4.24ms</td>
+          <td>11.79ms</td>
+          <td>2.78x</td>
         </tr>
       </table>
       <table>
@@ -184,15 +184,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out 1000x</td>
-          <td>1.63ms</td>
-          <td>4.12ms</td>
-          <td>2.53x</td>
+          <td>2.12ms</td>
+          <td>4.23ms</td>
+          <td>1.99x</td>
         </tr>
         <tr>
           <td>In 1000x</td>
-          <td>27.21ms</td>
-          <td>82.98ms</td>
-          <td>3.05x</td>
+          <td>27.42ms</td>
+          <td>81.75ms</td>
+          <td>2.98x</td>
         </tr>
       </table>
       <table>
@@ -204,15 +204,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out 10000x</td>
-          <td>12.58ms</td>
-          <td>40.04ms</td>
-          <td>3.18x</td>
+          <td>13.70ms</td>
+          <td>40.52ms</td>
+          <td>2.96x</td>
         </tr>
         <tr>
           <td>In 10000x</td>
-          <td>226.19ms</td>
-          <td>818.58ms</td>
-          <td>3.62x</td>
+          <td>227.62ms</td>
+          <td>812.45ms</td>
+          <td>3.57x</td>
         </tr>
       </table>
     </td>
@@ -299,15 +299,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out 100x</td>
-          <td>0.39ms</td>
-          <td>1.44ms</td>
-          <td>3.69x</td>
+          <td>0.48ms</td>
+          <td>1.41ms</td>
+          <td>2.92x</td>
         </tr>
         <tr>
           <td>In 100x</td>
-          <td>4.30ms</td>
-          <td>12.34ms</td>
-          <td>2.87x</td>
+          <td>4.40ms</td>
+          <td>12.24ms</td>
+          <td>2.79x</td>
         </tr>
       </table>
       <table>
@@ -319,15 +319,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out 1000x</td>
-          <td>3.50ms</td>
-          <td>8.95ms</td>
-          <td>2.56x</td>
+          <td>4.36ms</td>
+          <td>9.10ms</td>
+          <td>2.09x</td>
         </tr>
         <tr>
           <td>In 1000x</td>
-          <td>26.01ms</td>
-          <td>85.12ms</td>
-          <td>3.27x</td>
+          <td>27.38ms</td>
+          <td>85.23ms</td>
+          <td>3.11x</td>
         </tr>
       </table>
       <table>
@@ -339,15 +339,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out 10000x</td>
-          <td>25.72ms</td>
-          <td>91.68ms</td>
-          <td>3.56x</td>
+          <td>27.49ms</td>
+          <td>91.04ms</td>
+          <td>3.31x</td>
         </tr>
         <tr>
           <td>In 10000x</td>
-          <td>228.78ms</td>
-          <td>851.87ms</td>
-          <td>3.72x</td>
+          <td>231.99ms</td>
+          <td>854.76ms</td>
+          <td>3.68x</td>
         </tr>
       </table>
     </td>
@@ -434,15 +434,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out 100x</td>
-          <td>0.35ms</td>
-          <td>0.92ms</td>
-          <td>2.63x</td>
+          <td>0.36ms</td>
+          <td>0.85ms</td>
+          <td>2.34x</td>
         </tr>
         <tr>
           <td>In 100x</td>
-          <td>4.55ms</td>
-          <td>11.86ms</td>
-          <td>2.61x</td>
+          <td>4.38ms</td>
+          <td>10.82ms</td>
+          <td>2.47x</td>
         </tr>
       </table>
       <table>
@@ -454,15 +454,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out 1000x</td>
-          <td>2.96ms</td>
-          <td>5.99ms</td>
-          <td>2.02x</td>
+          <td>3.42ms</td>
+          <td>6.03ms</td>
+          <td>1.76x</td>
         </tr>
         <tr>
           <td>In 1000x</td>
-          <td>27.84ms</td>
-          <td>85.70ms</td>
-          <td>3.08x</td>
+          <td>28.66ms</td>
+          <td>86.16ms</td>
+          <td>3.01x</td>
         </tr>
       </table>
       <table>
@@ -474,15 +474,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out 10000x</td>
-          <td>23.50ms</td>
-          <td>56.78ms</td>
-          <td>2.42x</td>
+          <td>23.08ms</td>
+          <td>57.33ms</td>
+          <td>2.48x</td>
         </tr>
         <tr>
           <td>In 10000x</td>
-          <td>266.34ms</td>
-          <td>834.22ms</td>
-          <td>3.13x</td>
+          <td>265.89ms</td>
+          <td>836.70ms</td>
+          <td>3.15x</td>
         </tr>
       </table>
     </td>
@@ -569,15 +569,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out 100x</td>
-          <td>0.47ms</td>
-          <td>6.19ms</td>
-          <td>13.17x</td>
+          <td>0.50ms</td>
+          <td>6.13ms</td>
+          <td>12.29x</td>
         </tr>
         <tr>
           <td>In 100x</td>
-          <td>4.25ms</td>
-          <td>14.23ms</td>
-          <td>3.35x</td>
+          <td>4.55ms</td>
+          <td>14.47ms</td>
+          <td>3.18x</td>
         </tr>
       </table>
       <table>
@@ -589,15 +589,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out 1000x</td>
-          <td>4.15ms</td>
-          <td>39.45ms</td>
-          <td>9.51x</td>
+          <td>4.27ms</td>
+          <td>39.44ms</td>
+          <td>9.24x</td>
         </tr>
         <tr>
           <td>In 1000x</td>
-          <td>26.28ms</td>
-          <td>104.81ms</td>
-          <td>3.99x</td>
+          <td>26.82ms</td>
+          <td>104.71ms</td>
+          <td>3.90x</td>
         </tr>
       </table>
       <table>
@@ -609,15 +609,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out 10000x</td>
-          <td>27.68ms</td>
-          <td>416.15ms</td>
-          <td>15.03x</td>
+          <td>29.12ms</td>
+          <td>417.89ms</td>
+          <td>14.35x</td>
         </tr>
         <tr>
           <td>In 10000x</td>
-          <td>238.39ms</td>
-          <td>1056.80ms</td>
-          <td>4.43x</td>
+          <td>240.16ms</td>
+          <td>1060.69ms</td>
+          <td>4.42x</td>
         </tr>
       </table>
     </td>
@@ -664,9 +664,9 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>In 100x</td>
-          <td>10.43ms</td>
-          <td>1750.91ms</td>
-          <td>167.87x</td>
+          <td>11.71ms</td>
+          <td>1770.53ms</td>
+          <td>151.20x</td>
         </tr>
       </table>
     </td>
