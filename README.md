@@ -51,9 +51,8 @@ ws.addEventListener('message', (event) => {
   console.log('Received:', event.data);
 });
 
-// Send erent types of data
+// Send different types of data
 ws.send('Plain text message');
-ws.send(new Blob(['Binary data']));
 ws.send(new Uint8Array([1, 2, 3, 4]));
 
 // Close the connection when done
