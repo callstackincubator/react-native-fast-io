@@ -673,7 +673,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
   </tr>
 </table>
 
-All tests were performed with local WebSocket server to minimize network variance. Each test was run 10 times and averaged.
+All tests were performed with local WebSocket server to minimize network variance. Each test was run enough times to have 10 samples, after removing outliers.
 
 In the future, we would like to add benchmarks for:
 - CPU usage during message processing
