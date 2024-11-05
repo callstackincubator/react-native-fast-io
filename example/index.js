@@ -2,6 +2,6 @@ import '@bacons/text-decoder/install'
 
 import { AppRegistry } from 'react-native'
 
-import { App } from './App'
+import { BenchmarkUI } from './tests/benchmark'
 
-AppRegistry.registerComponent('NitroPlayground', () => App)
+AppRegistry.registerComponent('NitroPlayground', () => BenchmarkUI)
