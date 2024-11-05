@@ -81,27 +81,293 @@ For more detailed information about the WebSocket API, check out the [MDN WebSoc
 
 These benchmarks are provided to demonstrate theoretical performance benefits and should be used as a general reference rather than absolute performance indicators.
 
-#### iOS (iPhone 16 Pro, iOS 18.0)
+You can browse the benchmark code [here](example/tests/benchmark.tsx) and check each message payload [here](example/tests/payloads.ts).
 
-| Operation | React Native | FastWS | Improvement |
-|-----------|--------------|--------|-------------|
-| Send 10k strings | x | x | x |
-| Receive 10k strings | x | x | x |
-| Send 10k ArrayBuffers | x | x | x |
-| Receive 10k ArrayBuffers | x | x | x |
+### Small JSON payload - Text
 
-#### Android (Medium Phone, Android 15)
+<table>
+  <tr>
+    <th>Android</th>
+    <th>iOS</th>
+  </tr>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <th></th>
+          <th>FastWS</th>
+          <th>RN</th>
+          <th>Improvement</th>
+        </tr>
+        <tr>
+          <td>Sending</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+        <tr>
+          <td>Receiving</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tr>
+          <th></th>
+          <th>FastWS</th>
+          <th>RN</th>
+          <th>Improvement</th>
+        </tr>
+        <tr>
+          <td>Sending</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+        <tr>
+          <td>Receiving</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
-| Operation | React Native | FastWS | Improvement |
-|-----------|--------------|--------|-------------|
-| Send 10k strings | x | x | x |
-| Receive 10k strings | x | x | x |
-| Send 10k ArrayBuffers | x | x | x |
-| Receive 10k ArrayBuffers | x | x | x |
+### Small JSON payload - Binary
 
-All tests were performed with local WebSocket server to minimize network variance. Each test was run 5 times and averaged.
+<table>
+  <tr>
+    <th>Android</th>
+    <th>iOS</th>
+  </tr>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <th></th>
+          <th>FastWS</th>
+          <th>RN</th>
+          <th>Improvement</th>
+        </tr>
+        <tr>
+          <td>Sending</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+        <tr>
+          <td>Receiving</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tr>
+          <th></th>
+          <th>FastWS</th>
+          <th>RN</th>
+          <th>Improvement</th>
+        </tr>
+        <tr>
+          <td>Sending</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+        <tr>
+          <td>Receiving</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
-In the future, we would like to add benchmarks for CPU and memory usage, since that's where FastWS should shine. Your contributions are welcome!
+### Large JSON payload - Text
+
+<table>
+  <tr>
+    <th>Android</th>
+    <th>iOS</th>
+  </tr>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <th></th>
+          <th>FastWS</th>
+          <th>RN</th>
+          <th>Improvement</th>
+        </tr>
+        <tr>
+          <td>Sending</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+        <tr>
+          <td>Receiving</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tr>
+          <th></th>
+          <th>FastWS</th>
+          <th>RN</th>
+          <th>Improvement</th>
+        </tr>
+        <tr>
+          <td>Sending</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+        <tr>
+          <td>Receiving</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+### Large JSON payload - Binary
+
+<table>
+  <tr>
+    <th>Android</th>
+    <th>iOS</th>
+  </tr>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <th></th>
+          <th>FastWS</th>
+          <th>RN</th>
+          <th>Improvement</th>
+        </tr>
+        <tr>
+          <td>Sending</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+        <tr>
+          <td>Receiving</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tr>
+          <th></th>
+          <th>FastWS</th>
+          <th>RN</th>
+          <th>Improvement</th>
+        </tr>
+        <tr>
+          <td>Sending</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+        <tr>
+          <td>Receiving</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+### Large Binary
+
+<table>
+  <tr>
+    <th>Android</th>
+    <th>iOS</th>
+  </tr>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <th></th>
+          <th>FastWS</th>
+          <th>RN</th>
+          <th>Improvement</th>
+        </tr>
+        <tr>
+          <td>Sending</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+        <tr>
+          <td>Receiving</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <table>
+        <tr>
+          <th></th>
+          <th>FastWS</th>
+          <th>RN</th>
+          <th>Improvement</th>
+        </tr>
+        <tr>
+          <td>Sending</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+        <tr>
+          <td>Receiving</td>
+          <td>x</td>
+          <td>x</td>
+          <td>x%</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+All tests were performed with local WebSocket server to minimize network variance. Each test was run 10 times and averaged.
+
+In the future, we would like to add benchmarks for:
+- CPU usage during message processing
+- Memory footprint during large transfers
+- Connection establishment time
+- Concurrent connection handling
+- Message latency under high load
+
+Your contributions are welcome! Check out our [contributing guidelines](CONTRIBUTING.md) to help improve these benchmarks.
 
 ## Made with ❤️ at Callstack
 
