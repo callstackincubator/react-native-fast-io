@@ -385,19 +385,19 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
       </table>
      <table>
         <tr>
-          <th></th>
+          <th>1000x</th>
           <th>FastWS</th>
           <th>RN</th>
-          <th>Improvement</th>
+          <th></th>
         </tr>
         <tr>
-          <td>Out 1000x</td>
+          <td>Out </td>
           <td>9.83ms</td>
           <td>21.67ms</td>
           <td>2.20x</td>
         </tr>
         <tr>
-          <td>In 1000x</td>
+          <td>In</td>
           <td>18.00ms</td>
           <td>210.93ms</td>
           <td>11.72x</td>
