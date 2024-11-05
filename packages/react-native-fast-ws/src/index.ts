@@ -168,10 +168,13 @@ export class WebSocket
       return
     }
 
-    // tbd: Blob support
-    // if (message instanceof Blob) {
-    //   return
-    // }
+    if (message instanceof Blob) {
+      ;(async () => {
+        const arrayBuffer = await message.arrayBuffer()
+        this.send(arrayBuffer)
+      })()
+      return
+    }
 
     throw new TypeError('Invalid message type')
   }
