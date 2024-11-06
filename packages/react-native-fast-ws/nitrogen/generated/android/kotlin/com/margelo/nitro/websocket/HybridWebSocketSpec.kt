@@ -38,7 +38,11 @@ abstract class HybridWebSocketSpec: HybridObject() {
   }
 
   // Properties
-  
+  @get:DoNotStrip
+  @get:Keep
+  @set:DoNotStrip
+  @set:Keep
+  abstract var binaryType: BinaryType
 
   // Methods
   @DoNotStrip
@@ -48,6 +52,10 @@ abstract class HybridWebSocketSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun sendArrayBuffer(buffer: ArrayBuffer): Unit
+  
+  @DoNotStrip
+  @Keep
+  abstract fun sendBlob(blob: HybridBlobSpec): Unit
   
   @DoNotStrip
   @Keep
@@ -113,6 +121,17 @@ abstract class HybridWebSocketSpec: HybridObject() {
   @Keep
   private fun onArrayBuffer(callback: Func_void_std__shared_ptr_ArrayBuffer_): Unit {
     val __result = onArrayBuffer(callback.toLambda())
+    return __result
+  }
+  
+  @DoNotStrip
+  @Keep
+  abstract fun onBlob(callback: (blob: HybridBlobSpec) -> Unit): Unit
+  
+  @DoNotStrip
+  @Keep
+  private fun onBlob(callback: Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_): Unit {
+    val __result = onBlob(callback.toLambda())
     return __result
   }
 

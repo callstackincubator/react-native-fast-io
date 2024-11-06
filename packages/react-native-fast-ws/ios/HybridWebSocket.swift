@@ -8,12 +8,15 @@
 import NitroModules
 
 class HybridWebSocket : HybridWebSocketSpec {
+  var binaryType: BinaryType
+  
   var onOpen: ((String) -> Void)?
   var onClose: ((Double, String) -> Void)?
   var onError: ((String) -> Void)?
   
   var onMessage: ((String) -> Void)?
   var onArrayBuffer: ((ArrayBufferHolder) -> Void)?
+  var onBlob: ((HybridBlobSpec) -> Void)?
   
   let ws: URLSessionWebSocketTask
   let urlSession: URLSession
@@ -79,7 +82,13 @@ class HybridWebSocket : HybridWebSocketSpec {
       data.deallocate()
     }
     
-    self.onArrayBuffer?(ArrayBufferHolder.makeBuffer(data, other.count, deleteFunc))
+    let buffer = ArrayBufferHolder.makeBuffer(data, other.count, deleteFunc)
+    
+    if (binaryType == .blob) {
+      self.onBlob?(HybridBlob.init(buffer))
+    } else {
+      self.onArrayBuffer?(buffer)
+    }
   }
   
   func send(message: String) {
@@ -88,6 +97,10 @@ class HybridWebSocket : HybridWebSocketSpec {
         self.onError?(error.localizedDescription)
       }
     }
+  }
+  
+  func sendBlob(blob: (any HybridBlobSpec)) throws {
+    // tbd
   }
   
   func sendArrayBuffer(buffer: ArrayBufferHolder) throws {
@@ -121,6 +134,10 @@ class HybridWebSocket : HybridWebSocketSpec {
   
   func onArrayBuffer(callback: @escaping ((ArrayBufferHolder) -> Void)) {
     onArrayBuffer = callback
+  }
+  
+  func onBlob(callback: @escaping (((any HybridBlobSpec)) -> Void)) throws {
+    onBlob = callback
   }
   
   func onError(callback: @escaping ((String) -> Void)) {

@@ -15,6 +15,7 @@
 #include "JFunc_void_std__string.hpp"
 #include "JFunc_void_double_std__string.hpp"
 #include "JFunc_void_std__shared_ptr_ArrayBuffer_.hpp"
+#include "JFunc_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_.hpp"
 #include "JHybridWebSocketManagerSpec.hpp"
 #include <NitroModules/JNISharedPtr.hpp>
 
@@ -33,6 +34,7 @@ int initialize(JavaVM* vm) {
     margelo::nitro::websocket::JFunc_void_std__string::registerNatives();
     margelo::nitro::websocket::JFunc_void_std__string::registerNatives();
     margelo::nitro::websocket::JFunc_void_std__shared_ptr_ArrayBuffer_::registerNatives();
+    margelo::nitro::websocket::JFunc_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_::registerNatives();
     margelo::nitro::websocket::JHybridWebSocketManagerSpec::registerNatives();
 
     // Register Nitro Hybrid Objects

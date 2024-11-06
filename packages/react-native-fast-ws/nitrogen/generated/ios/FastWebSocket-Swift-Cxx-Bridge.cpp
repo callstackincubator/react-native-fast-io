@@ -9,12 +9,29 @@
 
 // Include C++ implementation defined types
 #include "FastWebSocket-Swift-Cxx-Umbrella.hpp"
+#include "HybridBlobSpecSwift.hpp"
 #include "HybridWebSocketManagerSpecSwift.hpp"
 #include "HybridWebSocketSpecSwift.hpp"
 #include <NitroModules/HybridContext.hpp>
 
 namespace margelo::nitro::websocket::bridge::swift {
 
+  // pragma MARK: std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>
+  std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec> create_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_(void* _Nonnull swiftUnsafePointer) {
+    FastWebSocket::HybridBlobSpecCxx swiftPart = FastWebSocket::HybridBlobSpecCxxUnsafe::fromUnsafe(swiftUnsafePointer);
+    return HybridContext::getOrCreate<margelo::nitro::websocket::HybridBlobSpecSwift>(swiftPart);
+  }
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_(std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::websocket::HybridBlobSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::websocket::HybridBlobSpecSwift>(cppType);
+  #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridBlobSpec\" is not implemented in Swift!");
+    }
+  #endif
+    FastWebSocket::HybridBlobSpecCxx swiftPart = swiftWrapper->getSwiftPart();
+    return FastWebSocket::HybridBlobSpecCxxUnsafe::toUnsafe(swiftPart);
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::websocket::HybridWebSocketSpec>
   std::shared_ptr<margelo::nitro::websocket::HybridWebSocketSpec> create_std__shared_ptr_margelo__nitro__websocket__HybridWebSocketSpec_(void* _Nonnull swiftUnsafePointer) {
     FastWebSocket::HybridWebSocketSpecCxx swiftPart = FastWebSocket::HybridWebSocketSpecCxxUnsafe::fromUnsafe(swiftUnsafePointer);

@@ -13,11 +13,18 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
+// Forward declaration of `BinaryType` to properly resolve imports.
+namespace margelo::nitro::websocket { enum class BinaryType; }
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
+// Forward declaration of `HybridBlobSpec` to properly resolve imports.
+namespace margelo::nitro::websocket { class HybridBlobSpec; }
 
+#include "BinaryType.hpp"
 #include <string>
 #include <NitroModules/ArrayBuffer.hpp>
+#include <memory>
+#include "HybridBlobSpec.hpp"
 #include <functional>
 
 namespace margelo::nitro::websocket {
@@ -47,12 +54,14 @@ namespace margelo::nitro::websocket {
 
     public:
       // Properties
-      
+      virtual BinaryType getBinaryType() = 0;
+      virtual void setBinaryType(BinaryType binaryType) = 0;
 
     public:
       // Methods
       virtual void send(const std::string& message) = 0;
       virtual void sendArrayBuffer(const std::shared_ptr<ArrayBuffer>& buffer) = 0;
+      virtual void sendBlob(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& blob) = 0;
       virtual void connect() = 0;
       virtual void close(double code, const std::string& reason) = 0;
       virtual void ping() = 0;
@@ -61,6 +70,7 @@ namespace margelo::nitro::websocket {
       virtual void onError(const std::function<void(const std::string& /* error */)>& callback) = 0;
       virtual void onMessage(const std::function<void(const std::string& /* message */)>& callback) = 0;
       virtual void onArrayBuffer(const std::function<void(const std::shared_ptr<ArrayBuffer>& /* buffer */)>& callback) = 0;
+      virtual void onBlob(const std::function<void(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& /* blob */)>& callback) = 0;
 
     protected:
       // Hybrid Setup

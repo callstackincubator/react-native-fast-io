@@ -511,15 +511,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out</td>
-          <td>1.94ms</td>
-          <td>11.36ms</td>
-          <td>5.85x</td>
+          <td>1.59ms</td>
+          <td>13.59ms</td>
+          <td>8.52x</td>
         </tr>
         <tr>
           <td>In</td>
-          <td>2.64ms</td>
-          <td>27.02ms</td>
-          <td>10.23x</td>
+          <td>2.79ms</td>
+          <td>26.77ms</td>
+          <td>9.58x</td>
         </tr>
       </table>
       <table>
@@ -530,16 +530,16 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th></th>
         </tr>
         <tr>
-          <td>Out</td>
-          <td>18.00ms</td>
-          <td>105.60ms</td>
-          <td>5.87x</td>
+          <td>Out </td>
+          <td>16.47ms</td>
+          <td>120.34ms</td>
+          <td>7.31x</td>
         </tr>
         <tr>
           <td>In</td>
-          <td>23.72ms</td>
-          <td>248.20ms</td>
-          <td>10.47x</td>
+          <td>21.73ms</td>
+          <td>250.45ms</td>
+          <td>11.53x</td>
         </tr>
       </table>
       <table>
@@ -550,16 +550,16 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th></th>
         </tr>
         <tr>
-          <td>Out</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
+          <td>Out </td>
+          <td>113.43ms</td>
+          <td>1317.29ms</td>
+          <td>11.61x</td>
         </tr>
         <tr>
           <td>In</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
+          <td>426.67ms</td>
+          <td>2971.67ms</td>
+          <td>6.96x</td>
         </tr>
       </table>
     </td>

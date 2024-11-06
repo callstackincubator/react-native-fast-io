@@ -10,16 +10,23 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
+// Forward declaration of `BinaryType` to properly resolve imports.
+namespace margelo::nitro::websocket { enum class BinaryType; }
+// Forward declaration of `HybridBlobSpec` to properly resolve imports.
+namespace margelo::nitro::websocket { class HybridBlobSpec; }
 // Forward declaration of `HybridWebSocketManagerSpec` to properly resolve imports.
 namespace margelo::nitro::websocket { class HybridWebSocketManagerSpec; }
 // Forward declaration of `HybridWebSocketSpec` to properly resolve imports.
 namespace margelo::nitro::websocket { class HybridWebSocketSpec; }
 
 // Include C++ defined types
+#include "BinaryType.hpp"
+#include "HybridBlobSpec.hpp"
 #include "HybridWebSocketManagerSpec.hpp"
 #include "HybridWebSocketSpec.hpp"
 #include <NitroModules/ArrayBuffer.hpp>
 #include <functional>
+#include <future>
 #include <memory>
 #include <string>
 #include <vector>
@@ -34,6 +41,8 @@ namespace margelo::nitro::websocket { class HybridWebSocketSpec; }
 #include <NitroModules/PromiseHolder.hpp>
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridBlobSpecCxx` to properly resolve imports.
+namespace FastWebSocket { class HybridBlobSpecCxx; }
 // Forward declaration of `HybridWebSocketManagerSpecCxx` to properly resolve imports.
 namespace FastWebSocket { class HybridWebSocketManagerSpecCxx; }
 // Forward declaration of `HybridWebSocketSpecCxx` to properly resolve imports.

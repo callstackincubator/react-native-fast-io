@@ -29,6 +29,7 @@ target_sources(
   # Shared Nitrogen C++ sources
   ../nitrogen/generated/shared/c++/HybridWebSocketSpec.cpp
   ../nitrogen/generated/shared/c++/HybridWebSocketManagerSpec.cpp
+  ../nitrogen/generated/shared/c++/HybridBlobSpec.cpp
   # Android-specific Nitrogen C++ sources
   ../nitrogen/generated/android/c++/JHybridWebSocketSpec.cpp
   ../nitrogen/generated/android/c++/JHybridWebSocketManagerSpec.cpp

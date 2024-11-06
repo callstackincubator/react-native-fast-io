@@ -12,14 +12,21 @@
 // Forward declaration of `HybridWebSocketSpecCxx` to properly resolve imports.
 namespace FastWebSocket { class HybridWebSocketSpecCxx; }
 
+// Forward declaration of `BinaryType` to properly resolve imports.
+namespace margelo::nitro::websocket { enum class BinaryType; }
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
 // Forward declaration of `ArrayBufferHolder` to properly resolve imports.
 namespace NitroModules { class ArrayBufferHolder; }
+// Forward declaration of `HybridBlobSpec` to properly resolve imports.
+namespace margelo::nitro::websocket { class HybridBlobSpec; }
 
+#include "BinaryType.hpp"
 #include <string>
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/ArrayBufferHolder.hpp>
+#include <memory>
+#include "HybridBlobSpec.hpp"
 #include <functional>
 
 #if __has_include(<NitroModules/HybridContext.hpp>)
@@ -61,7 +68,13 @@ namespace margelo::nitro::websocket {
 
   public:
     // Properties
-    
+    inline BinaryType getBinaryType() noexcept override {
+      auto __result = _swiftPart.getBinaryType();
+      return static_cast<BinaryType>(__result);
+    }
+    inline void setBinaryType(BinaryType binaryType) noexcept override {
+      _swiftPart.setBinaryType(static_cast<int>(binaryType));
+    }
 
   public:
     // Methods
@@ -70,6 +83,9 @@ namespace margelo::nitro::websocket {
     }
     inline void sendArrayBuffer(const std::shared_ptr<ArrayBuffer>& buffer) override {
       _swiftPart.sendArrayBuffer(ArrayBufferHolder(buffer));
+    }
+    inline void sendBlob(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& blob) override {
+      _swiftPart.sendBlob(blob);
     }
     inline void connect() override {
       _swiftPart.connect();
@@ -94,6 +110,9 @@ namespace margelo::nitro::websocket {
     }
     inline void onArrayBuffer(const std::function<void(const std::shared_ptr<ArrayBuffer>& /* buffer */)>& callback) override {
       _swiftPart.onArrayBuffer(callback);
+    }
+    inline void onBlob(const std::function<void(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& /* blob */)>& callback) override {
+      _swiftPart.onBlob(callback);
     }
 
   private:

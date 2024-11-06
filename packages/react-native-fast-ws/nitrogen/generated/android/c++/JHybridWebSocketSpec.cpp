@@ -7,16 +7,27 @@
 
 #include "JHybridWebSocketSpec.hpp"
 
+// Forward declaration of `BinaryType` to properly resolve imports.
+namespace margelo::nitro::websocket { enum class BinaryType; }
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
+// Forward declaration of `HybridBlobSpec` to properly resolve imports.
+namespace margelo::nitro::websocket { class HybridBlobSpec; }
 
+#include "BinaryType.hpp"
+#include "JBinaryType.hpp"
 #include <string>
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/JArrayBuffer.hpp>
+#include <memory>
+#include "HybridBlobSpec.hpp"
+#include "JHybridBlobSpec.hpp"
+#include <NitroModules/JNISharedPtr.hpp>
 #include <functional>
 #include "JFunc_void_std__string.hpp"
 #include "JFunc_void_double_std__string.hpp"
 #include "JFunc_void_std__shared_ptr_ArrayBuffer_.hpp"
+#include "JFunc_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_.hpp"
 
 namespace margelo::nitro::websocket {
 
@@ -36,7 +47,15 @@ namespace margelo::nitro::websocket {
   }
 
   // Properties
-  
+  BinaryType JHybridWebSocketSpec::getBinaryType() {
+    static const auto method = _javaPart->getClass()->getMethod<jni::local_ref<JBinaryType>()>("getBinaryType");
+    auto __result = method(_javaPart);
+    return __result->toCpp();
+  }
+  void JHybridWebSocketSpec::setBinaryType(BinaryType binaryType) {
+    static const auto method = _javaPart->getClass()->getMethod<void(jni::alias_ref<JBinaryType> /* binaryType */)>("setBinaryType");
+    method(_javaPart, JBinaryType::fromCpp(binaryType));
+  }
 
   // Methods
   void JHybridWebSocketSpec::send(const std::string& message) {
@@ -46,6 +65,10 @@ namespace margelo::nitro::websocket {
   void JHybridWebSocketSpec::sendArrayBuffer(const std::shared_ptr<ArrayBuffer>& buffer) {
     static const auto method = _javaPart->getClass()->getMethod<void(jni::alias_ref<JArrayBuffer::javaobject> /* buffer */)>("sendArrayBuffer");
     method(_javaPart, JArrayBuffer::wrap(buffer));
+  }
+  void JHybridWebSocketSpec::sendBlob(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& blob) {
+    static const auto method = _javaPart->getClass()->getMethod<void(jni::alias_ref<JHybridBlobSpec::javaobject> /* blob */)>("sendBlob");
+    method(_javaPart, std::dynamic_pointer_cast<JHybridBlobSpec>(blob)->getJavaPart());
   }
   void JHybridWebSocketSpec::connect() {
     static const auto method = _javaPart->getClass()->getMethod<void()>("connect");
@@ -78,6 +101,10 @@ namespace margelo::nitro::websocket {
   void JHybridWebSocketSpec::onArrayBuffer(const std::function<void(const std::shared_ptr<ArrayBuffer>& /* buffer */)>& callback) {
     static const auto method = _javaPart->getClass()->getMethod<void(jni::alias_ref<JFunc_void_std__shared_ptr_ArrayBuffer_::javaobject> /* callback */)>("onArrayBuffer");
     method(_javaPart, JFunc_void_std__shared_ptr_ArrayBuffer_::fromCpp(callback));
+  }
+  void JHybridWebSocketSpec::onBlob(const std::function<void(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& /* blob */)>& callback) {
+    static const auto method = _javaPart->getClass()->getMethod<void(jni::alias_ref<JFunc_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_::javaobject> /* callback */)>("onBlob");
+    method(_javaPart, JFunc_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_::fromCpp(callback));
   }
 
 } // namespace margelo::nitro::websocket

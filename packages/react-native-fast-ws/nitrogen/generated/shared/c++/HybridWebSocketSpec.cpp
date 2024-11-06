@@ -14,8 +14,11 @@ namespace margelo::nitro::websocket {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
+      prototype.registerHybridGetter("binaryType", &HybridWebSocketSpec::getBinaryType);
+      prototype.registerHybridSetter("binaryType", &HybridWebSocketSpec::setBinaryType);
       prototype.registerHybridMethod("send", &HybridWebSocketSpec::send);
       prototype.registerHybridMethod("sendArrayBuffer", &HybridWebSocketSpec::sendArrayBuffer);
+      prototype.registerHybridMethod("sendBlob", &HybridWebSocketSpec::sendBlob);
       prototype.registerHybridMethod("connect", &HybridWebSocketSpec::connect);
       prototype.registerHybridMethod("close", &HybridWebSocketSpec::close);
       prototype.registerHybridMethod("ping", &HybridWebSocketSpec::ping);
@@ -24,6 +27,7 @@ namespace margelo::nitro::websocket {
       prototype.registerHybridMethod("onError", &HybridWebSocketSpec::onError);
       prototype.registerHybridMethod("onMessage", &HybridWebSocketSpec::onMessage);
       prototype.registerHybridMethod("onArrayBuffer", &HybridWebSocketSpec::onArrayBuffer);
+      prototype.registerHybridMethod("onBlob", &HybridWebSocketSpec::onBlob);
     });
   }
 

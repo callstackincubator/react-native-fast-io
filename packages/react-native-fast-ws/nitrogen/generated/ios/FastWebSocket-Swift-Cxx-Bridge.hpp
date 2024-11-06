@@ -12,23 +12,30 @@
 namespace NitroModules { class ArrayBufferHolder; }
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
+// Forward declaration of `HybridBlobSpec` to properly resolve imports.
+namespace margelo::nitro::websocket { class HybridBlobSpec; }
 // Forward declaration of `HybridWebSocketManagerSpec` to properly resolve imports.
 namespace margelo::nitro::websocket { class HybridWebSocketManagerSpec; }
 // Forward declaration of `HybridWebSocketSpec` to properly resolve imports.
 namespace margelo::nitro::websocket { class HybridWebSocketSpec; }
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridBlobSpecCxx` to properly resolve imports.
+namespace FastWebSocket { class HybridBlobSpecCxx; }
 // Forward declaration of `HybridWebSocketManagerSpecCxx` to properly resolve imports.
 namespace FastWebSocket { class HybridWebSocketManagerSpecCxx; }
 // Forward declaration of `HybridWebSocketSpecCxx` to properly resolve imports.
 namespace FastWebSocket { class HybridWebSocketSpecCxx; }
 
 // Include C++ defined types
+#include "HybridBlobSpec.hpp"
 #include "HybridWebSocketManagerSpec.hpp"
 #include "HybridWebSocketSpec.hpp"
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/ArrayBufferHolder.hpp>
+#include <NitroModules/PromiseHolder.hpp>
 #include <functional>
+#include <future>
 #include <memory>
 #include <string>
 #include <vector>
@@ -39,6 +46,14 @@ namespace FastWebSocket { class HybridWebSocketSpecCxx; }
  */
 namespace margelo::nitro::websocket::bridge::swift {
 
+  // pragma MARK: std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>
+  /**
+   * Specialized version of `std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>`.
+   */
+  using std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_ = std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>;
+  std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec> create_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_(void* _Nonnull swiftUnsafePointer);
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_(std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_ cppType);
+  
   // pragma MARK: std::function<void(const std::string& /* selectedProtocol */)>
   /**
    * Specialized version of `std::function<void(const std::string&)>`.
@@ -123,6 +138,34 @@ namespace margelo::nitro::websocket::bridge::swift {
     return std::make_shared<Func_void_std__shared_ptr_ArrayBuffer__Wrapper>(value);
   }
   
+  // pragma MARK: std::function<void(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& /* blob */)>
+  /**
+   * Specialized version of `std::function<void(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>&)>`.
+   */
+  using Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_ = std::function<void(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& /* blob */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& / * blob * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec__Wrapper final {
+  public:
+    explicit Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec__Wrapper(const std::function<void(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& /* blob */)>& func): _function(func) {}
+    explicit Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec__Wrapper(std::function<void(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& /* blob */)>&& func): _function(std::move(func)) {}
+    inline void call(std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec> blob) const {
+      _function(blob);
+    }
+  private:
+    std::function<void(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& /* blob */)> _function;
+  };
+  inline Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_ create_Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_(void* _Nonnull closureHolder, void(* _Nonnull call)(void* _Nonnull /* closureHolder */, std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>), void(* _Nonnull destroy)(void* _Nonnull)) {
+    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
+    return Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_([sharedClosureHolder, call](const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& blob) -> void {
+      call(sharedClosureHolder.get(), blob);
+    });
+  }
+  inline std::shared_ptr<Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec__Wrapper> share_Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_(const Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_& value) {
+    return std::make_shared<Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec__Wrapper>(value);
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::websocket::HybridWebSocketSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::websocket::HybridWebSocketSpec>`.
@@ -149,5 +192,14 @@ namespace margelo::nitro::websocket::bridge::swift {
   using std__shared_ptr_margelo__nitro__websocket__HybridWebSocketManagerSpec_ = std::shared_ptr<margelo::nitro::websocket::HybridWebSocketManagerSpec>;
   std::shared_ptr<margelo::nitro::websocket::HybridWebSocketManagerSpec> create_std__shared_ptr_margelo__nitro__websocket__HybridWebSocketManagerSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__websocket__HybridWebSocketManagerSpec_(std__shared_ptr_margelo__nitro__websocket__HybridWebSocketManagerSpec_ cppType);
+  
+  // pragma MARK: PromiseHolder<std::shared_ptr<ArrayBuffer>>
+  /**
+   * Specialized version of `PromiseHolder<std::shared_ptr<ArrayBuffer>>`.
+   */
+  using PromiseHolder_std__shared_ptr_ArrayBuffer__ = PromiseHolder<std::shared_ptr<ArrayBuffer>>;
+  inline PromiseHolder<std::shared_ptr<ArrayBuffer>> create_PromiseHolder_std__shared_ptr_ArrayBuffer__() {
+    return PromiseHolder<std::shared_ptr<ArrayBuffer>>();
+  }
 
 } // namespace margelo::nitro::websocket::bridge::swift

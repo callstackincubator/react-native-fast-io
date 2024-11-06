@@ -6,8 +6,7 @@ import {
 } from 'event-target-shim'
 import { NitroModules } from 'react-native-nitro-modules'
 
-import { Blob } from './blob'
-import { WebSocket as HybridWebSocket, WebSocketManager } from './spec.nitro'
+import type { Blob, WebSocket as HybridWebSocket, WebSocketManager } from './spec.nitro'
 
 const manager = NitroModules.createHybridObject<WebSocketManager>('WebSocketManager')
 
@@ -77,7 +76,13 @@ export class WebSocket
 
   readonly url: string
 
-  binaryType: 'arraybuffer' | 'blob' = 'blob'
+  get binaryType() {
+    return this.ws.binaryType
+  }
+
+  set binaryType(value: 'arraybuffer' | 'blob') {
+    this.ws.binaryType = value
+  }
 
   private _readyState: WebSocketReadyState = WebSocketReadyState.CONNECTING
   get readyState() {
@@ -116,11 +121,11 @@ export class WebSocket
     })
 
     this.ws.onArrayBuffer((buffer) => {
-      if (this.binaryType === 'blob') {
-        this.dispatchEvent(new MessageEvent(new Blob([buffer])))
-        return
-      }
       this.dispatchEvent(new MessageEvent(buffer))
+    })
+
+    this.ws.onBlob((blob) => {
+      this.dispatchEvent(new MessageEvent(blob))
     })
 
     this.ws.onError((message) => {
@@ -169,10 +174,7 @@ export class WebSocket
     }
 
     if (message instanceof Blob) {
-      ;(async () => {
-        const arrayBuffer = await message.arrayBuffer()
-        this.send(arrayBuffer)
-      })()
+      this.ws.sendBlob(message)
       return
     }
 

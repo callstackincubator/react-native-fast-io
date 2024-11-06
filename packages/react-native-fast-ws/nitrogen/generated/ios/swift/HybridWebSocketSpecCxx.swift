@@ -95,7 +95,16 @@ public class HybridWebSocketSpecCxx {
   }
 
   // Properties
-  
+  public var binaryType: Int32 {
+    @inline(__always)
+    get {
+      return self.__implementation.binaryType.rawValue
+    }
+    @inline(__always)
+    set {
+      self.__implementation.binaryType = margelo.nitro.websocket.BinaryType(rawValue: newValue)!
+    }
+  }
 
   // Methods
   @inline(__always)
@@ -113,6 +122,21 @@ public class HybridWebSocketSpecCxx {
   public func sendArrayBuffer(buffer: ArrayBufferHolder) -> Void {
     do {
       try self.__implementation.sendArrayBuffer(buffer: buffer)
+      return 
+    } catch {
+      let __message = "\(error.localizedDescription)"
+      fatalError("Swift errors can currently not be propagated to C++! See https://github.com/swiftlang/swift/issues/75290 (Error: \(__message))")
+    }
+  }
+  
+  @inline(__always)
+  public func sendBlob(blob: bridge.std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_) -> Void {
+    do {
+      try self.__implementation.sendBlob(blob: { () -> HybridBlobSpec in
+        let __unsafePointer = bridge.get_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_(blob)
+        let __instance = HybridBlobSpecCxxUnsafe.fromUnsafe(__unsafePointer)
+        return __instance.getHybridBlobSpec()
+      }())
       return 
     } catch {
       let __message = "\(error.localizedDescription)"
@@ -224,6 +248,26 @@ public class HybridWebSocketSpecCxx {
         let __sharedClosure = bridge.share_Func_void_std__shared_ptr_ArrayBuffer_(callback)
         return { (__buffer: ArrayBufferHolder) -> Void in
           __sharedClosure.pointee.call(__buffer)
+        }
+      }())
+      return 
+    } catch {
+      let __message = "\(error.localizedDescription)"
+      fatalError("Swift errors can currently not be propagated to C++! See https://github.com/swiftlang/swift/issues/75290 (Error: \(__message))")
+    }
+  }
+  
+  @inline(__always)
+  public func onBlob(callback: bridge.Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_) -> Void {
+    do {
+      try self.__implementation.onBlob(callback: { () -> (((any HybridBlobSpec)) -> Void) in
+        let __sharedClosure = bridge.share_Func_void_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_(callback)
+        return { (__blob: (any HybridBlobSpec)) -> Void in
+          __sharedClosure.pointee.call({ () -> bridge.std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_ in
+          let __cxxWrapped = HybridBlobSpecCxx(__blob)
+          let __pointer = HybridBlobSpecCxxUnsafe.toUnsafe(__cxxWrapped)
+          return bridge.create_std__shared_ptr_margelo__nitro__websocket__HybridBlobSpec_(__pointer)
+        }())
         }
       }())
       return 

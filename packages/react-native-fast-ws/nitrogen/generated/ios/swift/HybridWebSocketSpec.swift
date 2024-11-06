@@ -29,11 +29,12 @@ import NitroModules
  */
 public protocol HybridWebSocketSpec: AnyObject, HybridObjectSpec {
   // Properties
-  
+  var binaryType: BinaryType { get set }
 
   // Methods
   func send(message: String) throws -> Void
   func sendArrayBuffer(buffer: ArrayBufferHolder) throws -> Void
+  func sendBlob(blob: (any HybridBlobSpec)) throws -> Void
   func connect() throws -> Void
   func close(code: Double, reason: String) throws -> Void
   func ping() throws -> Void
@@ -42,4 +43,5 @@ public protocol HybridWebSocketSpec: AnyObject, HybridObjectSpec {
   func onError(callback: @escaping ((_ error: String) -> Void)) throws -> Void
   func onMessage(callback: @escaping ((_ message: String) -> Void)) throws -> Void
   func onArrayBuffer(callback: @escaping ((_ buffer: ArrayBufferHolder) -> Void)) throws -> Void
+  func onBlob(callback: @escaping ((_ blob: (any HybridBlobSpec)) -> Void)) throws -> Void
 }

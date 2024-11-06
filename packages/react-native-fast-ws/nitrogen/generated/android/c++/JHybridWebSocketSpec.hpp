@@ -41,12 +41,14 @@ namespace margelo::nitro::websocket {
 
   public:
     // Properties
-    
+    BinaryType getBinaryType() override;
+    void setBinaryType(BinaryType binaryType) override;
 
   public:
     // Methods
     void send(const std::string& message) override;
     void sendArrayBuffer(const std::shared_ptr<ArrayBuffer>& buffer) override;
+    void sendBlob(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& blob) override;
     void connect() override;
     void close(double code, const std::string& reason) override;
     void ping() override;
@@ -55,6 +57,7 @@ namespace margelo::nitro::websocket {
     void onError(const std::function<void(const std::string& /* error */)>& callback) override;
     void onMessage(const std::function<void(const std::string& /* message */)>& callback) override;
     void onArrayBuffer(const std::function<void(const std::shared_ptr<ArrayBuffer>& /* buffer */)>& callback) override;
+    void onBlob(const std::function<void(const std::shared_ptr<margelo::nitro::websocket::HybridBlobSpec>& /* blob */)>& callback) override;
 
   private:
     friend HybridBase;
