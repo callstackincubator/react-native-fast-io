@@ -53,6 +53,7 @@ ws.addEventListener('message', (event) => {
 
 // Send different types of data
 ws.send('Plain text message');
+ws.send(new Blob('string'));
 ws.send(new Uint8Array([1, 2, 3, 4]));
 
 // Close the connection when done
