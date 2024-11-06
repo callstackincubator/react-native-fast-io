@@ -29,8 +29,12 @@ npm install react-native-fast-ws --save
 
 This library implements the [WebSocket Web API](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) and is meant to be a drop-in replacement for React Native's WebSocket implementation.
 
+Under the hood, it uses:
+- on iOS, built-in WebSocket API ([URLSessionWebSocketTask](https://developer.apple.com/documentation/foundation/urlsessionwebsockettask))
+- on Android, OkHttp (same as React Native)
+
 ```ts
-import { WebSocket } from 'react-native-fast-ws';
+import { WebSocket, Blob } from 'react-native-fast-ws';
 
 // Create a new WebSocket instance
 const ws = new WebSocket('wss://echo.websocket.org');
