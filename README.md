@@ -13,7 +13,7 @@
 
 ---
 
-### Getting started
+## Getting started
 
 ```
 npm install react-native-fast-ws --save
@@ -25,7 +25,7 @@ npm install react-native-fast-ws --save
 > [!WARNING]
 > This library is still under development. Use at your own risk. The API is experimental and subject to change. This project explores new ideas and approaches to WebSocket and Blob APIs, thanks to Nitro, and its scope may change.
 
-### Usage
+## Usage
 
 This library implements the [WebSocket Web API](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) and is meant to be a drop-in replacement for React Native's WebSocket implementation.
 
@@ -65,7 +65,7 @@ ws.close();
 
 For more detailed information about the WebSocket API, check out the [MDN WebSocket documentation](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
 
-### Differences with React Native
+## Differences with React Native
 
 - Can create `Blob`s from `ArrayBuffer`, `ArrayBufferView` too. With React Native, [you can only create Blob from string or another Blob](https://github.com/facebook/react-native/blob/af384a914a4e9ef6a5d25b00bc14b0483e5af879/packages/react-native/Libraries/Blob/BlobManager.js#L69-L73)
 - Each `Blob` has `text()`, `arrayBuffer()`, and `stream()` methods. With React Native, you can only access the contents of `Blob` via [custom `data` field](https://github.com/facebook/react-native/blob/af384a914a4e9ef6a5d25b00bc14b0483e5af879/packages/react-native/Libraries/Blob/Blob.js#L75-L82)
@@ -75,21 +75,34 @@ For more detailed information about the WebSocket API, check out the [MDN WebSoc
 - Uses direct callbacks per WebSocket instance. [React Native broadcasts all events to JS and filters by connection ID, which is less efficient](https://github.com/facebook/react-native/blob/af384a914a4e9ef6a5d25b00bc14b0483e5af879/packages/react-native/React/CoreModules/RCTWebSocketModule.mm#L144-L157)
 - It will throw when attempting to close WebSocket connection with a code other than 1000 or outside of range 3000-4999. This is spec compliant behavior and something [not supported by React Native's WebSocket implementation](https://github.com/facebook/react-native/blob/af384a914a4e9ef6a5d25b00bc14b0483e5af879/packages/react-native/Libraries/WebSocket/WebSocket.js#L221)
 
-### Benchmarks
+## Benchmarks
 
-> [!NOTE]
+> [!IMPORTANT]
 > Benchmarks shown below operate in controlled environments and may not accurately reflect real-world performance. Results can vary significantly based on factors such as:
 > - Device model and OS version
 > - Network conditions and latency
 > - Message payload size and type
 > - Application state and concurrent operations
 
-These benchmarks are provided to demonstrate theoretical performance benefits and should be used as a general reference rather than absolute performance indicators.
+> [!CAUTION]
+> These benchmarks are provided to demonstrate theoretical performance benefits and should be used as a general reference rather than absolute performance indicators.
 
-You can browse the benchmark code [here](example/tests/benchmark.tsx) and check each message payload [here](example/tests/payloads.ts).
+### Methodology
 
+All tests were performed with local WebSocket server to minimize network variance. Each test was run enough times to have 10 samples, after removing outliers. You can browse the benchmark code [here](example/tests/benchmark.tsx) and check each message payload [here](example/tests/payloads.ts).
 
-### Small JSON payload - Text
+In the future, we would like to add benchmarks for:
+- CPU usage during message processing
+- Memory footprint during large transfers
+- Connection establishment time
+- Concurrent connection handling
+- Message latency under high load
+
+Your contributions are welcome! Check out our [contributing guidelines](CONTRIBUTING.md) to help improve these benchmarks.
+
+### Results
+
+#### Small JSON payload - Text
 
 <table>
   <tr>
@@ -224,7 +237,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
   </tr>
 </table>
 
-### Small JSON payload - Binary
+#### Small JSON payload - Binary
 
 <table>
   <tr>
@@ -359,7 +372,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
   </tr>
 </table>
 
-### Large JSON payload - Text
+#### Large JSON payload - Text
 
 <table>
   <tr>
@@ -494,7 +507,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
   </tr>
 </table>
 
-### Large JSON payload - Binary
+#### Large JSON payload - Binary
 
 <table>
   <tr>
@@ -512,15 +525,15 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
         </tr>
         <tr>
           <td>Out</td>
-          <td>1.94ms</td>
-          <td>11.36ms</td>
-          <td>5.85x</td>
+          <td>1.59ms</td>
+          <td>13.59ms</td>
+          <td>8.52x</td>
         </tr>
         <tr>
           <td>In</td>
-          <td>2.64ms</td>
-          <td>27.02ms</td>
-          <td>10.23x</td>
+          <td>2.79ms</td>
+          <td>26.77ms</td>
+          <td>9.58x</td>
         </tr>
       </table>
       <table>
@@ -531,16 +544,16 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th></th>
         </tr>
         <tr>
-          <td>Out</td>
-          <td>18.00ms</td>
-          <td>105.60ms</td>
-          <td>5.87x</td>
+          <td>Out </td>
+          <td>16.47ms</td>
+          <td>120.34ms</td>
+          <td>7.31x</td>
         </tr>
         <tr>
           <td>In</td>
-          <td>23.72ms</td>
-          <td>248.20ms</td>
-          <td>10.47x</td>
+          <td>21.73ms</td>
+          <td>250.45ms</td>
+          <td>11.53x</td>
         </tr>
       </table>
       <table>
@@ -551,16 +564,16 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
           <th></th>
         </tr>
         <tr>
-          <td>Out</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
+          <td>Out </td>
+          <td>113.43ms</td>
+          <td>1317.29ms</td>
+          <td>11.61x</td>
         </tr>
         <tr>
           <td>In</td>
-          <td>X</td>
-          <td>X</td>
-          <td>X</td>
+          <td>426.67ms</td>
+          <td>2971.67ms</td>
+          <td>6.96x</td>
         </tr>
       </table>
     </td>
@@ -629,7 +642,7 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
   </tr>
 </table>
 
-### Large Binary (Image - 234KB)
+#### Large Binary (Image - 234KB)
 
 <table>
   <tr>
@@ -677,21 +690,6 @@ You can browse the benchmark code [here](example/tests/benchmark.tsx) and check 
     </td>
   </tr>
 </table>
-
-### Methodology
-
-All tests were performed with local WebSocket server to minimize network variance. Each test was run enough times to have 10 samples, after removing outliers.
-
-In the future, we would like to add benchmarks for:
-- CPU usage during message processing
-- Memory footprint during large transfers
-- Connection establishment time
-- Concurrent connection handling
-- Message latency under high load
-
-Your contributions are welcome! Check out our [contributing guidelines](CONTRIBUTING.md) to help improve these benchmarks.
-
-
 
 ## Made with ❤️ at Callstack
 
