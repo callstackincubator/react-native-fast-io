@@ -5,7 +5,7 @@ export interface WebSocket extends HybridObject<{ ios: 'swift'; android: 'kotlin
   sendArrayBuffer(buffer: ArrayBuffer): void
 
   connect(): void
-  close(code?: number, reason?: string): void
+  close(code: number, reason: string): void
   ping(): void
 
   onOpen(callback: (selectedProtocol: string) => void): void
