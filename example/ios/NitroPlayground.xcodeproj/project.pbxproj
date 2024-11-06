@@ -14,6 +14,7 @@
 		70957A65132BC4E9B39A9A04 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0E38540129B92DAA08E84C4F /* PrivacyInfo.xcprivacy */; };
 		7699B88040F8A987B510C191 /* libPods-NitroPlayground-NitroPlaygroundTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-NitroPlayground-NitroPlaygroundTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		AD97562E2CDBCACC00317B72 /* img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AD97562D2CDBCACC00317B72 /* img.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-NitroPlayground.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NitroPlayground.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = NitroPlayground/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-NitroPlayground-NitroPlaygroundTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NitroPlayground-NitroPlaygroundTests.release.xcconfig"; path = "Target Support Files/Pods-NitroPlayground-NitroPlaygroundTests/Pods-NitroPlayground-NitroPlaygroundTests.release.xcconfig"; sourceTree = "<group>"; };
+		AD97562D2CDBCACC00317B72 /* img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = img.jpg; path = ../server/img.jpg; sourceTree = SOURCE_ROOT; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -69,6 +71,7 @@
 		13B07FAE1A68108700A75B9A /* NitroPlayground */ = {
 			isa = PBXGroup;
 			children = (
+				AD97562D2CDBCACC00317B72 /* img.jpg */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -228,6 +231,7 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				70957A65132BC4E9B39A9A04 /* PrivacyInfo.xcprivacy in Resources */,
+				AD97562E2CDBCACC00317B72 /* img.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

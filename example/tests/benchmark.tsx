@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { WebSocket as FastWebSocket } from 'react-native-fast-ws'
+import { createReadableStream, fetch, WebSocket as FastWS } from 'react-native-fast-io'
 
 import {
   CHAT_PAYLOAD,
@@ -111,7 +111,7 @@ function TestCase({ test, messageCount }: { test: (typeof TESTS)[0]; messageCoun
     try {
       const fastResult = await runSingleTest({
         // @ts-ignore
-        Ws: FastWebSocket,
+        Ws: FastWS,
         port: test.port,
         messageCount,
         testCase: test.name,
@@ -442,3 +442,13 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 })
+
+// tbd: playground
+;(async () => {
+  const img = createReadableStream('image.png')
+
+  await fetch('http://localhost:3002/upload', {
+    method: 'POST',
+    body: img,
+  })
+})()

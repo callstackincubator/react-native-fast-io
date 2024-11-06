@@ -1,0 +1,42 @@
+{
+  "name": "react-native-fast-io",
+  "version": "0.1.1",
+  "description": "FastIO",
+  "main": "src/index.ts",
+  "scripts": {
+    "codegen": "npx nitro-codegen"
+  },
+  "homepage": "https://github.com/callstackincubator/react-native-fast-io",
+  "license": "MIT",
+  "files": [
+    "src",
+    "android",
+    "!android/build",
+    "!android/.cxx",
+    "nitrogen",
+    "ios",
+    "nitro.json"
+  ],
+  "author": "Mike Grabowski <grabbou@gmail.com>",
+  "peerDependencies": {
+    "react-native-nitro-modules": "^0.15.0",
+    "react-native": "^0.76.0"
+  },
+  "dependencies": {
+    "event-target-shim": "^6.0.2",
+    "web-streams-polyfill": "^4.0.0"
+  },
+  "devDependencies": {
+    "nitro-codegen": "^0.15.0"
+  },
+  "keywords": [
+    "react-native",
+    "websocket",
+    "fetch",
+    "io",
+    "streams",
+    "nitro",
+    "react-native-nitro-modules",
+    "nitrogen"
+  ]
+}

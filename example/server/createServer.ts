@@ -1,15 +1,37 @@
 /// <reference types="bun-types" />
 
 /**
- * Creates a WebSocket server that sends configurable responses
+ * Creates a WebSocket server that sends configurable responses and handles file uploads
  */
 export function createServer(payload: string | Bun.BufferSource, port: number) {
   const server = Bun.serve({
-    fetch(req, server) {
+    async fetch(req, server) {
+      // Handle WebSocket upgrade
       if (server.upgrade(req)) {
         return
       }
-      return new Response('Upgrade failed', { status: 500 })
+
+      // Handle POST /upload
+      if (req.method === 'POST' && req.url.endsWith('/upload')) {
+        try {
+          console.log('req.body', req.body)
+          if (!req.body) {
+            return new Response('No body provided', { status: 400 })
+          }
+
+          for await (const chunk of req.body) {
+            console.log('Chunk:', chunk)
+          }
+
+          return new Response('Upload successful', { status: 200 })
+        } catch (error) {
+          console.error('Upload error:', error)
+          return new Response('Upload failed', { status: 500 })
+        }
+      }
+
+      // Default response for other routes
+      return new Response('Not found', { status: 404 })
     },
     websocket: {
       message(ws, message: string) {
@@ -32,7 +54,7 @@ export function createServer(payload: string | Bun.BufferSource, port: number) {
     port,
   })
 
-  console.log(`WebSocket server listening on ws://localhost:${port}`)
+  console.log(`Server listening on http://localhost:${port}`)
 
   // Return cleanup function
   return () => server.stop()
