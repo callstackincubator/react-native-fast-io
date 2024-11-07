@@ -16,6 +16,17 @@ class HybridFileSystem : HybridFileSystemSpec {
     return HybridInputStream(stream: stream)
   }
   
+  func getFileMetadata(path: String) throws -> Metadata {
+    let fileURL = Bundle.main.url(forResource: "img", withExtension: "jpg")!
+    let attributes = try FileManager.default.attributesOfItem(atPath: fileURL.path)
+    
+    return Metadata.init(
+      name: fileURL.lastPathComponent,
+      size: attributes[.size] as? Double ?? 0,
+      lastModified: 0
+    )
+  }
+  
   var hybridContext = margelo.nitro.HybridContext()
   
   // Return size of the instance to inform JS GC about memory pressure

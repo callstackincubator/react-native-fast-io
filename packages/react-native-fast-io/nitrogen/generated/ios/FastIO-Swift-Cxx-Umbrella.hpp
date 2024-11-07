@@ -24,6 +24,8 @@ namespace margelo::nitro::fastio { class HybridPassThroughStreamSpec; }
 namespace margelo::nitro::fastio { class HybridWebSocketManagerSpec; }
 // Forward declaration of `HybridWebSocketSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridWebSocketSpec; }
+// Forward declaration of `Metadata` to properly resolve imports.
+namespace margelo::nitro::fastio { struct Metadata; }
 // Forward declaration of `RequestMethod` to properly resolve imports.
 namespace margelo::nitro::fastio { enum class RequestMethod; }
 // Forward declaration of `RequestOptions` to properly resolve imports.
@@ -37,6 +39,7 @@ namespace margelo::nitro::fastio { struct RequestOptions; }
 #include "HybridPassThroughStreamSpec.hpp"
 #include "HybridWebSocketManagerSpec.hpp"
 #include "HybridWebSocketSpec.hpp"
+#include "Metadata.hpp"
 #include "RequestMethod.hpp"
 #include "RequestOptions.hpp"
 #include <NitroModules/ArrayBuffer.hpp>

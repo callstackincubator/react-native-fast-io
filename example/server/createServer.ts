@@ -14,7 +14,8 @@ export function createServer(payload: string | Bun.BufferSource, port: number) {
       // Handle POST /upload
       if (req.method === 'POST' && req.url.endsWith('/upload')) {
         try {
-          console.log('req.body', req.body)
+          console.log('Waiting for body...')
+
           if (!req.body) {
             return new Response('No body provided', { status: 400 })
           }

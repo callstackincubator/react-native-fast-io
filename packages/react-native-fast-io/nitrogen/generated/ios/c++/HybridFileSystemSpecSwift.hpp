@@ -14,10 +14,13 @@ namespace FastIO { class HybridFileSystemSpecCxx; }
 
 // Forward declaration of `HybridInputStreamSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
+// Forward declaration of `Metadata` to properly resolve imports.
+namespace margelo::nitro::fastio { struct Metadata; }
 
 #include <memory>
 #include "HybridInputStreamSpec.hpp"
 #include <string>
+#include "Metadata.hpp"
 
 #if __has_include(<NitroModules/HybridContext.hpp>)
 #include <NitroModules/HybridContext.hpp>
@@ -64,6 +67,10 @@ namespace margelo::nitro::fastio {
     // Methods
     inline std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec> createInputStream(const std::string& path) override {
       auto __result = _swiftPart.createInputStream(path);
+      return __result;
+    }
+    inline Metadata getFileMetadata(const std::string& path) override {
+      auto __result = _swiftPart.getFileMetadata(path);
       return __result;
     }
 

@@ -112,4 +112,15 @@ public class HybridFileSystemSpecCxx {
       fatalError("Swift errors can currently not be propagated to C++! See https://github.com/swiftlang/swift/issues/75290 (Error: \(__message))")
     }
   }
+  
+  @inline(__always)
+  public func getFileMetadata(path: std.string) -> Metadata {
+    do {
+      let __result = try self.__implementation.getFileMetadata(path: String(path))
+      return __result
+    } catch {
+      let __message = "\(error.localizedDescription)"
+      fatalError("Swift errors can currently not be propagated to C++! See https://github.com/swiftlang/swift/issues/75290 (Error: \(__message))")
+    }
+  }
 }

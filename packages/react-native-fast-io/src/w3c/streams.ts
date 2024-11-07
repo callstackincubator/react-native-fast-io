@@ -2,15 +2,15 @@ import { ReadableStream, WritableStream } from 'web-streams-polyfill'
 
 import { InputStream, OutputStream, PassThroughStream } from '../native/streams.nitro'
 
+const CHUNK_SIZE = 1024 * 64
+
 export const toReadableStream = (inputStream: InputStream) => {
   const stream = new ReadableStream<Uint8Array>({
-    async start() {
+    start() {
       inputStream.open()
     },
-
     pull(controller) {
-      const chunkSize = 1024 * 64
-      const buffer = new ArrayBuffer(chunkSize)
+      const buffer = new ArrayBuffer(CHUNK_SIZE)
 
       if (!inputStream.hasBytesAvailable()) {
         inputStream.close()
@@ -18,7 +18,7 @@ export const toReadableStream = (inputStream: InputStream) => {
         return
       }
 
-      const bytesRead = inputStream.read(buffer, chunkSize)
+      const bytesRead = inputStream.read(buffer, CHUNK_SIZE)
       if (bytesRead < 0) {
         inputStream.close()
         controller.error('Error reading from stream.')
@@ -29,7 +29,6 @@ export const toReadableStream = (inputStream: InputStream) => {
         controller.enqueue(new Uint8Array(buffer.slice(0, bytesRead)))
       }
     },
-
     cancel() {
       inputStream.close()
     },
@@ -43,22 +42,18 @@ export const toWritableStream = (outputStream: OutputStream) => {
     start() {
       outputStream.open()
     },
-
-    async write(chunk: ArrayBuffer) {
+    write(chunk: Uint8Array) {
       if (!outputStream.hasSpaceAvailable()) {
         throw new Error('No space available in output stream')
       }
-
-      const bytesWritten = outputStream.write(chunk, chunk.byteLength)
+      const bytesWritten = outputStream.write(chunk.buffer, chunk.byteLength)
       if (bytesWritten < 0) {
         throw new Error('Failed to write to output stream')
       }
     },
-
     close() {
       outputStream.close()
     },
-
     abort() {
       outputStream.close()
     },

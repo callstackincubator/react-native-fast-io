@@ -23,13 +23,16 @@ export class Blob {
    * https://w3c.github.io/FileAPI/#attributes-blob
    */
   readonly type: string
+
+  protected _size: number
   get size(): number {
-    return calculateSize(this.parts)
+    return this._size
   }
 
   constructor(parts: Array<BlobPart> = [], options: BlobPropertyBag = {}) {
     this.parts = parts
     this.type = options?.type?.toLowerCase() || ''
+    this._size = calculateSize(parts)
   }
 
   /**
@@ -61,12 +64,8 @@ export class Blob {
       async start(controller) {
         try {
           for (const stream of streams) {
-            const reader = stream.getReader()
-            // eslint-disable-next-line no-constant-condition
-            while (true) {
-              const { done, value } = await reader.read()
-              if (done) break
-              controller.enqueue(value)
+            for await (const chunk of stream) {
+              controller.enqueue(chunk)
             }
           }
           controller.close()
@@ -81,6 +80,14 @@ export class Blob {
    * https://w3c.github.io/FileAPI/#arraybuffer-method-algo
    */
   async arrayBuffer(): Promise<ArrayBuffer> {
+    const view = await this.bytes()
+    return view.buffer
+  }
+
+  /**
+   * https://w3c.github.io/FileAPI/#bytes-method-algo
+   */
+  async bytes(): Promise<Uint8Array> {
     const result = new ArrayBuffer(this.size)
     const view = new Uint8Array(result)
 
@@ -90,22 +97,14 @@ export class Blob {
       offset += chunk.length
     }
 
-    return result
-  }
-
-  /**
-   * https://w3c.github.io/FileAPI/#bytes-method-algo
-   */
-  async bytes(): Promise<Uint8Array> {
-    const buffer = await this.arrayBuffer()
-    return new Uint8Array(buffer)
+    return view
   }
 
   /**
    * https://w3c.github.io/FileAPI/#text-method-algo
    */
   async text(): Promise<string> {
-    const buffer = await this.arrayBuffer()
+    const buffer = await this.bytes()
     return new TextDecoder().decode(buffer)
   }
 

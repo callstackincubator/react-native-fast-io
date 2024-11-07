@@ -34,26 +34,17 @@ class File extends Blob {
 
 class NativeFile extends File {
   nativeStream: ReadableStream<Uint8Array>
-  override get size(): number {
-    // tbd: use real size, otherwise will overflow buffer for other images
-    return 234_347
-  }
 
   constructor(path: string) {
-    // tbd: return file descriptor
     const inputStream = FileSystem.createInputStream(path)
+    const metadata = FileSystem.getFileMetadata(path)
 
-    super(
-      [],
-      // tbd: get name
-      path,
-      {
-        // tbd: get last modified from native
-        lastModified: Date.now(),
-      }
-    )
+    super([], metadata.name, {
+      lastModified: metadata.lastModified,
+    })
 
     this.nativeStream = toReadableStream(inputStream)
+    this._size = metadata.size
   }
 
   stream() {

@@ -15,10 +15,13 @@
 
 // Forward declaration of `HybridInputStreamSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
+// Forward declaration of `Metadata` to properly resolve imports.
+namespace margelo::nitro::fastio { struct Metadata; }
 
 #include <memory>
 #include "HybridInputStreamSpec.hpp"
 #include <string>
+#include "Metadata.hpp"
 
 namespace margelo::nitro::fastio {
 
@@ -52,6 +55,7 @@ namespace margelo::nitro::fastio {
     public:
       // Methods
       virtual std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec> createInputStream(const std::string& path) = 0;
+      virtual Metadata getFileMetadata(const std::string& path) = 0;
 
     protected:
       // Hybrid Setup
