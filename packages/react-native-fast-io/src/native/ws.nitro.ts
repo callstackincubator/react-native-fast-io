@@ -1,4 +1,4 @@
-import { HybridObject } from 'react-native-nitro-modules'
+import { HybridObject, NitroModules } from 'react-native-nitro-modules'
 
 export interface WebSocket extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
   send(message: string): void
@@ -19,3 +19,6 @@ export interface WebSocket extends HybridObject<{ ios: 'swift'; android: 'kotlin
 export interface WebSocketManager extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
   create(url: string, protocols: string[]): WebSocket
 }
+
+export const WebSocketManager =
+  NitroModules.createHybridObject<WebSocketManager>('WebSocketManager')

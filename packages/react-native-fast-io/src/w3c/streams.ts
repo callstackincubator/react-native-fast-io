@@ -3,7 +3,7 @@ import { ReadableStream, WritableStream } from 'web-streams-polyfill'
 import { InputStream, OutputStream, PassThroughStream } from '../native/streams.nitro'
 
 export const toReadableStream = (inputStream: InputStream) => {
-  const stream = new ReadableStream({
+  const stream = new ReadableStream<Uint8Array>({
     async start() {
       inputStream.open()
     },
@@ -26,7 +26,7 @@ export const toReadableStream = (inputStream: InputStream) => {
       }
 
       if (bytesRead > 0) {
-        controller.enqueue(buffer.slice(0, bytesRead))
+        controller.enqueue(new Uint8Array(buffer.slice(0, bytesRead)))
       }
     },
 

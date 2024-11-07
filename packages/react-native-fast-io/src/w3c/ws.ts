@@ -4,12 +4,9 @@ import {
   getEventAttributeValue,
   setEventAttributeValue,
 } from 'event-target-shim'
-import { NitroModules } from 'react-native-nitro-modules'
 
 import { WebSocket as HybridWebSocket, WebSocketManager } from '../native/ws.nitro'
 import { Blob } from './blob'
-
-const manager = NitroModules.createHybridObject<WebSocketManager>('WebSocketManager')
 
 enum WebSocketReadyState {
   CONNECTING = 0,
@@ -103,7 +100,7 @@ export class WebSocket
     super()
 
     this.url = url
-    this.ws = manager.create(url, Array.isArray(protocols) ? protocols : [protocols])
+    this.ws = WebSocketManager.create(url, Array.isArray(protocols) ? protocols : [protocols])
 
     this.ws.onOpen((protocol) => {
       this._readyState = WebSocketReadyState.OPEN

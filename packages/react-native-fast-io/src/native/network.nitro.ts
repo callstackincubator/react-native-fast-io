@@ -1,4 +1,4 @@
-import { HybridObject } from 'react-native-nitro-modules'
+import { HybridObject, NitroModules } from 'react-native-nitro-modules'
 
 import { InputStream } from './streams.nitro'
 
@@ -13,3 +13,5 @@ export type RequestOptions = {
 export interface Network extends HybridObject<{ ios: 'swift' }> {
   request(opts: RequestOptions): Promise<void>
 }
+
+export const Network = NitroModules.createHybridObject<Network>('Network')
