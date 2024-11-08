@@ -27,7 +27,6 @@
     "web-streams-polyfill": "^4.0.0"
   },
   "devDependencies": {
-    "@types/text-encoding": "^0.0.39",
     "nitro-codegen": "^0.15.0"
   },
   "keywords": [

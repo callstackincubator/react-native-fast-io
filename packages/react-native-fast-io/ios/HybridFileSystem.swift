@@ -25,16 +25,17 @@ class HybridFileSystem : HybridFileSystemSpec {
       path: path,
       root: "/",
       size: attributes[.size] as? Double ?? 0,
-      lastModified: 0
+      lastModified: (attributes[.modificationDate] as? Date)?.timeIntervalSince1970 ?? 0 * 1000
     )
   }
   
   func showOpenFilePicker() throws -> Promise<[String]> {
+    let filePicker = FilePicker()
+    
     let promise = Promise<[String]>()
     
     Task {
       do {
-        let filePicker = FilePicker()
         let files = try await filePicker.showOpenFilePicker()
         promise.resolve(withResult: files)
       } catch {

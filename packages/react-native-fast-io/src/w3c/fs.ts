@@ -4,16 +4,10 @@ import { FileSystem, Metadata } from '../native/fs.nitro'
 import { Blob } from './blob'
 import { toReadableStream } from './streams'
 
-/**
- * https://w3c.github.io/FileAPI/#dfn-file
- */
 class File extends Blob implements globalThis.File {
   name: string
   lastModified: number
 
-  /**
-   * https://w3c.github.io/FileAPI/#file-constructor
-   */
   constructor(fileBits: BlobPart[], name: string, options: FilePropertyBag = {}) {
     super(fileBits, options)
     this.name = name
@@ -86,7 +80,22 @@ class FileSystemFileHandle implements globalThis.FileSystemFileHandle {
   }
 }
 
-export async function showOpenFilePicker(): Promise<FileSystemFileHandle[]> {
+export async function showOpenFilePicker(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  options?: OpenFilePickerOptions
+): Promise<FileSystemFileHandle[]> {
   const paths = await FileSystem.showOpenFilePicker()
   return paths.map((path) => new FileSystemFileHandle(path))
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function showSaveFilePicker(options?: SaveFilePickerOptions): Promise<FileSystemFileHandle> {
+  throw new Error('Not implemented')
+}
+
+export function showDirectoryPicker(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  options?: DirectoryPickerOptions
+): Promise<FileSystemDirectoryHandle> {
+  throw new Error('Not implemented')
 }
