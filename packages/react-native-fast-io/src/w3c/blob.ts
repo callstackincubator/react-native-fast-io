@@ -1,5 +1,3 @@
-import { ReadableStream } from 'web-streams-polyfill'
-
 export class Blob implements globalThis.Blob {
   private parts: Array<BlobPart>
 

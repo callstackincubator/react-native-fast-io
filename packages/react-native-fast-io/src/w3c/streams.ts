@@ -1,5 +1,3 @@
-import { ReadableStream, WritableStream } from 'web-streams-polyfill'
-
 import { InputStream, OutputStream, PassThroughStream } from '../native/streams.nitro'
 
 const CHUNK_SIZE = 1024 * 64

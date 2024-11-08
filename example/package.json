@@ -14,7 +14,8 @@
     "react": "18.3.1",
     "react-native": "0.76.0",
     "react-native-fast-io": "0.1.1",
-    "react-native-nitro-modules": "^0.15.0"
+    "react-native-nitro-modules": "^0.15.0",
+    "web-streams-polyfill": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

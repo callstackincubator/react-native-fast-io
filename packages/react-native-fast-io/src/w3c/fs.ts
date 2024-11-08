@@ -1,5 +1,3 @@
-import { ReadableStream } from 'web-streams-polyfill'
-
 import { FileSystem, Metadata } from '../native/fs.nitro'
 import { Blob } from './blob'
 import { toReadableStream } from './streams'
