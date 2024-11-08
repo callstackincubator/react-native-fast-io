@@ -11,6 +11,8 @@ type Metadata = {
 export interface FileSystem extends HybridObject<{ ios: 'swift' }> {
   createInputStream(path: string): InputStream
   getFileMetadata(path: string): Metadata
+
+  showOpenFilePicker(): Promise<string[]>
 }
 
 export const FileSystem = NitroModules.createHybridObject<FileSystem>('FileSystem')

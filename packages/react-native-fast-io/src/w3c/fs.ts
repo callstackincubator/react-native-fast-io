@@ -56,7 +56,28 @@ class NativeFile extends File {
   }
 }
 
-// tbd: convert this to FileSystemFileHandle
-export const readAsFile = (path: string) => {
-  return new NativeFile(path)
+class FileSystemFileHandle {
+  readonly kind = 'file'
+  private path: string
+
+  constructor(path: string) {
+    this.path = path
+  }
+
+  async getFile() {
+    return new NativeFile(this.path)
+  }
+
+  async createWritable() {
+    throw new Error('Not implemented')
+  }
+
+  get [Symbol.toStringTag](): string {
+    return 'FileSystemFileHandle'
+  }
+}
+
+export async function showOpenFilePicker(): Promise<FileSystemFileHandle[]> {
+  const paths = await FileSystem.showOpenFilePicker()
+  return paths.map((path) => new FileSystemFileHandle(path))
 }

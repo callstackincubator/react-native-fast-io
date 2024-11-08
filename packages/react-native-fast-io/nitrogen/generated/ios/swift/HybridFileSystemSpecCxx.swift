@@ -123,4 +123,27 @@ public class HybridFileSystemSpecCxx {
       fatalError("Swift errors can currently not be propagated to C++! See https://github.com/swiftlang/swift/issues/75290 (Error: \(__message))")
     }
   }
+  
+  @inline(__always)
+  public func showOpenFilePicker() -> bridge.PromiseHolder_std__vector_std__string__ {
+    do {
+      let __result = try self.__implementation.showOpenFilePicker()
+      return { () -> bridge.PromiseHolder_std__vector_std__string__ in
+        let __promiseHolder = bridge.create_PromiseHolder_std__vector_std__string__()
+        __result
+          .then({ __result in __promiseHolder.resolve({ () -> bridge.std__vector_std__string_ in
+        var __vector = bridge.create_std__vector_std__string_(__result.count)
+        for __item in __result {
+          __vector.push_back(std.string(__item))
+        }
+        return __vector
+      }()) })
+          .catch({ __error in __promiseHolder.reject(std.string(String(describing: __error))) })
+        return __promiseHolder
+      }()
+    } catch {
+      let __message = "\(error.localizedDescription)"
+      fatalError("Swift errors can currently not be propagated to C++! See https://github.com/swiftlang/swift/issues/75290 (Error: \(__message))")
+    }
+  }
 }

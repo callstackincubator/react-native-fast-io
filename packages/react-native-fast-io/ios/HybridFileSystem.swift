@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import NitroModules
 
 class HybridFileSystem : HybridFileSystemSpec {
   func createInputStream(path: String) -> any HybridInputStreamSpec {
@@ -25,6 +26,22 @@ class HybridFileSystem : HybridFileSystemSpec {
       size: attributes[.size] as? Double ?? 0,
       lastModified: 0
     )
+  }
+  
+  func showOpenFilePicker() throws -> Promise<[String]> {
+    let promise = Promise<[String]>()
+    
+    Task {
+      do {
+        let filePicker = FilePicker()
+        let files = try await filePicker.showOpenFilePicker()
+        promise.resolve(withResult: files)
+      } catch {
+        promise.reject(withError: error)
+      }
+    }
+    
+    return promise
   }
   
   var hybridContext = margelo.nitro.HybridContext()

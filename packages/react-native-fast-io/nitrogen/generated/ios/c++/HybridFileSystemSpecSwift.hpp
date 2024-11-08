@@ -21,6 +21,9 @@ namespace margelo::nitro::fastio { struct Metadata; }
 #include "HybridInputStreamSpec.hpp"
 #include <string>
 #include "Metadata.hpp"
+#include <future>
+#include <vector>
+#include <NitroModules/PromiseHolder.hpp>
 
 #if __has_include(<NitroModules/HybridContext.hpp>)
 #include <NitroModules/HybridContext.hpp>
@@ -72,6 +75,10 @@ namespace margelo::nitro::fastio {
     inline Metadata getFileMetadata(const std::string& path) override {
       auto __result = _swiftPart.getFileMetadata(path);
       return __result;
+    }
+    inline std::future<std::vector<std::string>> showOpenFilePicker() override {
+      auto __result = _swiftPart.showOpenFilePicker();
+      return __result.getFuture();
     }
 
   private:
