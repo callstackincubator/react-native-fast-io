@@ -30,11 +30,13 @@ namespace margelo::nitro::fastio {
   struct Metadata {
   public:
     std::string name     SWIFT_PRIVATE;
+    std::string path     SWIFT_PRIVATE;
+    std::string root     SWIFT_PRIVATE;
     double size     SWIFT_PRIVATE;
     double lastModified     SWIFT_PRIVATE;
 
   public:
-    explicit Metadata(std::string name, double size, double lastModified): name(name), size(size), lastModified(lastModified) {}
+    explicit Metadata(std::string name, std::string path, std::string root, double size, double lastModified): name(name), path(path), root(root), size(size), lastModified(lastModified) {}
   };
 
 } // namespace margelo::nitro::fastio
@@ -50,6 +52,8 @@ namespace margelo::nitro {
       jsi::Object obj = arg.asObject(runtime);
       return Metadata(
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "name")),
+        JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "path")),
+        JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "root")),
         JSIConverter<double>::fromJSI(runtime, obj.getProperty(runtime, "size")),
         JSIConverter<double>::fromJSI(runtime, obj.getProperty(runtime, "lastModified"))
       );
@@ -57,6 +61,8 @@ namespace margelo::nitro {
     static inline jsi::Value toJSI(jsi::Runtime& runtime, const Metadata& arg) {
       jsi::Object obj(runtime);
       obj.setProperty(runtime, "name", JSIConverter<std::string>::toJSI(runtime, arg.name));
+      obj.setProperty(runtime, "path", JSIConverter<std::string>::toJSI(runtime, arg.path));
+      obj.setProperty(runtime, "root", JSIConverter<std::string>::toJSI(runtime, arg.root));
       obj.setProperty(runtime, "size", JSIConverter<double>::toJSI(runtime, arg.size));
       obj.setProperty(runtime, "lastModified", JSIConverter<double>::toJSI(runtime, arg.lastModified));
       return obj;
@@ -67,6 +73,8 @@ namespace margelo::nitro {
       }
       jsi::Object obj = value.getObject(runtime);
       if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "name"))) return false;
+      if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "path"))) return false;
+      if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "root"))) return false;
       if (!JSIConverter<double>::canConvert(runtime, obj.getProperty(runtime, "size"))) return false;
       if (!JSIConverter<double>::canConvert(runtime, obj.getProperty(runtime, "lastModified"))) return false;
       return true;

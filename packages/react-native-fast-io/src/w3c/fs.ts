@@ -1,20 +1,13 @@
 import { ReadableStream } from 'web-streams-polyfill'
 
-import { FileSystem } from '../native/fs.nitro'
-import { Blob, BlobPart, BlobPropertyBag } from './blob'
+import { FileSystem, Metadata } from '../native/fs.nitro'
+import { Blob } from './blob'
 import { toReadableStream } from './streams'
-
-/**
- * https://w3c.github.io/FileAPI/#dfn-FilePropertyBag
- */
-export interface FilePropertyBag extends BlobPropertyBag {
-  lastModified?: number
-}
 
 /**
  * https://w3c.github.io/FileAPI/#dfn-file
  */
-class File extends Blob {
+class File extends Blob implements globalThis.File {
   name: string
   lastModified: number
 
@@ -30,21 +23,24 @@ class File extends Blob {
   get [Symbol.toStringTag](): string {
     return 'File'
   }
+
+  get webkitRelativePath(): string {
+    throw new Error('Not implemented')
+  }
 }
 
 class NativeFile extends File {
   nativeStream: ReadableStream<Uint8Array>
 
-  constructor(path: string) {
+  constructor({ name, path, size, lastModified }: Metadata) {
     const inputStream = FileSystem.createInputStream(path)
-    const metadata = FileSystem.getFileMetadata(path)
 
-    super([], metadata.name, {
-      lastModified: metadata.lastModified,
+    super([], name, {
+      lastModified,
     })
 
     this.nativeStream = toReadableStream(inputStream)
-    this._size = metadata.size
+    this._size = size
   }
 
   stream() {
@@ -56,20 +52,36 @@ class NativeFile extends File {
   }
 }
 
-class FileSystemFileHandle {
+class FileSystemFileHandle implements globalThis.FileSystemFileHandle {
   readonly kind = 'file'
-  private path: string
+
+  get name(): string {
+    return this.#metadata.name
+  }
+
+  #metadata: Metadata
 
   constructor(path: string) {
-    this.path = path
+    this.#metadata = FileSystem.getFileMetadata(path)
   }
 
   async getFile() {
-    return new NativeFile(this.path)
+    return new NativeFile(this.#metadata)
   }
 
-  async createWritable() {
+  async createWritable(): Promise<FileSystemWritableFileStream> {
     throw new Error('Not implemented')
+  }
+
+  /**
+   * https://fs.spec.whatwg.org/#file-system-locator-the-same-locator-as
+   */
+  async isSameEntry(other: FileSystemHandle): Promise<boolean> {
+    return (
+      other instanceof FileSystemFileHandle &&
+      this.#metadata.root === other.#metadata.root &&
+      this.#metadata.path === other.#metadata.path
+    )
   }
 
   get [Symbol.toStringTag](): string {

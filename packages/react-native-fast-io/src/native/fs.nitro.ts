@@ -2,8 +2,10 @@ import { HybridObject, NitroModules } from 'react-native-nitro-modules'
 
 import { InputStream } from './streams.nitro'
 
-type Metadata = {
+export type Metadata = {
   name: string
+  path: string
+  root: string
   size: number
   lastModified: number
 }

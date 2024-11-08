@@ -3,6 +3,8 @@
   "compilerOptions": {
     "paths": {
       "event-target-shim": ["./node_modules/event-target-shim"],
-    }
+    },
+    "lib": ["es2020", "dom"],
+    "types": []
   }
 }

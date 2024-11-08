@@ -1,22 +1,9 @@
 import { ReadableStream } from 'web-streams-polyfill'
 
 /**
- * https://w3c.github.io/FileAPI/#dfn-BlobPropertyBag
- */
-export interface BlobPropertyBag {
-  type?: string
-}
-
-/**
- * https://w3c.github.io/FileAPI/#typedefdef-blobpart
- */
-type BufferSource = ArrayBuffer | ArrayBufferView
-export type BlobPart = BufferSource | Blob | string
-
-/**
  * https://w3c.github.io/FileAPI/#blob-section
  */
-export class Blob {
+export class Blob implements globalThis.Blob {
   private parts: Array<BlobPart>
 
   /**

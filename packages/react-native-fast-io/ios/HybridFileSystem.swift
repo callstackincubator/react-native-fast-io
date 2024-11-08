@@ -10,19 +10,20 @@ import NitroModules
 
 class HybridFileSystem : HybridFileSystemSpec {
   func createInputStream(path: String) -> any HybridInputStreamSpec {
-    let fakePath = Bundle.main.url(forResource: "img", withExtension: "jpg")!.path
-    guard let stream = InputStream(fileAtPath: fakePath) else {
+    guard let stream = InputStream(fileAtPath: path) else {
       fatalError("Failed to create stream from \(path)")
     }
     return HybridInputStream(stream: stream)
   }
   
   func getFileMetadata(path: String) throws -> Metadata {
-    let fileURL = Bundle.main.url(forResource: "img", withExtension: "jpg")!
-    let attributes = try FileManager.default.attributesOfItem(atPath: fileURL.path)
-    
+    let attributes = try FileManager.default.attributesOfItem(atPath: path)
+    let fileURL = URL(fileURLWithPath: path)
+
     return Metadata.init(
       name: fileURL.lastPathComponent,
+      path: path,
+      root: "/",
       size: attributes[.size] as? Double ?? 0,
       lastModified: 0
     )
