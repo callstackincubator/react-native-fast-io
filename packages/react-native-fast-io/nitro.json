@@ -1,0 +1,25 @@
+{
+  "cxxNamespace": ["fastio"],
+  "ios": {
+    "iosModuleName": "FastIO"
+  },
+  "android": {
+    "androidNamespace": ["fastio"],
+    "androidCxxLibName": "FastIO"
+  },
+  "autolinking": {
+    "WebSocketManager": {
+      "swift": "HybridWebSocketManager",
+      "kotlin": "HybridWebSocketManager"
+    },
+    "FileSystem": {
+      "swift": "HybridFileSystem"
+    },
+    "Network": {
+      "swift": "HybridNetwork"
+    },
+    "PassThroughStream": {
+      "swift": "HybridPassThroughStream"
+    }
+  }
+}

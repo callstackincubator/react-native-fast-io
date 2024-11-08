@@ -17,7 +17,7 @@ export const CHAT_PAYLOAD = JSON.stringify({
     type: 'direct',
   },
   metadata: {
-    client: 'react-native-fast-ws/1.0.0',
+    client: 'react-native-fast-io/1.0.0',
   },
 })
 

@@ -1,0 +1,8 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "event-target-shim": ["./node_modules/event-target-shim"],
+    }
+  }
+}
