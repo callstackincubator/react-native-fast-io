@@ -76,9 +76,9 @@ export class WebSocket
 
   binaryType: 'arraybuffer' | 'blob' = 'blob'
 
-  private _readyState: WebSocketReadyState = WebSocketReadyState.CONNECTING
+  #readyState: WebSocketReadyState = WebSocketReadyState.CONNECTING
   get readyState() {
-    return this._readyState
+    return this.#readyState
   }
 
   get bufferedAmount() {
@@ -89,9 +89,9 @@ export class WebSocket
     throw new Error('Not implemented')
   }
 
-  private _protocol = ''
+  #protocol = ''
   get protocol() {
-    return this._protocol
+    return this.#protocol
   }
 
   private readonly ws: HybridWebSocket
@@ -103,8 +103,8 @@ export class WebSocket
     this.ws = WebSocketManager.create(url, Array.isArray(protocols) ? protocols : [protocols])
 
     this.ws.onOpen((protocol) => {
-      this._readyState = WebSocketReadyState.OPEN
-      this._protocol = protocol
+      this.#readyState = WebSocketReadyState.OPEN
+      this.#protocol = protocol
       this.dispatchEvent(new Event('open'))
     })
 
@@ -127,14 +127,14 @@ export class WebSocket
        * Sending `close` frame before proceeding to close the connection
        * https://datatracker.ietf.org/doc/html/rfc6455#section-7.1.7
        */
-      this._readyState = WebSocketReadyState.CLOSED
+      this.#readyState = WebSocketReadyState.CLOSED
       this.dispatchEvent(new CloseEvent(ABNORMAL_CLOSURE))
 
       this.close()
     })
 
     this.ws.onClose((code, reason) => {
-      this._readyState = WebSocketReadyState.CLOSED
+      this.#readyState = WebSocketReadyState.CLOSED
       this.dispatchEvent(new CloseEvent(code, reason))
     })
 
@@ -146,8 +146,12 @@ export class WebSocket
    */
 
   send(message: string | ArrayBuffer | ArrayBufferView | Blob) {
-    if (this._readyState === WebSocketReadyState.CONNECTING) {
+    if (this.#readyState === WebSocketReadyState.CONNECTING) {
       throw new Error('InvalidStateError')
+    }
+
+    if (this.#readyState !== WebSocketReadyState.OPEN) {
+      return
     }
 
     if (typeof message === 'string') {
@@ -172,8 +176,6 @@ export class WebSocket
       })()
       return
     }
-
-    throw new TypeError('Invalid message type')
   }
 
   /**
@@ -181,8 +183,8 @@ export class WebSocket
    */
   close(code: number = 1000, reason: string = '') {
     if (
-      this._readyState === WebSocketReadyState.CLOSING ||
-      this._readyState === WebSocketReadyState.CLOSED
+      this.#readyState === WebSocketReadyState.CLOSING ||
+      this.#readyState === WebSocketReadyState.CLOSED
     ) {
       return
     }
@@ -191,7 +193,7 @@ export class WebSocket
       throw new Error('Invalid close code. Must be 1000 or in range 3000-4999.')
     }
 
-    this._readyState = WebSocketReadyState.CLOSING
+    this.#readyState = WebSocketReadyState.CLOSING
     this.ws.close(code, reason)
   }
 
