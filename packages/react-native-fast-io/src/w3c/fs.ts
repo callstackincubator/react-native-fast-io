@@ -73,9 +73,6 @@ class FileSystemFileHandle implements globalThis.FileSystemFileHandle {
     throw new Error('Not implemented')
   }
 
-  /**
-   * https://fs.spec.whatwg.org/#file-system-locator-the-same-locator-as
-   */
   async isSameEntry(other: FileSystemHandle): Promise<boolean> {
     return (
       other instanceof FileSystemFileHandle &&
