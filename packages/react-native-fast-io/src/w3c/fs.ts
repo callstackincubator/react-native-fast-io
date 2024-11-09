@@ -2,7 +2,7 @@ import { FileSystem, Metadata } from '../native/fs.nitro'
 import { Blob } from './blob'
 import { toReadableStream } from './streams'
 
-class File extends Blob implements globalThis.File {
+export class File extends Blob implements globalThis.File {
   name: string
   lastModified: number
 

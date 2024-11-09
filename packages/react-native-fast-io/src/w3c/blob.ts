@@ -14,9 +14,6 @@ export class Blob implements globalThis.Blob {
     this._size = calculateSize(parts)
   }
 
-  /**
-   * https://w3c.github.io/FileAPI/#slice-method-algo
-   */
   slice(): Blob {
     throw new Error('Not implemented')
   }
