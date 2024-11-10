@@ -7,6 +7,7 @@ export type Metadata = {
   path: string
   root: string
   size: number
+  type: string
   lastModified: number
 }
 
