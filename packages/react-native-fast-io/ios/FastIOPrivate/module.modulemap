@@ -1,0 +1,4 @@
+module FastIOPrivate {
+    header "../RCTUtilsWrapper.h"
+    export *
+}

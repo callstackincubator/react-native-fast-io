@@ -7,8 +7,9 @@
 
 import Foundation
 import NitroModules
+import FastIOPrivate
 
-class HybridFileSystem : HybridFileSystemSpec {
+class HybridFileSystem : NSObject, UIDocumentPickerDelegate, HybridFileSystemSpec {
   func createInputStream(path: String) -> any HybridInputStreamSpec {
     guard let stream = InputStream(fileAtPath: path) else {
       fatalError("Failed to create stream from \(path)")
@@ -29,21 +30,46 @@ class HybridFileSystem : HybridFileSystemSpec {
     )
   }
   
+  private var filePicker: (promise: Promise<[String]>, vc: UIDocumentPickerViewController)?
   func showOpenFilePicker() throws -> Promise<[String]> {
-    let filePicker = FilePicker()
+    if filePicker != nil {
+      return Promise.rejected(withError: RuntimeError.error(withMessage: "File picker already open"))
+    }
     
     let promise = Promise<[String]>()
     
-    Task {
-      do {
-        let files = try await filePicker.showOpenFilePicker()
-        promise.resolve(withResult: files)
-      } catch {
-        promise.reject(withError: error)
+    DispatchQueue.main.async {
+      let documentPicker = UIDocumentPickerViewController(
+        forOpeningContentTypes: [.item],
+        asCopy: true
+      )
+      documentPicker.delegate = self
+      
+      guard let vc = RCTUtilsWrapper.getPresentedViewController() else {
+        promise.reject(withError: RuntimeError.error(withMessage: "Cannot present file picker"))
+        return
       }
+      
+      vc.present(documentPicker, animated: true)
+      
+      self.filePicker = (promise, documentPicker)
     }
     
     return promise
+  }
+  
+  func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+    controller.dismiss(animated: true, completion: nil)
+    
+    filePicker?.promise.resolve(withResult: urls.map { $0.path })
+    filePicker = nil
+  }
+  
+  func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+    controller.dismiss(animated: true, completion: nil)
+    
+    filePicker?.promise.resolve(withResult: [])
+    filePicker = nil
   }
   
   var hybridContext = margelo.nitro.HybridContext()
@@ -51,5 +77,14 @@ class HybridFileSystem : HybridFileSystemSpec {
   // Return size of the instance to inform JS GC about memory pressure
   var memorySize: Int {
     return getSizeOf(self)
+  }
+  
+  deinit {
+    if let (promise, picker) = filePicker {
+      promise.resolve(withResult: [])
+      DispatchQueue.main.async {
+        picker.dismiss(animated: false)
+      }
+    }
   }
 }
