@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HybridPassThroughStream : HybridPassThroughStreamSpec {
+class HybridDuplexStream : HybridDuplexStreamSpec {
   var inputStream: (any HybridInputStreamSpec)
   var outputStream: (any HybridOutputStreamSpec)
   

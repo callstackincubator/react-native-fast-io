@@ -18,8 +18,8 @@
     "Network": {
       "swift": "HybridNetwork"
     },
-    "PassThroughStream": {
-      "swift": "HybridPassThroughStream"
+    "DuplexStream": {
+      "swift": "HybridDuplexStream"
     }
   }
 }
