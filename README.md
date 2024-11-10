@@ -15,15 +15,21 @@
 
 ## Getting started
 
+> [!WARNING]
+> This library is still under development. Use at your own risk.
+
 ```
 npm install react-native-fast-io --save
 ```
 
-> [!NOTE]
-> This package requires React Native 0.76 or higher. You must also install and configure [Nitro Modules](https://github.com/mrousavy/nitro) to use this package.
+### Prerequisites
 
-> [!WARNING]
-> This library is still under development. Use at your own risk.
+- React Native 0.76 or higher
+- Nitro Modules
+- Polyfills:
+  - TextDecoder, e.g. `@bacons/text-decoder`
+  - Streams, e.g. `web-streams-polyfill/polyfill`
+  - AsyncIterator, e.g. `@azure/core-asynciterator-polyfill`
 
 ## Usage
 
