@@ -114,9 +114,9 @@ public class HybridFileSystemSpecCxx {
   }
   
   @inline(__always)
-  public func getFileMetadata(path: std.string) -> Metadata {
+  public func getMetadata(path: std.string) -> Metadata {
     do {
-      let __result = try self.__implementation.getFileMetadata(path: String(path))
+      let __result = try self.__implementation.getMetadata(path: String(path))
       return __result
     } catch {
       let __message = "\(error.localizedDescription)"
@@ -125,9 +125,26 @@ public class HybridFileSystemSpecCxx {
   }
   
   @inline(__always)
-  public func showOpenFilePicker() -> bridge.PromiseHolder_std__vector_std__string__ {
+  public func getWellKnownDirectoryPath(directory: Int32) -> std.string {
     do {
-      let __result = try self.__implementation.showOpenFilePicker()
+      let __result = try self.__implementation.getWellKnownDirectoryPath(directory: margelo.nitro.fastio.WellKnownDirectory(rawValue: directory)!)
+      return std.string(__result)
+    } catch {
+      let __message = "\(error.localizedDescription)"
+      fatalError("Swift errors can currently not be propagated to C++! See https://github.com/swiftlang/swift/issues/75290 (Error: \(__message))")
+    }
+  }
+  
+  @inline(__always)
+  public func showOpenFilePicker(options: bridge.std__optional_NativeFilePickerOptions_) -> bridge.PromiseHolder_std__vector_std__string__ {
+    do {
+      let __result = try self.__implementation.showOpenFilePicker(options: { () -> NativeFilePickerOptions? in
+        if let __unwrapped = options.value {
+          return __unwrapped
+        } else {
+          return nil
+        }
+      }())
       return { () -> bridge.PromiseHolder_std__vector_std__string__ in
         let __promiseHolder = bridge.create_PromiseHolder_std__vector_std__string__()
         __result

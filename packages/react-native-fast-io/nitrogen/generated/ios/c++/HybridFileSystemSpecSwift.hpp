@@ -16,14 +16,21 @@ namespace FastIO { class HybridFileSystemSpecCxx; }
 namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 // Forward declaration of `Metadata` to properly resolve imports.
 namespace margelo::nitro::fastio { struct Metadata; }
+// Forward declaration of `WellKnownDirectory` to properly resolve imports.
+namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
+// Forward declaration of `NativeFilePickerOptions` to properly resolve imports.
+namespace margelo::nitro::fastio { struct NativeFilePickerOptions; }
 
 #include <memory>
 #include "HybridInputStreamSpec.hpp"
 #include <string>
 #include "Metadata.hpp"
+#include "WellKnownDirectory.hpp"
 #include <future>
 #include <vector>
 #include <NitroModules/PromiseHolder.hpp>
+#include <optional>
+#include "NativeFilePickerOptions.hpp"
 
 #if __has_include(<NitroModules/HybridContext.hpp>)
 #include <NitroModules/HybridContext.hpp>
@@ -72,12 +79,16 @@ namespace margelo::nitro::fastio {
       auto __result = _swiftPart.createInputStream(path);
       return __result;
     }
-    inline Metadata getFileMetadata(const std::string& path) override {
-      auto __result = _swiftPart.getFileMetadata(path);
+    inline Metadata getMetadata(const std::string& path) override {
+      auto __result = _swiftPart.getMetadata(path);
       return __result;
     }
-    inline std::future<std::vector<std::string>> showOpenFilePicker() override {
-      auto __result = _swiftPart.showOpenFilePicker();
+    inline std::string getWellKnownDirectoryPath(WellKnownDirectory directory) override {
+      auto __result = _swiftPart.getWellKnownDirectoryPath(static_cast<int>(directory));
+      return __result;
+    }
+    inline std::future<std::vector<std::string>> showOpenFilePicker(const std::optional<NativeFilePickerOptions>& options) override {
+      auto __result = _swiftPart.showOpenFilePicker(options);
       return __result.getFuture();
     }
 

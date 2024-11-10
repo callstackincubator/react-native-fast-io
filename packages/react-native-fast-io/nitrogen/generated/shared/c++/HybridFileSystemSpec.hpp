@@ -17,13 +17,20 @@
 namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 // Forward declaration of `Metadata` to properly resolve imports.
 namespace margelo::nitro::fastio { struct Metadata; }
+// Forward declaration of `WellKnownDirectory` to properly resolve imports.
+namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
+// Forward declaration of `NativeFilePickerOptions` to properly resolve imports.
+namespace margelo::nitro::fastio { struct NativeFilePickerOptions; }
 
 #include <memory>
 #include "HybridInputStreamSpec.hpp"
 #include <string>
 #include "Metadata.hpp"
+#include "WellKnownDirectory.hpp"
 #include <future>
 #include <vector>
+#include <optional>
+#include "NativeFilePickerOptions.hpp"
 
 namespace margelo::nitro::fastio {
 
@@ -57,8 +64,9 @@ namespace margelo::nitro::fastio {
     public:
       // Methods
       virtual std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec> createInputStream(const std::string& path) = 0;
-      virtual Metadata getFileMetadata(const std::string& path) = 0;
-      virtual std::future<std::vector<std::string>> showOpenFilePicker() = 0;
+      virtual Metadata getMetadata(const std::string& path) = 0;
+      virtual std::string getWellKnownDirectoryPath(WellKnownDirectory directory) = 0;
+      virtual std::future<std::vector<std::string>> showOpenFilePicker(const std::optional<NativeFilePickerOptions>& options) = 0;
 
     protected:
       // Hybrid Setup

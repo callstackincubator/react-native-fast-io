@@ -26,10 +26,14 @@ namespace margelo::nitro::fastio { class HybridWebSocketManagerSpec; }
 namespace margelo::nitro::fastio { class HybridWebSocketSpec; }
 // Forward declaration of `Metadata` to properly resolve imports.
 namespace margelo::nitro::fastio { struct Metadata; }
+// Forward declaration of `NativeFilePickerOptions` to properly resolve imports.
+namespace margelo::nitro::fastio { struct NativeFilePickerOptions; }
 // Forward declaration of `RequestMethod` to properly resolve imports.
 namespace margelo::nitro::fastio { enum class RequestMethod; }
 // Forward declaration of `RequestOptions` to properly resolve imports.
 namespace margelo::nitro::fastio { struct RequestOptions; }
+// Forward declaration of `WellKnownDirectory` to properly resolve imports.
+namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 
 // Include C++ defined types
 #include "HybridFileSystemSpec.hpp"
@@ -40,12 +44,15 @@ namespace margelo::nitro::fastio { struct RequestOptions; }
 #include "HybridWebSocketManagerSpec.hpp"
 #include "HybridWebSocketSpec.hpp"
 #include "Metadata.hpp"
+#include "NativeFilePickerOptions.hpp"
 #include "RequestMethod.hpp"
 #include "RequestOptions.hpp"
+#include "WellKnownDirectory.hpp"
 #include <NitroModules/ArrayBuffer.hpp>
 #include <functional>
 #include <future>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 

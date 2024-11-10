@@ -33,6 +33,7 @@ public protocol HybridFileSystemSpec: AnyObject, HybridObjectSpec {
 
   // Methods
   func createInputStream(path: String) throws -> (any HybridInputStreamSpec)
-  func getFileMetadata(path: String) throws -> Metadata
-  func showOpenFilePicker() throws -> Promise<[String]>
+  func getMetadata(path: String) throws -> Metadata
+  func getWellKnownDirectoryPath(directory: WellKnownDirectory) throws -> String
+  func showOpenFilePicker(options: NativeFilePickerOptions?) throws -> Promise<[String]>
 }

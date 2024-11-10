@@ -15,7 +15,7 @@ declare global {
      * @default ""
      */
     description?: string | undefined
-    accept?: Record<MIMEType, FileExtension | FileExtension[]> | undefined
+    accept: Record<MIMEType, FileExtension | FileExtension[]> | undefined
   }
 
   interface FilePickerOptions {
@@ -24,7 +24,7 @@ declare global {
      * @default false
      */
     excludeAcceptAllOption?: boolean | undefined
-    startIn?: WellKnownDirectory | FileSystemHandle | undefined
+    startIn?: WellKnownDirectory | /* | FileSystemHandle */ undefined
     id?: string | undefined
   }
 
@@ -43,7 +43,7 @@ declare global {
 
   interface DirectoryPickerOptions {
     id?: string | undefined
-    startIn?: WellKnownDirectory | FileSystemHandle | undefined
+    startIn?: WellKnownDirectory /* | FileSystemHandle */ | undefined
     /**
      * @default "read"
      */

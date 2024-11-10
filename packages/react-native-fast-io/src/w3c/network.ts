@@ -1,5 +1,3 @@
-import { ReadableStream } from 'web-streams-polyfill'
-
 import { Network, RequestMethod } from '../native/network.nitro'
 import { fromReadableStream } from './streams'
 
