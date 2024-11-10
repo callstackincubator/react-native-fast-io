@@ -63,10 +63,8 @@ class HybridFileSystem : NSObject, UIDocumentPickerDelegate, HybridFileSystemSpe
     let promise = Promise<[String]>()
     
     DispatchQueue.main.async {
-      // Convert extensions to UTTypes, filtering out any that can't be converted
       let utTypes: [UTType] = options?.extensions?
         .compactMap { ext in
-          // Remove leading dot if present
           let cleanExt = ext.hasPrefix(".") ? String(ext.dropFirst()) : ext
           return UTType(filenameExtension: cleanExt)
         } ?? [.item]
