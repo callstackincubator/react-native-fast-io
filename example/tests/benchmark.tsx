@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { fetch, readAsFile, WebSocket as FastWS } from 'react-native-fast-io'
+import { fetch, showOpenFilePicker, WebSocket as FastWS } from 'react-native-fast-io'
 
 import {
   CHAT_PAYLOAD,
@@ -444,13 +444,17 @@ const styles = StyleSheet.create({
 })
 
 // tbd: playground
-;(async () => {
-  const img = readAsFile('image.png')
+setTimeout(async () => {
+  const files = await showOpenFilePicker()
 
-  // console.log('file', new Uint8Array(await img.arrayBuffer()))
+  if (!files[0]) {
+    console.log('No file')
+  }
+
+  const file = await files[0].getFile()
 
   await fetch('http://localhost:3002/upload', {
     method: 'POST',
-    body: img.stream(),
+    body: file.stream(),
   })
-})()
+}, 2000)

@@ -1,27 +1,6 @@
-import { ReadableStream } from 'web-streams-polyfill'
-
-/**
- * https://w3c.github.io/FileAPI/#dfn-BlobPropertyBag
- */
-export interface BlobPropertyBag {
-  type?: string
-}
-
-/**
- * https://w3c.github.io/FileAPI/#typedefdef-blobpart
- */
-type BufferSource = ArrayBuffer | ArrayBufferView
-export type BlobPart = BufferSource | Blob | string
-
-/**
- * https://w3c.github.io/FileAPI/#blob-section
- */
-export class Blob {
+export class Blob implements globalThis.Blob {
   private parts: Array<BlobPart>
 
-  /**
-   * https://w3c.github.io/FileAPI/#attributes-blob
-   */
   readonly type: string
 
   protected _size: number
@@ -35,16 +14,10 @@ export class Blob {
     this._size = calculateSize(parts)
   }
 
-  /**
-   * https://w3c.github.io/FileAPI/#slice-method-algo
-   */
   slice(): Blob {
     throw new Error('Not implemented')
   }
 
-  /**
-   * https://w3c.github.io/FileAPI/#stream-method-algo
-   */
   stream() {
     const streams = this.parts.map((part) => {
       if (part instanceof Blob) {
@@ -76,18 +49,12 @@ export class Blob {
     })
   }
 
-  /**
-   * https://w3c.github.io/FileAPI/#arraybuffer-method-algo
-   */
-  async arrayBuffer(): Promise<ArrayBuffer> {
+  async arrayBuffer() {
     const view = await this.bytes()
     return view.buffer
   }
 
-  /**
-   * https://w3c.github.io/FileAPI/#bytes-method-algo
-   */
-  async bytes(): Promise<Uint8Array> {
+  async bytes() {
     const result = new ArrayBuffer(this.size)
     const view = new Uint8Array(result)
 
@@ -100,10 +67,7 @@ export class Blob {
     return view
   }
 
-  /**
-   * https://w3c.github.io/FileAPI/#text-method-algo
-   */
-  async text(): Promise<string> {
+  async text() {
     const buffer = await this.bytes()
     return new TextDecoder().decode(buffer)
   }

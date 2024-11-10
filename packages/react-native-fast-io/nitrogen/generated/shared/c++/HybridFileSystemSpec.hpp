@@ -22,6 +22,8 @@ namespace margelo::nitro::fastio { struct Metadata; }
 #include "HybridInputStreamSpec.hpp"
 #include <string>
 #include "Metadata.hpp"
+#include <future>
+#include <vector>
 
 namespace margelo::nitro::fastio {
 
@@ -56,6 +58,7 @@ namespace margelo::nitro::fastio {
       // Methods
       virtual std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec> createInputStream(const std::string& path) = 0;
       virtual Metadata getFileMetadata(const std::string& path) = 0;
+      virtual std::future<std::vector<std::string>> showOpenFilePicker() = 0;
 
     protected:
       // Hybrid Setup

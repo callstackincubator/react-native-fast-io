@@ -34,4 +34,5 @@ public protocol HybridFileSystemSpec: AnyObject, HybridObjectSpec {
   // Methods
   func createInputStream(path: String) throws -> (any HybridInputStreamSpec)
   func getFileMetadata(path: String) throws -> Metadata
+  func showOpenFilePicker() throws -> Promise<[String]>
 }

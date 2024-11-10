@@ -14,8 +14,12 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/grabbou/react-native-fast-io.git", :tag => "#{s.version}" }
 
   s.source_files = [
-    "ios/**/*.{swift}"
+    "ios/**/*.{h,m,swift}"
   ]
+
+  s.pod_target_xcconfig = {
+  'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/ios'
+}
 
   load 'nitrogen/generated/ios/FastIO+autolinking.rb'
   add_nitrogen_files(s)

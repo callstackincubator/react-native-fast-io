@@ -74,6 +74,26 @@ namespace margelo::nitro::fastio::bridge::swift {
   std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ cppType);
   
+  // pragma MARK: std::vector<std::string>
+  /**
+   * Specialized version of `std::vector<std::string>`.
+   */
+  using std__vector_std__string_ = std::vector<std::string>;
+  inline std::vector<std::string> create_std__vector_std__string_(size_t size) {
+    std::vector<std::string> vector;
+    vector.reserve(size);
+    return vector;
+  }
+  
+  // pragma MARK: PromiseHolder<std::vector<std::string>>
+  /**
+   * Specialized version of `PromiseHolder<std::vector<std::string>>`.
+   */
+  using PromiseHolder_std__vector_std__string__ = PromiseHolder<std::vector<std::string>>;
+  inline PromiseHolder<std::vector<std::string>> create_PromiseHolder_std__vector_std__string__() {
+    return PromiseHolder<std::vector<std::string>>();
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridFileSystemSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::fastio::HybridFileSystemSpec>`.
@@ -206,17 +226,6 @@ namespace margelo::nitro::fastio::bridge::swift {
   using std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec_ = std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec>;
   std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec_(std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec_ cppType);
-  
-  // pragma MARK: std::vector<std::string>
-  /**
-   * Specialized version of `std::vector<std::string>`.
-   */
-  using std__vector_std__string_ = std::vector<std::string>;
-  inline std::vector<std::string> create_std__vector_std__string_(size_t size) {
-    std::vector<std::string> vector;
-    vector.reserve(size);
-    return vector;
-  }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridWebSocketManagerSpec>
   /**

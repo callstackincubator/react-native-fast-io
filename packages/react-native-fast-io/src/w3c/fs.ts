@@ -1,26 +1,11 @@
-import { ReadableStream } from 'web-streams-polyfill'
-
-import { FileSystem } from '../native/fs.nitro'
-import { Blob, BlobPart, BlobPropertyBag } from './blob'
+import { FileSystem, Metadata } from '../native/fs.nitro'
+import { Blob } from './blob'
 import { toReadableStream } from './streams'
 
-/**
- * https://w3c.github.io/FileAPI/#dfn-FilePropertyBag
- */
-export interface FilePropertyBag extends BlobPropertyBag {
-  lastModified?: number
-}
-
-/**
- * https://w3c.github.io/FileAPI/#dfn-file
- */
-class File extends Blob {
+export class File extends Blob implements globalThis.File {
   name: string
   lastModified: number
 
-  /**
-   * https://w3c.github.io/FileAPI/#file-constructor
-   */
   constructor(fileBits: BlobPart[], name: string, options: FilePropertyBag = {}) {
     super(fileBits, options)
     this.name = name
@@ -30,21 +15,24 @@ class File extends Blob {
   get [Symbol.toStringTag](): string {
     return 'File'
   }
+
+  get webkitRelativePath(): string {
+    throw new Error('Not implemented')
+  }
 }
 
 class NativeFile extends File {
   nativeStream: ReadableStream<Uint8Array>
 
-  constructor(path: string) {
+  constructor({ name, path, size, lastModified }: Metadata) {
     const inputStream = FileSystem.createInputStream(path)
-    const metadata = FileSystem.getFileMetadata(path)
 
-    super([], metadata.name, {
-      lastModified: metadata.lastModified,
+    super([], name, {
+      lastModified,
     })
 
     this.nativeStream = toReadableStream(inputStream)
-    this._size = metadata.size
+    this._size = size
   }
 
   stream() {
@@ -56,7 +44,56 @@ class NativeFile extends File {
   }
 }
 
-// tbd: convert this to FileSystemFileHandle
-export const readAsFile = (path: string) => {
-  return new NativeFile(path)
+class FileSystemFileHandle implements globalThis.FileSystemFileHandle {
+  readonly kind = 'file'
+
+  get name(): string {
+    return this.#metadata.name
+  }
+
+  #metadata: Metadata
+
+  constructor(path: string) {
+    this.#metadata = FileSystem.getFileMetadata(path)
+  }
+
+  async getFile() {
+    return new NativeFile(this.#metadata)
+  }
+
+  async createWritable(): Promise<FileSystemWritableFileStream> {
+    throw new Error('Not implemented')
+  }
+
+  async isSameEntry(other: FileSystemHandle): Promise<boolean> {
+    return (
+      other instanceof FileSystemFileHandle &&
+      this.#metadata.root === other.#metadata.root &&
+      this.#metadata.path === other.#metadata.path
+    )
+  }
+
+  get [Symbol.toStringTag](): string {
+    return 'FileSystemFileHandle'
+  }
+}
+
+export async function showOpenFilePicker(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  options?: OpenFilePickerOptions
+): Promise<FileSystemFileHandle[]> {
+  const paths = await FileSystem.showOpenFilePicker()
+  return paths.map((path) => new FileSystemFileHandle(path))
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function showSaveFilePicker(options?: SaveFilePickerOptions): Promise<FileSystemFileHandle> {
+  throw new Error('Not implemented')
+}
+
+export function showDirectoryPicker(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  options?: DirectoryPickerOptions
+): Promise<FileSystemDirectoryHandle> {
+  throw new Error('Not implemented')
 }

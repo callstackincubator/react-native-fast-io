@@ -18,8 +18,8 @@ public extension Metadata {
   /**
    * Create a new instance of `Metadata`.
    */
-  init(name: String, size: Double, lastModified: Double) {
-    self.init(std.string(name), size, lastModified)
+  init(name: String, path: String, root: String, size: Double, lastModified: Double) {
+    self.init(std.string(name), std.string(path), std.string(root), size, lastModified)
   }
 
   var name: String {
@@ -30,6 +30,28 @@ public extension Metadata {
     @inline(__always)
     set {
       self.__name = std.string(newValue)
+    }
+  }
+  
+  var path: String {
+    @inline(__always)
+    get {
+      return String(self.__path)
+    }
+    @inline(__always)
+    set {
+      self.__path = std.string(newValue)
+    }
+  }
+  
+  var root: String {
+    @inline(__always)
+    get {
+      return String(self.__root)
+    }
+    @inline(__always)
+    set {
+      self.__root = std.string(newValue)
     }
   }
   
