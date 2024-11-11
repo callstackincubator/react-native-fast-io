@@ -1,7 +1,5 @@
 import { HybridObject, NitroModules } from 'react-native-nitro-modules'
 
-import { InputStream } from './streams.nitro'
-
 export type Metadata = {
   name: string
   path: string
@@ -19,9 +17,7 @@ export type NativeFilePickerOptions = {
   extensions?: string[]
 }
 
-export interface FileSystem extends HybridObject<{ ios: 'swift' }> {
-  createInputStream(path: string): InputStream
-
+interface FileSystem extends HybridObject<{ ios: 'swift' }> {
   getMetadata(path: string): Metadata
   getWellKnownDirectoryPath(directory: WellKnownDirectory): string
 

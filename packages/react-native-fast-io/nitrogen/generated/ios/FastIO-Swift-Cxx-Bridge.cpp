@@ -16,28 +16,13 @@
 #include "HybridInputStreamSpecSwift.hpp"
 #include "HybridNetworkSpecSwift.hpp"
 #include "HybridOutputStreamSpecSwift.hpp"
+#include "HybridStreamManagerSpecSwift.hpp"
 #include "HybridWebSocketManagerSpecSwift.hpp"
 #include "HybridWebSocketSpecSwift.hpp"
 #include <NitroModules/HybridContext.hpp>
 
 namespace margelo::nitro::fastio::bridge::swift {
 
-  // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>
-  std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(void* _Nonnull swiftUnsafePointer) {
-    FastIO::HybridInputStreamSpecCxx swiftPart = FastIO::HybridInputStreamSpecCxxUnsafe::fromUnsafe(swiftUnsafePointer);
-    return HybridContext::getOrCreate<margelo::nitro::fastio::HybridInputStreamSpecSwift>(swiftPart);
-  }
-  void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ cppType) {
-    std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::fastio::HybridInputStreamSpecSwift>(cppType);
-  #ifdef NITRO_DEBUG
-    if (swiftWrapper == nullptr) [[unlikely]] {
-      throw std::runtime_error("Class \"HybridInputStreamSpec\" is not implemented in Swift!");
-    }
-  #endif
-    FastIO::HybridInputStreamSpecCxx swiftPart = swiftWrapper->getSwiftPart();
-    return FastIO::HybridInputStreamSpecCxxUnsafe::toUnsafe(swiftPart);
-  }
-  
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridFileSystemSpec>
   std::shared_ptr<margelo::nitro::fastio::HybridFileSystemSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridFileSystemSpec_(void* _Nonnull swiftUnsafePointer) {
     FastIO::HybridFileSystemSpecCxx swiftPart = FastIO::HybridFileSystemSpecCxxUnsafe::fromUnsafe(swiftUnsafePointer);
@@ -52,6 +37,22 @@ namespace margelo::nitro::fastio::bridge::swift {
   #endif
     FastIO::HybridFileSystemSpecCxx swiftPart = swiftWrapper->getSwiftPart();
     return FastIO::HybridFileSystemSpecCxxUnsafe::toUnsafe(swiftPart);
+  }
+  
+  // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>
+  std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(void* _Nonnull swiftUnsafePointer) {
+    FastIO::HybridInputStreamSpecCxx swiftPart = FastIO::HybridInputStreamSpecCxxUnsafe::fromUnsafe(swiftUnsafePointer);
+    return HybridContext::getOrCreate<margelo::nitro::fastio::HybridInputStreamSpecSwift>(swiftPart);
+  }
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::fastio::HybridInputStreamSpecSwift>(cppType);
+  #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridInputStreamSpec\" is not implemented in Swift!");
+    }
+  #endif
+    FastIO::HybridInputStreamSpecCxx swiftPart = swiftWrapper->getSwiftPart();
+    return FastIO::HybridInputStreamSpecCxxUnsafe::toUnsafe(swiftPart);
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridNetworkSpec>
@@ -132,6 +133,22 @@ namespace margelo::nitro::fastio::bridge::swift {
   #endif
     FastIO::HybridDuplexStreamSpecCxx swiftPart = swiftWrapper->getSwiftPart();
     return FastIO::HybridDuplexStreamSpecCxxUnsafe::toUnsafe(swiftPart);
+  }
+  
+  // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridStreamManagerSpec>
+  std::shared_ptr<margelo::nitro::fastio::HybridStreamManagerSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridStreamManagerSpec_(void* _Nonnull swiftUnsafePointer) {
+    FastIO::HybridStreamManagerSpecCxx swiftPart = FastIO::HybridStreamManagerSpecCxxUnsafe::fromUnsafe(swiftUnsafePointer);
+    return HybridContext::getOrCreate<margelo::nitro::fastio::HybridStreamManagerSpecSwift>(swiftPart);
+  }
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridStreamManagerSpec_(std__shared_ptr_margelo__nitro__fastio__HybridStreamManagerSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::fastio::HybridStreamManagerSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::fastio::HybridStreamManagerSpecSwift>(cppType);
+  #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridStreamManagerSpec\" is not implemented in Swift!");
+    }
+  #endif
+    FastIO::HybridStreamManagerSpecCxx swiftPart = swiftWrapper->getSwiftPart();
+    return FastIO::HybridStreamManagerSpecCxxUnsafe::toUnsafe(swiftPart);
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec>

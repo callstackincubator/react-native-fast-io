@@ -23,6 +23,9 @@
     },
     "CompressorFactory": {
       "swift": "HybridCompressorFactory"
+    },
+    "StreamManager": {
+      "swift": "HybridStreamManager"
     }
   }
 }

@@ -18,7 +18,7 @@ export interface OutputStream extends HybridObject<{ ios: 'swift' }> {
 
 export type CompressionAlgorithm = 'gzip' | 'deflate' | 'deflate-raw'
 
-export interface CompressorFactory extends HybridObject<{ ios: 'swift' }> {
+interface CompressorFactory extends HybridObject<{ ios: 'swift' }> {
   create(algorithm: CompressionAlgorithm): Compressor
 }
 
@@ -27,7 +27,7 @@ interface Compressor extends HybridObject<{ ios: 'swift' }> {
   finalize(): ArrayBuffer
 }
 
-export interface DuplexStream extends HybridObject<{ ios: 'swift' }> {
+interface DuplexStream extends HybridObject<{ ios: 'swift' }> {
   inputStream: InputStream
   outputStream: OutputStream
 }
@@ -35,3 +35,10 @@ export interface DuplexStream extends HybridObject<{ ios: 'swift' }> {
 export const DuplexStream = getHybridObjectConstructor<DuplexStream>('DuplexStream')
 export const CompressorFactory =
   NitroModules.createHybridObject<CompressorFactory>('CompressorFactory')
+
+interface StreamManager extends HybridObject<{ ios: 'swift' }> {
+  readonly bufferSize: number
+  createInputStream(path: string): InputStream
+}
+
+export const StreamManager = NitroModules.createHybridObject<StreamManager>('StreamManager')

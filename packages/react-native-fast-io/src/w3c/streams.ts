@@ -1,7 +1,10 @@
-import { CompressorFactory, DuplexStream, InputStream, OutputStream } from '../native/streams.nitro'
-
-// tbd: move this into constant and do not hardcode the value
-const CHUNK_SIZE = 1024 * 64
+import {
+  CompressorFactory,
+  DuplexStream,
+  InputStream,
+  OutputStream,
+  StreamManager,
+} from '../native/streams.nitro'
 
 export const toReadableStream = (inputStream: InputStream) => {
   const stream = new ReadableStream<Uint8Array>({
@@ -9,7 +12,7 @@ export const toReadableStream = (inputStream: InputStream) => {
       inputStream.open()
     },
     pull(controller) {
-      const buffer = new ArrayBuffer(CHUNK_SIZE)
+      const buffer = new ArrayBuffer(StreamManager.bufferSize)
 
       if (!inputStream.hasBytesAvailable()) {
         inputStream.close()
@@ -17,7 +20,7 @@ export const toReadableStream = (inputStream: InputStream) => {
         return
       }
 
-      const bytesRead = inputStream.read(buffer, CHUNK_SIZE)
+      const bytesRead = inputStream.read(buffer, StreamManager.bufferSize)
       if (bytesRead < 0) {
         inputStream.close()
         controller.error('Error reading from stream.')
