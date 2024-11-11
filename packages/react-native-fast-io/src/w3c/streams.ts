@@ -41,13 +41,16 @@ export const toWritableStream = (outputStream: OutputStream) => {
     start() {
       outputStream.open()
     },
-    write(chunk: Uint8Array) {
+    async write(chunk: Uint8Array) {
       if (chunk.byteLength === 0) {
         return
       }
-      if (!outputStream.hasSpaceAvailable()) {
-        throw new Error('No space available in output stream')
+
+      // tbd: implement better backpressure mechanism
+      while (!outputStream.hasSpaceAvailable()) {
+        await new Promise((resolve) => setTimeout(resolve, 1))
       }
+
       const bytesWritten = outputStream.write(chunk.buffer, chunk.byteLength)
       if (bytesWritten < 0) {
         throw new Error('Failed to write to output stream')
@@ -66,7 +69,7 @@ export const fromReadableStream = (stream: ReadableStream): InputStream => {
   const duplexStream = new DuplexStream()
 
   const writableStream = toWritableStream(duplexStream.outputStream)
-  stream.pipeTo(writableStream)
+  stream.pipeTo(writableStream).catch((e) => console.error(e))
 
   return duplexStream.inputStream
 }

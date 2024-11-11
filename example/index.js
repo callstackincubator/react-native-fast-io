@@ -4,6 +4,6 @@ import '@azure/core-asynciterator-polyfill'
 
 import { AppRegistry } from 'react-native'
 
-import { BenchmarkUI } from './tests/benchmark'
+import { App } from './tests'
 
-AppRegistry.registerComponent('NitroPlayground', () => BenchmarkUI)
+AppRegistry.registerComponent('NitroPlayground', () => App)

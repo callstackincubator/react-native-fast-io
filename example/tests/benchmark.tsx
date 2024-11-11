@@ -3,18 +3,12 @@ import {
   ActivityIndicator,
   Clipboard,
   Platform,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
-import {
-  CompressionStream,
-  fetch,
-  showOpenFilePicker,
-  WebSocket as FastWS,
-} from 'react-native-fast-io'
+import { WebSocket as FastWS } from 'react-native-fast-io'
 
 import {
   CHAT_PAYLOAD,
@@ -86,12 +80,12 @@ const BASE_URL = Platform.OS === 'android' ? 'ws://10.0.2.2' : 'ws://localhost'
 
 export function BenchmarkUI() {
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.header}>WebSocket Benchmark</Text>
       {TESTS.map((test) => (
         <TestSection key={test.name} test={test} />
       ))}
-    </ScrollView>
+    </View>
   )
 }
 
@@ -360,7 +354,6 @@ function formatTableAsMarkdown({ fast, native }: { fast: TestResult; native: Tes
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
   },
   header: {
     fontSize: 24,
@@ -447,36 +440,3 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 })
-
-// EXAMPLE 1
-setTimeout(async () => {
-  // File System API - https://developer.mozilla.org/en-US/docs/Web/API/File_System_API
-  const [fileHandle] = await showOpenFilePicker()
-
-  // Get `File` object (file is not loaded into memory)
-  const file = await fileHandle.getFile()
-
-  // File is streamed to the server
-  await fetch('http://localhost:3002/upload', {
-    method: 'POST',
-    body: file,
-  })
-}, 2000)
-
-// EXAMPLE 2
-setTimeout(async () => {
-  // File System API - https://developer.mozilla.org/en-US/docs/Web/API/File_System_API
-  const [fileHandle] = await showOpenFilePicker()
-
-  // Get `File` object (file is not loaded into memory)
-  const file = await fileHandle.getFile()
-
-  // You can also transform the stream in JavaScript, still no loading, all lazy
-  const compressed = file.stream().pipeThrough(new CompressionStream('gzip'))
-
-  // File is streamed to the server
-  await fetch('http://localhost:3002/upload', {
-    method: 'POST',
-    body: compressed,
-  })
-}, 2000)
