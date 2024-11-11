@@ -15,7 +15,7 @@
 #include "HybridNetworkSpecSwift.hpp"
 #include "HybridDuplexStreamSpecSwift.hpp"
 #include "HybridCompressorFactorySpecSwift.hpp"
-#include "HybridStreamManagerSpecSwift.hpp"
+#include "HybridStreamFactorySpecSwift.hpp"
 
 @interface FastIOAutolinking : NSObject
 @end
@@ -62,9 +62,9 @@
     }
   );
   HybridObjectRegistry::registerHybridObjectConstructor(
-    "StreamManager",
+    "StreamFactory",
     []() -> std::shared_ptr<HybridObject> {
-      std::shared_ptr<margelo::nitro::fastio::HybridStreamManagerSpec> hybridObject = FastIO::FastIOAutolinking::createStreamManager();
+      std::shared_ptr<margelo::nitro::fastio::HybridStreamFactorySpec> hybridObject = FastIO::FastIOAutolinking::createStreamFactory();
       return hybridObject;
     }
   );

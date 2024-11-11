@@ -1,5 +1,5 @@
 //
-//  HybridStreamManager.swift
+//  HybridStreamFactory.swift
 //  FastIO
 //
 //  Created by Mike Grabowski on 12/11/2024.

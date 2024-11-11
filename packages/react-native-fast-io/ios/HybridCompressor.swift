@@ -38,7 +38,7 @@ class HybridCompressor : HybridCompressorSpec {
     }
     let footerSize = (format == .gzip && finalize) ? 8 : 0
     
-    let destBufferSize = HybridStreamManager.BUFFER_SIZE + headerSize + footerSize
+    let destBufferSize = HybridStreamFactory.BUFFER_SIZE + headerSize + footerSize
     let destBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: destBufferSize)
     
     if headerSize > 0 {
@@ -63,7 +63,7 @@ class HybridCompressor : HybridCompressorSpec {
     stream.src_ptr = source
     stream.src_size = sourceSize
     stream.dst_ptr = destBuffer.advanced(by: headerSize)
-    stream.dst_size = HybridStreamManager.BUFFER_SIZE
+    stream.dst_size = HybridStreamFactory.BUFFER_SIZE
     
     status = compression_stream_process(&stream, Int32(finalize ? COMPRESSION_STREAM_FINALIZE.rawValue : 0))
     
@@ -77,7 +77,7 @@ class HybridCompressor : HybridCompressorSpec {
       throw RuntimeError.error(withMessage: "Unexpected remaining input data.")
     }
     
-    let currentOffset = headerSize + (HybridStreamManager.BUFFER_SIZE - stream.dst_size)
+    let currentOffset = headerSize + (HybridStreamFactory.BUFFER_SIZE - stream.dst_size)
     
     if footerSize > 0 {
       let footer = getGzipFooter()

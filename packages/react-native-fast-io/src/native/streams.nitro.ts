@@ -36,9 +36,9 @@ export const DuplexStream = getHybridObjectConstructor<DuplexStream>('DuplexStre
 export const CompressorFactory =
   NitroModules.createHybridObject<CompressorFactory>('CompressorFactory')
 
-interface StreamManager extends HybridObject<{ ios: 'swift' }> {
+interface StreamFactory extends HybridObject<{ ios: 'swift' }> {
   readonly bufferSize: number
   createInputStream(path: string): InputStream
 }
 
-export const StreamManager = NitroModules.createHybridObject<StreamManager>('StreamManager')
+export const StreamFactory = NitroModules.createHybridObject<StreamFactory>('StreamFactory')

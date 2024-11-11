@@ -3,7 +3,7 @@ import {
   DuplexStream,
   InputStream,
   OutputStream,
-  StreamManager,
+  StreamFactory,
 } from '../native/streams.nitro'
 
 export const toReadableStream = (inputStream: InputStream) => {
@@ -12,7 +12,7 @@ export const toReadableStream = (inputStream: InputStream) => {
       inputStream.open()
     },
     pull(controller) {
-      const buffer = new ArrayBuffer(StreamManager.bufferSize)
+      const buffer = new ArrayBuffer(StreamFactory.bufferSize)
 
       if (!inputStream.hasBytesAvailable()) {
         inputStream.close()
@@ -20,7 +20,7 @@ export const toReadableStream = (inputStream: InputStream) => {
         return
       }
 
-      const bytesRead = inputStream.read(buffer, StreamManager.bufferSize)
+      const bytesRead = inputStream.read(buffer, StreamFactory.bufferSize)
       if (bytesRead < 0) {
         inputStream.close()
         controller.error('Error reading from stream.')

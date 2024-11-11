@@ -26,8 +26,8 @@ namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 namespace margelo::nitro::fastio { class HybridNetworkSpec; }
 // Forward declaration of `HybridOutputStreamSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridOutputStreamSpec; }
-// Forward declaration of `HybridStreamManagerSpec` to properly resolve imports.
-namespace margelo::nitro::fastio { class HybridStreamManagerSpec; }
+// Forward declaration of `HybridStreamFactorySpec` to properly resolve imports.
+namespace margelo::nitro::fastio { class HybridStreamFactorySpec; }
 // Forward declaration of `HybridWebSocketManagerSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridWebSocketManagerSpec; }
 // Forward declaration of `HybridWebSocketSpec` to properly resolve imports.
@@ -50,8 +50,8 @@ namespace FastIO { class HybridInputStreamSpecCxx; }
 namespace FastIO { class HybridNetworkSpecCxx; }
 // Forward declaration of `HybridOutputStreamSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridOutputStreamSpecCxx; }
-// Forward declaration of `HybridStreamManagerSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridStreamManagerSpecCxx; }
+// Forward declaration of `HybridStreamFactorySpecCxx` to properly resolve imports.
+namespace FastIO { class HybridStreamFactorySpecCxx; }
 // Forward declaration of `HybridWebSocketManagerSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridWebSocketManagerSpecCxx; }
 // Forward declaration of `HybridWebSocketSpecCxx` to properly resolve imports.
@@ -65,7 +65,7 @@ namespace FastIO { class HybridWebSocketSpecCxx; }
 #include "HybridInputStreamSpec.hpp"
 #include "HybridNetworkSpec.hpp"
 #include "HybridOutputStreamSpec.hpp"
-#include "HybridStreamManagerSpec.hpp"
+#include "HybridStreamFactorySpec.hpp"
 #include "HybridWebSocketManagerSpec.hpp"
 #include "HybridWebSocketSpec.hpp"
 #include "NativeFilePickerOptions.hpp"
@@ -215,13 +215,13 @@ namespace margelo::nitro::fastio::bridge::swift {
   std::shared_ptr<margelo::nitro::fastio::HybridDuplexStreamSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridDuplexStreamSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridDuplexStreamSpec_(std__shared_ptr_margelo__nitro__fastio__HybridDuplexStreamSpec_ cppType);
   
-  // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridStreamManagerSpec>
+  // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridStreamFactorySpec>
   /**
-   * Specialized version of `std::shared_ptr<margelo::nitro::fastio::HybridStreamManagerSpec>`.
+   * Specialized version of `std::shared_ptr<margelo::nitro::fastio::HybridStreamFactorySpec>`.
    */
-  using std__shared_ptr_margelo__nitro__fastio__HybridStreamManagerSpec_ = std::shared_ptr<margelo::nitro::fastio::HybridStreamManagerSpec>;
-  std::shared_ptr<margelo::nitro::fastio::HybridStreamManagerSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridStreamManagerSpec_(void* _Nonnull swiftUnsafePointer);
-  void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridStreamManagerSpec_(std__shared_ptr_margelo__nitro__fastio__HybridStreamManagerSpec_ cppType);
+  using std__shared_ptr_margelo__nitro__fastio__HybridStreamFactorySpec_ = std::shared_ptr<margelo::nitro::fastio::HybridStreamFactorySpec>;
+  std::shared_ptr<margelo::nitro::fastio::HybridStreamFactorySpec> create_std__shared_ptr_margelo__nitro__fastio__HybridStreamFactorySpec_(void* _Nonnull swiftUnsafePointer);
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridStreamFactorySpec_(std__shared_ptr_margelo__nitro__fastio__HybridStreamFactorySpec_ cppType);
   
   // pragma MARK: std::function<void(const std::string& /* selectedProtocol */)>
   /**

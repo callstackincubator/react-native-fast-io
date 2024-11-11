@@ -1,5 +1,5 @@
 import { FileSystem, Metadata, NativeFilePickerOptions } from '../native/fs.nitro'
-import { StreamManager } from '../native/streams.nitro'
+import { StreamFactory } from '../native/streams.nitro'
 import { Blob } from './blob'
 import { toReadableStream } from './streams'
 
@@ -36,7 +36,7 @@ class NativeFile extends File {
   }
 
   stream() {
-    const nativeStream = StreamManager.createInputStream(this.#path)
+    const nativeStream = StreamFactory.createInputStream(this.#path)
     return toReadableStream(nativeStream)
   }
 
