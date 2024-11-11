@@ -21,8 +21,8 @@
     "DuplexStream": {
       "swift": "HybridDuplexStream"
     },
-    "GzipCompressor": {
-      "swift": "HybridGzipCompressor"
+    "CompressorFactory": {
+      "swift": "HybridCompressorFactory"
     }
   }
 }

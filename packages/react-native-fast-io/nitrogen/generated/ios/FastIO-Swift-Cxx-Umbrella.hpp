@@ -10,12 +10,16 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
+// Forward declaration of `CompressionAlgorithm` to properly resolve imports.
+namespace margelo::nitro::fastio { enum class CompressionAlgorithm; }
+// Forward declaration of `HybridCompressorFactorySpec` to properly resolve imports.
+namespace margelo::nitro::fastio { class HybridCompressorFactorySpec; }
+// Forward declaration of `HybridCompressorSpec` to properly resolve imports.
+namespace margelo::nitro::fastio { class HybridCompressorSpec; }
 // Forward declaration of `HybridDuplexStreamSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridDuplexStreamSpec; }
 // Forward declaration of `HybridFileSystemSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridFileSystemSpec; }
-// Forward declaration of `HybridGzipCompressorSpec` to properly resolve imports.
-namespace margelo::nitro::fastio { class HybridGzipCompressorSpec; }
 // Forward declaration of `HybridInputStreamSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 // Forward declaration of `HybridNetworkSpec` to properly resolve imports.
@@ -38,9 +42,11 @@ namespace margelo::nitro::fastio { struct RequestOptions; }
 namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 
 // Include C++ defined types
+#include "CompressionAlgorithm.hpp"
+#include "HybridCompressorFactorySpec.hpp"
+#include "HybridCompressorSpec.hpp"
 #include "HybridDuplexStreamSpec.hpp"
 #include "HybridFileSystemSpec.hpp"
-#include "HybridGzipCompressorSpec.hpp"
 #include "HybridInputStreamSpec.hpp"
 #include "HybridNetworkSpec.hpp"
 #include "HybridOutputStreamSpec.hpp"
@@ -69,12 +75,14 @@ namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 #include <NitroModules/PromiseHolder.hpp>
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridCompressorFactorySpecCxx` to properly resolve imports.
+namespace FastIO { class HybridCompressorFactorySpecCxx; }
+// Forward declaration of `HybridCompressorSpecCxx` to properly resolve imports.
+namespace FastIO { class HybridCompressorSpecCxx; }
 // Forward declaration of `HybridDuplexStreamSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridDuplexStreamSpecCxx; }
 // Forward declaration of `HybridFileSystemSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridFileSystemSpecCxx; }
-// Forward declaration of `HybridGzipCompressorSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridGzipCompressorSpecCxx; }
 // Forward declaration of `HybridInputStreamSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridInputStreamSpecCxx; }
 // Forward declaration of `HybridNetworkSpecCxx` to properly resolve imports.

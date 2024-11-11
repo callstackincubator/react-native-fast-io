@@ -9,7 +9,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { fetch, showOpenFilePicker, WebSocket as FastWS } from 'react-native-fast-io'
+import {
+  CompressionStream,
+  fetch,
+  showOpenFilePicker,
+  WebSocket as FastWS,
+} from 'react-native-fast-io'
 
 import {
   CHAT_PAYLOAD,
@@ -443,21 +448,35 @@ const styles = StyleSheet.create({
   },
 })
 
-// tbd: playground
+// EXAMPLE 1
 setTimeout(async () => {
-  const files = await showOpenFilePicker({
-    startIn: 'desktop',
-    types: [{ description: 'PDF files', accept: { 'application/pdf': ['.pdf'] } }],
-  })
+  // File System API - https://developer.mozilla.org/en-US/docs/Web/API/File_System_API
+  const [fileHandle] = await showOpenFilePicker()
 
-  if (!files[0]) {
-    console.log('No file')
-  }
+  // Get `File` object (file is not loaded into memory)
+  const file = await fileHandle.getFile()
 
-  const file = await files[0].getFile()
-
+  // File is streamed to the server
   await fetch('http://localhost:3002/upload', {
     method: 'POST',
-    body: file.stream(),
+    body: file,
+  })
+}, 2000)
+
+// EXAMPLE 2
+setTimeout(async () => {
+  // File System API - https://developer.mozilla.org/en-US/docs/Web/API/File_System_API
+  const [fileHandle] = await showOpenFilePicker()
+
+  // Get `File` object (file is not loaded into memory)
+  const file = await fileHandle.getFile()
+
+  // You can also transform the stream in JavaScript, still no loading, all lazy
+  const compressed = file.stream().pipeThrough(new CompressionStream('gzip'))
+
+  // File is streamed to the server
+  await fetch('http://localhost:3002/upload', {
+    method: 'POST',
+    body: compressed,
   })
 }, 2000)

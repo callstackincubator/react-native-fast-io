@@ -14,7 +14,7 @@
 #include "HybridFileSystemSpecSwift.hpp"
 #include "HybridNetworkSpecSwift.hpp"
 #include "HybridDuplexStreamSpecSwift.hpp"
-#include "HybridGzipCompressorSpecSwift.hpp"
+#include "HybridCompressorFactorySpecSwift.hpp"
 
 @interface FastIOAutolinking : NSObject
 @end
@@ -54,9 +54,9 @@
     }
   );
   HybridObjectRegistry::registerHybridObjectConstructor(
-    "GzipCompressor",
+    "CompressorFactory",
     []() -> std::shared_ptr<HybridObject> {
-      std::shared_ptr<margelo::nitro::fastio::HybridGzipCompressorSpec> hybridObject = FastIO::FastIOAutolinking::createGzipCompressor();
+      std::shared_ptr<margelo::nitro::fastio::HybridCompressorFactorySpec> hybridObject = FastIO::FastIOAutolinking::createCompressorFactory();
       return hybridObject;
     }
   );

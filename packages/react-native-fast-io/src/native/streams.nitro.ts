@@ -1,4 +1,4 @@
-import { getHybridObjectConstructor, HybridObject } from 'react-native-nitro-modules'
+import { getHybridObjectConstructor, HybridObject, NitroModules } from 'react-native-nitro-modules'
 
 export interface InputStream extends HybridObject<{ ios: 'swift' }> {
   hasBytesAvailable(): boolean
@@ -16,9 +16,13 @@ export interface OutputStream extends HybridObject<{ ios: 'swift' }> {
   close(): void
 }
 
-export type CompressionAlgorithm = 'gzip' | 'deflate'
+export type CompressionAlgorithm = 'gzip' | 'deflate' | 'deflate-raw'
 
-export interface GzipCompressor extends HybridObject<{ ios: 'swift' }> {
+export interface CompressorFactory extends HybridObject<{ ios: 'swift' }> {
+  create(algorithm: CompressionAlgorithm): Compressor
+}
+
+interface Compressor extends HybridObject<{ ios: 'swift' }> {
   compress(chunk: ArrayBuffer): ArrayBuffer
   finalize(): ArrayBuffer
 }
@@ -29,4 +33,5 @@ export interface DuplexStream extends HybridObject<{ ios: 'swift' }> {
 }
 
 export const DuplexStream = getHybridObjectConstructor<DuplexStream>('DuplexStream')
-export const GzipCompressor = getHybridObjectConstructor<GzipCompressor>('GzipCompressor')
+export const CompressorFactory =
+  NitroModules.createHybridObject<CompressorFactory>('CompressorFactory')

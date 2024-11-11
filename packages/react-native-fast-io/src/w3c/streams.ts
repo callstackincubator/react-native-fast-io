@@ -1,5 +1,6 @@
-import { DuplexStream, GzipCompressor, InputStream, OutputStream } from '../native/streams.nitro'
+import { CompressorFactory, DuplexStream, InputStream, OutputStream } from '../native/streams.nitro'
 
+// tbd: move this into constant and do not hardcode the value
 const CHUNK_SIZE = 1024 * 64
 
 export const toReadableStream = (inputStream: InputStream) => {
@@ -74,9 +75,8 @@ export class CompressionStream implements globalThis.CompressionStream {
   readonly readable: ReadableStream<Uint8Array>
   readonly writable: WritableStream<Uint8Array>
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(format: CompressionFormat) {
-    const compressor = new GzipCompressor()
+    const compressor = CompressorFactory.create(format)
 
     const { readable, writable } = new TransformStream<Uint8Array>({
       transform(chunk, controller) {
