@@ -20,9 +20,18 @@ export function createServer(payload: string | Bun.BufferSource, port: number) {
             return new Response('No body provided', { status: 400 })
           }
 
+          const writer = Bun.file('uploaded_file').writer()
+
           for await (const chunk of req.body) {
-            console.log('Chunk:', chunk)
+            // Write each chunk to file
+            writer.write(chunk)
+            // Debug
+            console.log('Chunk saved:', chunk.length, 'bytes')
           }
+
+          await writer.end()
+
+          console.log('Upload complete, file saved')
 
           return new Response('Upload successful', { status: 200 })
         } catch (error) {

@@ -27,17 +27,21 @@ class HybridCompressor : HybridCompressorSpec {
   }
   
   private func compressBuffer(source: UnsafePointer<UInt8>, sourceSize: Int, finalize: Bool = false) throws -> ArrayBufferHolder {
-    let headerSize: Int = switch format {
-        case .gzip: 10 
-        case .deflate: 2
-        case .deflateRaw: 0
+    let headerSize: Int = if totalSize == 0 {
+      switch format {
+      case .gzip: 10
+      case .deflate: 2
+      case .deflateRaw: 0
+      }
+    } else {
+      0
     }
     let footerSize = (format == .gzip && finalize) ? 8 : 0
     
     let destBufferSize = 64 * 1024 + headerSize + footerSize
     let destBuffer = UnsafeMutablePointer<UInt8>.allocate(capacity: destBufferSize)
     
-    if totalSize == 0 {
+    if headerSize > 0 {
       switch format {
       case .gzip:
         let header = getGzipHeader()
@@ -53,7 +57,9 @@ class HybridCompressor : HybridCompressorSpec {
     if format == .gzip && sourceSize > 0 {
       updateCRC32(data: source, size: sourceSize)
     }
-
+    
+    totalSize = (totalSize &+ UInt32(sourceSize)) & 0xffffffff
+    
     stream.src_ptr = source
     stream.src_size = sourceSize
     stream.dst_ptr = destBuffer.advanced(by: headerSize)
@@ -70,10 +76,10 @@ class HybridCompressor : HybridCompressorSpec {
       destBuffer.deallocate()
       throw RuntimeError.error(withMessage: "Unexpected remaining input data.")
     }
-        
+    
     let currentOffset = headerSize + (64 * 1024 - stream.dst_size)
-        
-    if (format == .gzip && finalize == true) {
+    
+    if footerSize > 0 {
       let footer = getGzipFooter()
       destBuffer.advanced(by: currentOffset).update(from: footer, count: footer.count)
     }
