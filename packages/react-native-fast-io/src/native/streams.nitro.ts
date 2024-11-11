@@ -16,9 +16,17 @@ export interface OutputStream extends HybridObject<{ ios: 'swift' }> {
   close(): void
 }
 
+export type CompressionAlgorithm = 'gzip' | 'deflate'
+
+export interface GzipCompressor extends HybridObject<{ ios: 'swift' }> {
+  compress(chunk: ArrayBuffer): ArrayBuffer
+  finalize(): ArrayBuffer
+}
+
 export interface DuplexStream extends HybridObject<{ ios: 'swift' }> {
   inputStream: InputStream
   outputStream: OutputStream
 }
 
-export const DuplexStream = getHybridObjectConstructor<DuplexStream>('PassThroughStream')
+export const DuplexStream = getHybridObjectConstructor<DuplexStream>('DuplexStream')
+export const GzipCompressor = getHybridObjectConstructor<GzipCompressor>('GzipCompressor')

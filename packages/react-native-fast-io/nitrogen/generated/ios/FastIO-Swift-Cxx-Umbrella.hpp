@@ -14,6 +14,8 @@ namespace NitroModules { class ArrayBuffer; }
 namespace margelo::nitro::fastio { class HybridDuplexStreamSpec; }
 // Forward declaration of `HybridFileSystemSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridFileSystemSpec; }
+// Forward declaration of `HybridGzipCompressorSpec` to properly resolve imports.
+namespace margelo::nitro::fastio { class HybridGzipCompressorSpec; }
 // Forward declaration of `HybridInputStreamSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 // Forward declaration of `HybridNetworkSpec` to properly resolve imports.
@@ -38,6 +40,7 @@ namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 // Include C++ defined types
 #include "HybridDuplexStreamSpec.hpp"
 #include "HybridFileSystemSpec.hpp"
+#include "HybridGzipCompressorSpec.hpp"
 #include "HybridInputStreamSpec.hpp"
 #include "HybridNetworkSpec.hpp"
 #include "HybridOutputStreamSpec.hpp"
@@ -70,6 +73,8 @@ namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 namespace FastIO { class HybridDuplexStreamSpecCxx; }
 // Forward declaration of `HybridFileSystemSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridFileSystemSpecCxx; }
+// Forward declaration of `HybridGzipCompressorSpecCxx` to properly resolve imports.
+namespace FastIO { class HybridGzipCompressorSpecCxx; }
 // Forward declaration of `HybridInputStreamSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridInputStreamSpecCxx; }
 // Forward declaration of `HybridNetworkSpecCxx` to properly resolve imports.

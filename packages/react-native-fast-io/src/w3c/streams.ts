@@ -1,4 +1,4 @@
-import { DuplexStream, InputStream, OutputStream } from '../native/streams.nitro'
+import { DuplexStream, GzipCompressor, InputStream, OutputStream } from '../native/streams.nitro'
 
 const CHUNK_SIZE = 1024 * 64
 
@@ -41,6 +41,9 @@ export const toWritableStream = (outputStream: OutputStream) => {
       outputStream.open()
     },
     write(chunk: Uint8Array) {
+      if (chunk.byteLength === 0) {
+        return
+      }
       if (!outputStream.hasSpaceAvailable()) {
         throw new Error('No space available in output stream')
       }
@@ -65,4 +68,30 @@ export const fromReadableStream = (stream: ReadableStream): InputStream => {
   stream.pipeTo(writableStream)
 
   return duplexStream.inputStream
+}
+
+export class CompressionStream implements globalThis.CompressionStream {
+  readonly readable: ReadableStream<Uint8Array>
+  readonly writable: WritableStream<Uint8Array>
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  constructor(format: CompressionFormat) {
+    const compressor = new GzipCompressor()
+
+    const { readable, writable } = new TransformStream<Uint8Array>({
+      transform(chunk, controller) {
+        const compressedData = compressor.compress(chunk.buffer)
+        controller.enqueue(new Uint8Array(compressedData))
+      },
+      flush(controller) {
+        const finalData = compressor.finalize()
+        if (finalData.byteLength > 0) {
+          controller.enqueue(new Uint8Array(finalData))
+        }
+      },
+    })
+
+    this.readable = readable
+    this.writable = writable
+  }
 }

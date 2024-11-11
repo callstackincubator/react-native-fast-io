@@ -11,6 +11,7 @@
 #include "FastIO-Swift-Cxx-Umbrella.hpp"
 #include "HybridDuplexStreamSpecSwift.hpp"
 #include "HybridFileSystemSpecSwift.hpp"
+#include "HybridGzipCompressorSpecSwift.hpp"
 #include "HybridInputStreamSpecSwift.hpp"
 #include "HybridNetworkSpecSwift.hpp"
 #include "HybridOutputStreamSpecSwift.hpp"
@@ -82,6 +83,22 @@ namespace margelo::nitro::fastio::bridge::swift {
   #endif
     FastIO::HybridOutputStreamSpecCxx swiftPart = swiftWrapper->getSwiftPart();
     return FastIO::HybridOutputStreamSpecCxxUnsafe::toUnsafe(swiftPart);
+  }
+  
+  // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridGzipCompressorSpec>
+  std::shared_ptr<margelo::nitro::fastio::HybridGzipCompressorSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridGzipCompressorSpec_(void* _Nonnull swiftUnsafePointer) {
+    FastIO::HybridGzipCompressorSpecCxx swiftPart = FastIO::HybridGzipCompressorSpecCxxUnsafe::fromUnsafe(swiftUnsafePointer);
+    return HybridContext::getOrCreate<margelo::nitro::fastio::HybridGzipCompressorSpecSwift>(swiftPart);
+  }
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridGzipCompressorSpec_(std__shared_ptr_margelo__nitro__fastio__HybridGzipCompressorSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::fastio::HybridGzipCompressorSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::fastio::HybridGzipCompressorSpecSwift>(cppType);
+  #ifdef NITRO_DEBUG
+    if (swiftWrapper == nullptr) [[unlikely]] {
+      throw std::runtime_error("Class \"HybridGzipCompressorSpec\" is not implemented in Swift!");
+    }
+  #endif
+    FastIO::HybridGzipCompressorSpecCxx swiftPart = swiftWrapper->getSwiftPart();
+    return FastIO::HybridGzipCompressorSpecCxxUnsafe::toUnsafe(swiftPart);
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridDuplexStreamSpec>
