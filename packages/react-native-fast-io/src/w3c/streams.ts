@@ -69,7 +69,7 @@ export const fromReadableStream = (stream: ReadableStream): InputStream => {
   const duplexStream = new DuplexStream()
 
   const writableStream = toWritableStream(duplexStream.outputStream)
-  stream.pipeTo(writableStream).catch((e) => console.error(e))
+  stream.pipeTo(writableStream)
 
   return duplexStream.inputStream
 }
