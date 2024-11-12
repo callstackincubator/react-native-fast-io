@@ -87,7 +87,7 @@ class HybridFileSystem : HybridFileSystemSpec() {
     }
 
     companion object {
-        private const val FILE_PICKER_REQUEST_CODE = 12345
+        private const val FILE_PICKER_REQUEST_CODE = 1001
         private var pendingPromise: Promise<Array<String>>? = null
 
         val activityEventListener = object : BaseActivityEventListener() {
