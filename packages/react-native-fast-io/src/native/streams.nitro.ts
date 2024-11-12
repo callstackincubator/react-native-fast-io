@@ -16,25 +16,12 @@ export interface OutputStream extends HybridObject<{ ios: 'swift'; android: 'kot
   close(): void
 }
 
-export type CompressionAlgorithm = 'gzip' | 'deflate' | 'deflate-raw'
-
-interface CompressorFactory extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
-  create(algorithm: CompressionAlgorithm): Compressor
-}
-
-interface Compressor extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
-  compress(chunk: ArrayBuffer): ArrayBuffer
-  finalize(): ArrayBuffer
-}
-
 interface DuplexStream extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
   inputStream: InputStream
   outputStream: OutputStream
 }
 
 export const DuplexStream = getHybridObjectConstructor<DuplexStream>('DuplexStream')
-export const CompressorFactory =
-  NitroModules.createHybridObject<CompressorFactory>('CompressorFactory')
 
 interface StreamFactory extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
   readonly bufferSize: number
@@ -42,3 +29,17 @@ interface StreamFactory extends HybridObject<{ ios: 'swift'; android: 'kotlin' }
 }
 
 export const StreamFactory = NitroModules.createHybridObject<StreamFactory>('StreamFactory')
+
+export type CompressionAlgorithm = 'gzip' | 'deflate' | 'deflate-raw'
+
+interface CompressorFactory extends HybridObject<{ ios: 'c++'; android: 'c++' }> {
+  create(algorithm: CompressionAlgorithm): Compressor
+}
+
+interface Compressor extends HybridObject<{ ios: 'c++'; android: 'c++' }> {
+  compress(chunk: ArrayBuffer): ArrayBuffer
+  finalize(): ArrayBuffer
+}
+
+export const CompressorFactory =
+  NitroModules.createHybridObject<CompressorFactory>('CompressorFactory')
