@@ -1,4 +1,5 @@
 import { FileSystem, Metadata, NativeFilePickerOptions } from '../native/fs.nitro'
+import { StreamFactory } from '../native/streams.nitro'
 import { Blob } from './blob'
 import { toReadableStream } from './streams'
 
@@ -22,22 +23,21 @@ export class File extends Blob implements globalThis.File {
 }
 
 class NativeFile extends File {
-  nativeStream: ReadableStream<Uint8Array>
+  #path: string
 
   constructor({ name, path, type, size, lastModified }: Metadata) {
-    const inputStream = FileSystem.createInputStream(path)
-
     super([], name, {
       lastModified,
       type,
     })
 
-    this.nativeStream = toReadableStream(inputStream)
+    this.#path = path
     this._size = size
   }
 
   stream() {
-    return this.nativeStream
+    const nativeStream = StreamFactory.createInputStream(this.#path)
+    return toReadableStream(nativeStream)
   }
 
   get [Symbol.toStringTag](): string {

@@ -14,7 +14,6 @@ namespace margelo::nitro::fastio {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
-      prototype.registerHybridMethod("createInputStream", &HybridFileSystemSpec::createInputStream);
       prototype.registerHybridMethod("getMetadata", &HybridFileSystemSpec::getMetadata);
       prototype.registerHybridMethod("getWellKnownDirectoryPath", &HybridFileSystemSpec::getWellKnownDirectoryPath);
       prototype.registerHybridMethod("showOpenFilePicker", &HybridFileSystemSpec::showOpenFilePicker);

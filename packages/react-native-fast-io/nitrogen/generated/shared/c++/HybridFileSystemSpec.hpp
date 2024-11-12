@@ -13,8 +13,6 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-// Forward declaration of `HybridInputStreamSpec` to properly resolve imports.
-namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 // Forward declaration of `Metadata` to properly resolve imports.
 namespace margelo::nitro::fastio { struct Metadata; }
 // Forward declaration of `WellKnownDirectory` to properly resolve imports.
@@ -22,10 +20,8 @@ namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 // Forward declaration of `NativeFilePickerOptions` to properly resolve imports.
 namespace margelo::nitro::fastio { struct NativeFilePickerOptions; }
 
-#include <memory>
-#include "HybridInputStreamSpec.hpp"
-#include <string>
 #include "Metadata.hpp"
+#include <string>
 #include "WellKnownDirectory.hpp"
 #include <future>
 #include <vector>
@@ -63,7 +59,6 @@ namespace margelo::nitro::fastio {
 
     public:
       // Methods
-      virtual std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec> createInputStream(const std::string& path) = 0;
       virtual Metadata getMetadata(const std::string& path) = 0;
       virtual std::string getWellKnownDirectoryPath(WellKnownDirectory directory) = 0;
       virtual std::future<std::vector<std::string>> showOpenFilePicker(const std::optional<NativeFilePickerOptions>& options) = 0;

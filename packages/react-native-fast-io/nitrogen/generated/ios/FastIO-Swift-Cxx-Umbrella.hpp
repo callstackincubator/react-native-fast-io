@@ -26,6 +26,8 @@ namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 namespace margelo::nitro::fastio { class HybridNetworkSpec; }
 // Forward declaration of `HybridOutputStreamSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridOutputStreamSpec; }
+// Forward declaration of `HybridStreamFactorySpec` to properly resolve imports.
+namespace margelo::nitro::fastio { class HybridStreamFactorySpec; }
 // Forward declaration of `HybridWebSocketManagerSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridWebSocketManagerSpec; }
 // Forward declaration of `HybridWebSocketSpec` to properly resolve imports.
@@ -50,6 +52,7 @@ namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 #include "HybridInputStreamSpec.hpp"
 #include "HybridNetworkSpec.hpp"
 #include "HybridOutputStreamSpec.hpp"
+#include "HybridStreamFactorySpec.hpp"
 #include "HybridWebSocketManagerSpec.hpp"
 #include "HybridWebSocketSpec.hpp"
 #include "Metadata.hpp"
@@ -89,6 +92,8 @@ namespace FastIO { class HybridInputStreamSpecCxx; }
 namespace FastIO { class HybridNetworkSpecCxx; }
 // Forward declaration of `HybridOutputStreamSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridOutputStreamSpecCxx; }
+// Forward declaration of `HybridStreamFactorySpecCxx` to properly resolve imports.
+namespace FastIO { class HybridStreamFactorySpecCxx; }
 // Forward declaration of `HybridWebSocketManagerSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridWebSocketManagerSpecCxx; }
 // Forward declaration of `HybridWebSocketSpecCxx` to properly resolve imports.

@@ -99,21 +99,6 @@ public class HybridFileSystemSpecCxx {
 
   // Methods
   @inline(__always)
-  public func createInputStream(path: std.string) -> bridge.std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ {
-    do {
-      let __result = try self.__implementation.createInputStream(path: String(path))
-      return { () -> bridge.std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ in
-        let __cxxWrapped = HybridInputStreamSpecCxx(__result)
-        let __pointer = HybridInputStreamSpecCxxUnsafe.toUnsafe(__cxxWrapped)
-        return bridge.create_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(__pointer)
-      }()
-    } catch {
-      let __message = "\(error.localizedDescription)"
-      fatalError("Swift errors can currently not be propagated to C++! See https://github.com/swiftlang/swift/issues/75290 (Error: \(__message))")
-    }
-  }
-  
-  @inline(__always)
   public func getMetadata(path: std.string) -> Metadata {
     do {
       let __result = try self.__implementation.getMetadata(path: String(path))
