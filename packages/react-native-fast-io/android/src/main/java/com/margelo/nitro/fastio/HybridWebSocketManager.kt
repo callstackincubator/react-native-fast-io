@@ -1,4 +1,4 @@
-package com.margelo.nitro.websocket
+package com.margelo.nitro.fastio
 
 import com.facebook.proguard.annotations.DoNotStrip
 

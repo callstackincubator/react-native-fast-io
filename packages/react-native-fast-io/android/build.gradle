@@ -35,7 +35,7 @@ def getExtOrIntegerDefault(name) {
 }
 
 android {
-  namespace "com.margelo.nitro.websocket"
+  namespace "com.margelo.nitro.fastio"
 
   ndkVersion getExtOrDefault("ndkVersion")
   compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
@@ -135,6 +135,6 @@ if (isNewArchitectureEnabled()) {
   react {
     jsRootDir = file("../src/")
     libraryName = "FastIO"
-    codegenJavaPackageName = "com.margelo.nitro.websocket"
+    codegenJavaPackageName = "com.margelo.nitro.fastio"
   }
 }

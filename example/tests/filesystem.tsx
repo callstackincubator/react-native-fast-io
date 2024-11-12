@@ -3,20 +3,20 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { CompressionStream, fetch, showOpenFilePicker } from 'react-native-fast-io'
 
 export function FileSystemUI() {
-  const [fileHandle, setFileHandle] = useState<FileSystemFileHandle | null>(null)
+  const [file, setFile] = useState<File | null>(null)
 
   const pickFile = async () => {
     const [fileHandle] = await showOpenFilePicker()
+    const file = await fileHandle.getFile()
     // @ts-ignore
-    setFileHandle(fileHandle)
+    setFile(file)
   }
 
   const sendFile = async (compression?: 'gzip' | 'deflate' | 'deflate-raw') => {
-    if (!fileHandle) {
+    if (!file) {
       return
     }
 
-    const file = await fileHandle.getFile()
     const body = compression ? file.stream().pipeThrough(new CompressionStream(compression)) : file
 
     await fetch('http://localhost:3002/upload', {
@@ -33,7 +33,7 @@ export function FileSystemUI() {
         <Text style={styles.buttonText}>Pick File</Text>
       </TouchableOpacity>
 
-      {fileHandle && (
+      {file && (
         <View style={styles.actions}>
           <TouchableOpacity style={styles.button} onPress={() => sendFile()}>
             <Text style={styles.buttonText}>Send Uncompressed</Text>
@@ -50,9 +50,9 @@ export function FileSystemUI() {
         </View>
       )}
 
-      {fileHandle && (
+      {file && (
         <View style={styles.statusContainer}>
-          <Text style={styles.status}>{fileHandle.name}</Text>
+          <Text style={styles.status}>{file.name}</Text>
         </View>
       )}
     </View>
