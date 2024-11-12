@@ -2,6 +2,9 @@
 #
 .DS_Store
 
+# Bun
+example/uploaded_file.jpg
+
 # Ruby
 vendor/
 .bundle
