@@ -20,10 +20,7 @@ namespace margelo::nitro::fastio {
   private:
     std::shared_ptr<ArrayBuffer> compressBuffer(const uint8_t* source, size_t sourceSize, bool finalize = false);
     
-    z_stream stream_{};
-    CompressionAlgorithm format_;
-    
-    static const std::array<uint32_t, 256> CRC_TABLE;
+    z_stream _stream{};
   };
   
 }

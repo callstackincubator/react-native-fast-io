@@ -4,12 +4,12 @@
 
 namespace margelo::nitro::fastio {
 
-HybridCompressor::HybridCompressor(CompressionAlgorithm algorithm) : HybridObject(TAG), format_(algorithm) {
+HybridCompressor::HybridCompressor(CompressionAlgorithm algorithm) : HybridObject(TAG) {
   std::cout << "Initializing compressor with algorithm: " << static_cast<int>(algorithm) << std::endl;
   
-  stream_.zalloc = Z_NULL;
-  stream_.zfree = Z_NULL;
-  stream_.opaque = Z_NULL;
+  _stream.zalloc = Z_NULL;
+  _stream.zfree = Z_NULL;
+  _stream.opaque = Z_NULL;
   
   int windowBits = 15;
   switch (algorithm) {
@@ -23,36 +23,36 @@ HybridCompressor::HybridCompressor(CompressionAlgorithm algorithm) : HybridObjec
       break;
   }
   
-  if (deflateInit2(&stream_, Z_DEFAULT_COMPRESSION, Z_DEFLATED, windowBits, 8, Z_DEFAULT_STRATEGY) != Z_OK) {
+  if (deflateInit2(&_stream, Z_DEFAULT_COMPRESSION, Z_DEFLATED, windowBits, 8, Z_DEFAULT_STRATEGY) != Z_OK) {
     throw std::runtime_error("Failed to initialize compression");
   }
 }
 
 HybridCompressor::~HybridCompressor() {
-  deflateEnd(&stream_);
+  deflateEnd(&_stream);
 }
 
 std::shared_ptr<ArrayBuffer> HybridCompressor::compressBuffer(const uint8_t* source, size_t sourceSize, bool finalize) {
   uint8_t* destBuffer = new uint8_t[64 * 1024];
   
-  stream_.next_in = const_cast<Bytef*>(source);
-  stream_.avail_in = sourceSize;
-  stream_.next_out = destBuffer;
-  stream_.avail_out = 64 * 1024;
+  _stream.next_in = const_cast<Bytef*>(source);
+  _stream.avail_in = sourceSize;
+  _stream.next_out = destBuffer;
+  _stream.avail_out = 64 * 1024;
   
-  int status = deflate(&stream_, finalize ? Z_FINISH : Z_NO_FLUSH);
+  int status = deflate(&_stream, finalize ? Z_FINISH : Z_NO_FLUSH);
   
   if (status == Z_STREAM_ERROR) {
     delete[] destBuffer;
     throw std::runtime_error("Compression error");
   }
   
-  if (stream_.avail_in != 0) {
+  if (_stream.avail_in != 0) {
     delete[] destBuffer;
     throw std::runtime_error("Unexpected remaining input data");
   }
   
-  size_t currentOffset = 64 * 1024 - stream_.avail_out;
+  size_t currentOffset = 64 * 1024 - _stream.avail_out;
   
   return ArrayBuffer::makeBuffer(
                                  destBuffer,
