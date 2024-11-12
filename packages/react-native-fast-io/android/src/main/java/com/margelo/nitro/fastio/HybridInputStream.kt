@@ -1,24 +1,50 @@
 package com.margelo.nitro.fastio
 
 import com.margelo.nitro.core.ArrayBuffer
+import java.io.InputStream
 
-class HybridInputStream : HybridInputStreamSpec() {
+class HybridInputStream(private val stream: InputStream) : HybridInputStreamSpec() {
+    private var isOpen = true
+
     override fun hasBytesAvailable(): Boolean {
-        throw NotImplementedError("HybridInputStream.hasBytesAvailable() not implemented")
+        if (!isOpen) return false
+
+        return try {
+            stream.available() > 0
+        } catch (e: Exception) {
+            false
+        }
     }
 
     override fun read(buffer: ArrayBuffer, maxLength: Double): Double {
-        throw NotImplementedError("HybridInputStream.read() not implemented")
+        val byteBuffer = buffer.getBuffer(false)
+
+        val tempBuffer = ByteArray(minOf(maxLength.toInt(), buffer.size))
+
+        val bytesRead = stream.read(tempBuffer, 0, tempBuffer.size)
+
+        if (bytesRead > 0) {
+            byteBuffer.put(tempBuffer, 0, bytesRead)
+        }
+
+        return bytesRead.toDouble()
     }
 
     override fun open() {
-        throw NotImplementedError("HybridInputStream.open() not implemented")
+        // no-op
     }
 
     override fun close() {
-        throw NotImplementedError("HybridInputStream.close() not implemented")
+        if (!isOpen) return
+
+        stream.close()
+        isOpen = false
     }
 
     override val memorySize: Long
-        get() = 0L
+        get() = try {
+            stream.available().toLong()
+        } catch (e: Exception) {
+            0L
+        }
 } 
