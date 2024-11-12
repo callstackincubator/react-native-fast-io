@@ -17,17 +17,13 @@ class HybridInputStream(private val stream: InputStream) : HybridInputStreamSpec
     }
 
     override fun read(buffer: ArrayBuffer, maxLength: Double): Double {
-        // Get ByteBuffer from ArrayBuffer
         val byteBuffer = buffer.getBuffer(false)
 
-        // Create temporary byte array for reading
         val tempBuffer = ByteArray(minOf(maxLength.toInt(), buffer.size))
 
-        // Read into temp buffer
         val bytesRead = stream.read(tempBuffer, 0, tempBuffer.size)
 
         if (bytesRead > 0) {
-            // Copy from temp buffer to ByteBuffer
             byteBuffer.put(tempBuffer, 0, bytesRead)
         }
 
@@ -41,30 +37,14 @@ class HybridInputStream(private val stream: InputStream) : HybridInputStreamSpec
     override fun close() {
         if (!isOpen) return
 
-        try {
-            stream.close()
-            isOpen = false
-        } catch (e: Exception) {
-            // Log error but don't throw as close() should be silent
-            println("Error closing stream: ${e.message}")
-        }
+        stream.close()
+        isOpen = false
     }
 
     override val memorySize: Long
         get() = try {
-            // Estimate memory usage:
-            // - InputStream reference
-            // - Boolean flag
-            // - Any buffered data
-            stream.available().toLong() + 16
+            stream.available().toLong()
         } catch (e: Exception) {
-            16L  // Minimum size if we can't determine available bytes
+            0L
         }
-
-    // Clean up resources in case GC kicks in
-    protected fun finalize() {
-        if (isOpen) {
-            close()
-        }
-    }
 } 
