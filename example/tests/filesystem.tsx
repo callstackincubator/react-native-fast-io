@@ -6,15 +6,10 @@ export function FileSystemUI() {
   const [file, setFile] = useState<File | null>(null)
 
   const pickFile = async () => {
-    try {
-      const [fileHandle] = await showOpenFilePicker()
-      const file = await fileHandle.getFile()
-      console.log(file)
-      // @ts-ignore
-      setFile(file)
-    } catch (e) {
-      console.error(e)
-    }
+    const [fileHandle] = await showOpenFilePicker()
+    const file = await fileHandle.getFile()
+    // @ts-ignore
+    setFile(file)
   }
 
   const sendFile = async (compression?: 'gzip' | 'deflate' | 'deflate-raw') => {
