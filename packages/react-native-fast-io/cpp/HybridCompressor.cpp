@@ -43,10 +43,12 @@ std::shared_ptr<ArrayBuffer> HybridCompressor::compressBuffer(const uint8_t* sou
   int status = deflate(&stream_, finalize ? Z_FINISH : Z_NO_FLUSH);
   
   if (status == Z_STREAM_ERROR) {
+    delete[] destBuffer;
     throw std::runtime_error("Compression error");
   }
   
   if (stream_.avail_in != 0) {
+    delete[] destBuffer;
     throw std::runtime_error("Unexpected remaining input data");
   }
   
@@ -67,29 +69,8 @@ std::shared_ptr<ArrayBuffer> HybridCompressor::compress(const std::shared_ptr<Ar
 }
 
 std::shared_ptr<ArrayBuffer> HybridCompressor::finalize() {
-  return compressBuffer(nullptr, 0, true);
+  static const uint8_t dummyByte = 0;
+  return compressBuffer(&dummyByte, 0, true);
 }
 
-std::vector<uint8_t> HybridCompressor::getGzipHeader() const {
-  return {0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff};
-}
-
-std::vector<uint8_t> HybridCompressor::getGzipFooter() const {
-  std::vector<uint8_t> footer(8);
-  // CRC32
-  footer[0] = stream_.adler & 0xff;
-  footer[1] = (stream_.adler >> 8) & 0xff;
-  footer[2] = (stream_.adler >> 16) & 0xff;
-  footer[3] = (stream_.adler >> 24) & 0xff;
-  // Size
-  footer[4] = stream_.total_in & 0xff;
-  footer[5] = (stream_.total_in >> 8) & 0xff;
-  footer[6] = (stream_.total_in >> 16) & 0xff;
-  footer[7] = (stream_.total_in >> 24) & 0xff;
-  return footer;
-}
-
-std::vector<uint8_t> HybridCompressor::getDeflateHeader() const {
-  return {0x78, 0x9c};
-}
 }
