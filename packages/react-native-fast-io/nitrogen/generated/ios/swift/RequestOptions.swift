@@ -18,11 +18,17 @@ public extension RequestOptions {
   /**
    * Create a new instance of `RequestOptions`.
    */
-  init(url: String, method: RequestMethod, body: (any HybridInputStreamSpec)) {
-    self.init(std.string(url), method, { () -> bridge.std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ in
-      let __cxxWrapped = HybridInputStreamSpecCxx(body)
-      let __pointer = HybridInputStreamSpecCxxUnsafe.toUnsafe(__cxxWrapped)
-      return bridge.create_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(__pointer)
+  init(url: String, method: RequestMethod, body: (any HybridInputStreamSpec)?) {
+    self.init(std.string(url), method, { () -> bridge.std__optional_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__ in
+      if let __unwrappedValue = body {
+        return bridge.create_std__optional_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__({ () -> bridge.std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ in
+          let __cxxWrapped = HybridInputStreamSpecCxx(__unwrappedValue)
+          let __pointer = HybridInputStreamSpecCxxUnsafe.toUnsafe(__cxxWrapped)
+          return bridge.create_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(__pointer)
+        }())
+      } else {
+        return .init()
+      }
     }())
   }
 
@@ -48,21 +54,33 @@ public extension RequestOptions {
     }
   }
   
-  var body: (any HybridInputStreamSpec) {
+  var body: (any HybridInputStreamSpec)? {
     @inline(__always)
     get {
-      return { () -> HybridInputStreamSpec in
-        let __unsafePointer = bridge.get_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(self.__body)
-        let __instance = HybridInputStreamSpecCxxUnsafe.fromUnsafe(__unsafePointer)
-        return __instance.getHybridInputStreamSpec()
+      return { () -> (any HybridInputStreamSpec)? in
+        if let __unwrapped = self.__body.value {
+          return { () -> HybridInputStreamSpec in
+            let __unsafePointer = bridge.get_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(__unwrapped)
+            let __instance = HybridInputStreamSpecCxxUnsafe.fromUnsafe(__unsafePointer)
+            return __instance.getHybridInputStreamSpec()
+          }()
+        } else {
+          return nil
+        }
       }()
     }
     @inline(__always)
     set {
-      self.__body = { () -> bridge.std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ in
-        let __cxxWrapped = HybridInputStreamSpecCxx(newValue)
-        let __pointer = HybridInputStreamSpecCxxUnsafe.toUnsafe(__cxxWrapped)
-        return bridge.create_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(__pointer)
+      self.__body = { () -> bridge.std__optional_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__({ () -> bridge.std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ in
+            let __cxxWrapped = HybridInputStreamSpecCxx(__unwrappedValue)
+            let __pointer = HybridInputStreamSpecCxxUnsafe.toUnsafe(__cxxWrapped)
+            return bridge.create_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(__pointer)
+          }())
+        } else {
+          return .init()
+        }
       }()
     }
   }

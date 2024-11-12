@@ -31,6 +31,8 @@ target_sources(
   ../nitrogen/generated/shared/c++/HybridNetworkSpec.cpp
   ../nitrogen/generated/shared/c++/HybridInputStreamSpec.cpp
   ../nitrogen/generated/shared/c++/HybridOutputStreamSpec.cpp
+  ../nitrogen/generated/shared/c++/HybridCompressorFactorySpec.cpp
+  ../nitrogen/generated/shared/c++/HybridCompressorSpec.cpp
   ../nitrogen/generated/shared/c++/HybridDuplexStreamSpec.cpp
   ../nitrogen/generated/shared/c++/HybridWebSocketSpec.cpp
   ../nitrogen/generated/shared/c++/HybridWebSocketManagerSpec.cpp

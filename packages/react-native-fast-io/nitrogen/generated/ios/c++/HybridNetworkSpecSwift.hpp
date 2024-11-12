@@ -24,6 +24,7 @@ namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 #include "RequestOptions.hpp"
 #include <string>
 #include "RequestMethod.hpp"
+#include <optional>
 #include <memory>
 #include "HybridInputStreamSpec.hpp"
 
