@@ -16,9 +16,9 @@ export interface OutputStream extends HybridObject<{ ios: 'swift' }> {
   close(): void
 }
 
-export interface PassThroughStream extends HybridObject<{ ios: 'swift' }> {
+export interface DuplexStream extends HybridObject<{ ios: 'swift' }> {
   inputStream: InputStream
   outputStream: OutputStream
 }
 
-export const PassThroughStream = getHybridObjectConstructor<PassThroughStream>('PassThroughStream')
+export const DuplexStream = getHybridObjectConstructor<DuplexStream>('PassThroughStream')

@@ -10,6 +10,8 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
+// Forward declaration of `HybridDuplexStreamSpec` to properly resolve imports.
+namespace margelo::nitro::fastio { class HybridDuplexStreamSpec; }
 // Forward declaration of `HybridFileSystemSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridFileSystemSpec; }
 // Forward declaration of `HybridInputStreamSpec` to properly resolve imports.
@@ -18,8 +20,6 @@ namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 namespace margelo::nitro::fastio { class HybridNetworkSpec; }
 // Forward declaration of `HybridOutputStreamSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridOutputStreamSpec; }
-// Forward declaration of `HybridPassThroughStreamSpec` to properly resolve imports.
-namespace margelo::nitro::fastio { class HybridPassThroughStreamSpec; }
 // Forward declaration of `HybridWebSocketManagerSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridWebSocketManagerSpec; }
 // Forward declaration of `HybridWebSocketSpec` to properly resolve imports.
@@ -36,11 +36,11 @@ namespace margelo::nitro::fastio { struct RequestOptions; }
 namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 
 // Include C++ defined types
+#include "HybridDuplexStreamSpec.hpp"
 #include "HybridFileSystemSpec.hpp"
 #include "HybridInputStreamSpec.hpp"
 #include "HybridNetworkSpec.hpp"
 #include "HybridOutputStreamSpec.hpp"
-#include "HybridPassThroughStreamSpec.hpp"
 #include "HybridWebSocketManagerSpec.hpp"
 #include "HybridWebSocketSpec.hpp"
 #include "Metadata.hpp"
@@ -66,6 +66,8 @@ namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 #include <NitroModules/PromiseHolder.hpp>
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridDuplexStreamSpecCxx` to properly resolve imports.
+namespace FastIO { class HybridDuplexStreamSpecCxx; }
 // Forward declaration of `HybridFileSystemSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridFileSystemSpecCxx; }
 // Forward declaration of `HybridInputStreamSpecCxx` to properly resolve imports.
@@ -74,8 +76,6 @@ namespace FastIO { class HybridInputStreamSpecCxx; }
 namespace FastIO { class HybridNetworkSpecCxx; }
 // Forward declaration of `HybridOutputStreamSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridOutputStreamSpecCxx; }
-// Forward declaration of `HybridPassThroughStreamSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridPassThroughStreamSpecCxx; }
 // Forward declaration of `HybridWebSocketManagerSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridWebSocketManagerSpecCxx; }
 // Forward declaration of `HybridWebSocketSpecCxx` to properly resolve imports.
