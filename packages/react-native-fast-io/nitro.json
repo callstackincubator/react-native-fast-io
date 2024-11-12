@@ -13,19 +13,24 @@
       "kotlin": "HybridWebSocketManager"
     },
     "FileSystem": {
-      "swift": "HybridFileSystem"
+      "swift": "HybridFileSystem",
+      "kotlin": "HybridFileSystem"
     },
     "Network": {
-      "swift": "HybridNetwork"
+      "swift": "HybridNetwork",
+      "kotlin": "HybridNetwork"
     },
     "DuplexStream": {
-      "swift": "HybridDuplexStream"
+      "swift": "HybridDuplexStream",
+      "kotlin": "HybridDuplexStream"
     },
     "CompressorFactory": {
-      "swift": "HybridCompressorFactory"
+      "swift": "HybridCompressorFactory",
+      "kotlin": "HybridCompressorFactory"
     },
     "StreamFactory": {
-      "swift": "HybridStreamFactory"
+      "swift": "HybridStreamFactory",
+      "kotlin": "HybridStreamFactory"
     }
   }
 }

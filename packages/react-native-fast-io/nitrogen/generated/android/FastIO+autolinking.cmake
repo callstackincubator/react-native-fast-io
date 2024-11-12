@@ -38,6 +38,14 @@ target_sources(
   ../nitrogen/generated/shared/c++/HybridWebSocketSpec.cpp
   ../nitrogen/generated/shared/c++/HybridWebSocketManagerSpec.cpp
   # Android-specific Nitrogen C++ sources
+  ../nitrogen/generated/android/c++/JHybridFileSystemSpec.cpp
+  ../nitrogen/generated/android/c++/JHybridNetworkSpec.cpp
+  ../nitrogen/generated/android/c++/JHybridInputStreamSpec.cpp
+  ../nitrogen/generated/android/c++/JHybridOutputStreamSpec.cpp
+  ../nitrogen/generated/android/c++/JHybridCompressorFactorySpec.cpp
+  ../nitrogen/generated/android/c++/JHybridCompressorSpec.cpp
+  ../nitrogen/generated/android/c++/JHybridDuplexStreamSpec.cpp
+  ../nitrogen/generated/android/c++/JHybridStreamFactorySpec.cpp
   ../nitrogen/generated/android/c++/JHybridWebSocketSpec.cpp
   ../nitrogen/generated/android/c++/JHybridWebSocketManagerSpec.cpp
 )

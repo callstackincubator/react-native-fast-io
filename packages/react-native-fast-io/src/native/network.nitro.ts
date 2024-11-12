@@ -10,7 +10,7 @@ export type RequestOptions = {
   body?: InputStream
 }
 
-export interface Network extends HybridObject<{ ios: 'swift' }> {
+export interface Network extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
   request(opts: RequestOptions): Promise<void>
 }
 
