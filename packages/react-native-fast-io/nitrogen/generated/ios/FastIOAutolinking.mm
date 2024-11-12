@@ -14,7 +14,7 @@
 #include "HybridFileSystemSpecSwift.hpp"
 #include "HybridNetworkSpecSwift.hpp"
 #include "HybridDuplexStreamSpecSwift.hpp"
-#include "HybridCompressorFactorySpecSwift.hpp"
+#include "HybridCompressorFactory.hpp"
 #include "HybridStreamFactorySpecSwift.hpp"
 
 @interface FastIOAutolinking : NSObject
@@ -57,8 +57,10 @@
   HybridObjectRegistry::registerHybridObjectConstructor(
     "CompressorFactory",
     []() -> std::shared_ptr<HybridObject> {
-      std::shared_ptr<margelo::nitro::fastio::HybridCompressorFactorySpec> hybridObject = FastIO::FastIOAutolinking::createCompressorFactory();
-      return hybridObject;
+      static_assert(std::is_default_constructible_v<HybridCompressorFactory>,
+                    "The HybridObject \"HybridCompressorFactory\" is not default-constructible! "
+                    "Create a public constructor that takes zero arguments to be able to autolink this HybridObject.");
+      return std::make_shared<HybridCompressorFactory>();
     }
   );
   HybridObjectRegistry::registerHybridObjectConstructor(

@@ -31,10 +31,10 @@ target_sources(
   ../nitrogen/generated/shared/c++/HybridNetworkSpec.cpp
   ../nitrogen/generated/shared/c++/HybridInputStreamSpec.cpp
   ../nitrogen/generated/shared/c++/HybridOutputStreamSpec.cpp
-  ../nitrogen/generated/shared/c++/HybridCompressorFactorySpec.cpp
-  ../nitrogen/generated/shared/c++/HybridCompressorSpec.cpp
   ../nitrogen/generated/shared/c++/HybridDuplexStreamSpec.cpp
   ../nitrogen/generated/shared/c++/HybridStreamFactorySpec.cpp
+  ../nitrogen/generated/shared/c++/HybridCompressorFactorySpec.cpp
+  ../nitrogen/generated/shared/c++/HybridCompressorSpec.cpp
   ../nitrogen/generated/shared/c++/HybridWebSocketSpec.cpp
   ../nitrogen/generated/shared/c++/HybridWebSocketManagerSpec.cpp
   # Android-specific Nitrogen C++ sources
@@ -42,8 +42,6 @@ target_sources(
   ../nitrogen/generated/android/c++/JHybridNetworkSpec.cpp
   ../nitrogen/generated/android/c++/JHybridInputStreamSpec.cpp
   ../nitrogen/generated/android/c++/JHybridOutputStreamSpec.cpp
-  ../nitrogen/generated/android/c++/JHybridCompressorFactorySpec.cpp
-  ../nitrogen/generated/android/c++/JHybridCompressorSpec.cpp
   ../nitrogen/generated/android/c++/JHybridDuplexStreamSpec.cpp
   ../nitrogen/generated/android/c++/JHybridStreamFactorySpec.cpp
   ../nitrogen/generated/android/c++/JHybridWebSocketSpec.cpp

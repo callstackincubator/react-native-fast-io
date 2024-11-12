@@ -20,7 +20,7 @@ export function createServer(payload: string | Bun.BufferSource, port: number) {
             return new Response('No body provided', { status: 400 })
           }
 
-          const writer = Bun.file('uploaded_file').writer()
+          const writer = Bun.file('uploaded_file.jpg.gz').writer()
 
           for await (const chunk of req.body) {
             // Write each chunk to file

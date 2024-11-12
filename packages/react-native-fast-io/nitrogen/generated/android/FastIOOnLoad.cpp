@@ -15,8 +15,6 @@
 #include "JHybridNetworkSpec.hpp"
 #include "JHybridInputStreamSpec.hpp"
 #include "JHybridOutputStreamSpec.hpp"
-#include "JHybridCompressorFactorySpec.hpp"
-#include "JHybridCompressorSpec.hpp"
 #include "JHybridDuplexStreamSpec.hpp"
 #include "JHybridStreamFactorySpec.hpp"
 #include "JHybridWebSocketSpec.hpp"
@@ -25,6 +23,7 @@
 #include "JFunc_void_std__shared_ptr_ArrayBuffer_.hpp"
 #include "JHybridWebSocketManagerSpec.hpp"
 #include <NitroModules/JNISharedPtr.hpp>
+#include "HybridCompressorFactory.hpp"
 
 namespace margelo::nitro::fastio {
 
@@ -39,8 +38,6 @@ int initialize(JavaVM* vm) {
     margelo::nitro::fastio::JHybridNetworkSpec::registerNatives();
     margelo::nitro::fastio::JHybridInputStreamSpec::registerNatives();
     margelo::nitro::fastio::JHybridOutputStreamSpec::registerNatives();
-    margelo::nitro::fastio::JHybridCompressorFactorySpec::registerNatives();
-    margelo::nitro::fastio::JHybridCompressorSpec::registerNatives();
     margelo::nitro::fastio::JHybridDuplexStreamSpec::registerNatives();
     margelo::nitro::fastio::JHybridStreamFactorySpec::registerNatives();
     margelo::nitro::fastio::JHybridWebSocketSpec::registerNatives();
@@ -119,17 +116,10 @@ int initialize(JavaVM* vm) {
     HybridObjectRegistry::registerHybridObjectConstructor(
       "CompressorFactory",
       []() -> std::shared_ptr<HybridObject> {
-        static auto javaClass = jni::findClassStatic("com/margelo/nitro/fastio/HybridCompressorFactory");
-        static auto defaultConstructor = javaClass->getConstructor<JHybridCompressorFactorySpec::javaobject()>();
-    
-        auto instance = javaClass->newObject(defaultConstructor);
-    #ifdef NITRO_DEBUG
-        if (instance == nullptr) [[unlikely]] {
-          throw std::runtime_error("Failed to create an instance of \"JHybridCompressorFactorySpec\" - the constructor returned null!");
-        }
-    #endif
-        auto globalRef = jni::make_global(instance);
-        return JNISharedPtr::make_shared_from_jni<JHybridCompressorFactorySpec>(globalRef);
+        static_assert(std::is_default_constructible_v<HybridCompressorFactory>,
+                      "The HybridObject \"HybridCompressorFactory\" is not default-constructible! "
+                      "Create a public constructor that takes zero arguments to be able to autolink this HybridObject.");
+        return std::make_shared<HybridCompressorFactory>();
       }
     );
     HybridObjectRegistry::registerHybridObjectConstructor(

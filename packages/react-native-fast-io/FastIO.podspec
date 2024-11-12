@@ -14,7 +14,8 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/grabbou/react-native-fast-io.git", :tag => "#{s.version}" }
 
   s.source_files = [
-    "ios/**/*.{h,m,swift}"
+    "ios/**/*.{h,m,swift}",
+    "cpp/**/*.{h,hpp,cpp}"
   ]
 
   s.pod_target_xcconfig = {
