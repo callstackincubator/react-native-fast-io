@@ -82,30 +82,26 @@ export class CompressionStream implements globalThis.CompressionStream {
   readonly writable: WritableStream<Uint8Array>
 
   constructor(format: CompressionFormat) {
-    try {
-      const compressor = CompressorFactory.create(format)
+    const compressor = CompressorFactory.create(format)
 
-      const { readable, writable } = new TransformStream<Uint8Array>({
-        transform(chunk, controller) {
-          try {
-            const compressedData = compressor.compress(chunk.buffer)
-            controller.enqueue(new Uint8Array(compressedData))
-          } catch (error) {
-            console.error(error)
-          }
-        },
-        flush(controller) {
-          const finalData = compressor.finalize()
-          if (finalData.byteLength > 0) {
-            controller.enqueue(new Uint8Array(finalData))
-          }
-        },
-      })
+    const { readable, writable } = new TransformStream<Uint8Array>({
+      transform(chunk, controller) {
+        try {
+          const compressedData = compressor.compress(chunk.buffer)
+          controller.enqueue(new Uint8Array(compressedData))
+        } catch (error) {
+          console.error(error)
+        }
+      },
+      flush(controller) {
+        const finalData = compressor.finalize()
+        if (finalData.byteLength > 0) {
+          controller.enqueue(new Uint8Array(finalData))
+        }
+      },
+    })
 
-      this.readable = readable
-      this.writable = writable
-    } catch (error) {
-      console.error(error)
-    }
+    this.readable = readable
+    this.writable = writable
   }
 }
