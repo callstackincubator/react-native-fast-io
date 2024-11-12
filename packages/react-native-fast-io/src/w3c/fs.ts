@@ -1,5 +1,11 @@
 import { FileSystem, Metadata, NativeFilePickerOptions } from '../native/fs.nitro'
 import { StreamFactory } from '../native/streams.nitro'
+import {
+  DirectoryPickerOptions,
+  FileExtension,
+  OpenFilePickerOptions,
+  SaveFilePickerOptions,
+} from '../types/fs'
 import { Blob } from './blob'
 import { toReadableStream } from './streams'
 
@@ -93,12 +99,13 @@ export async function showOpenFilePicker(
   }
 
   if (options.types) {
-    nativePickerOptions.extensions = options.types?.reduce<FileExtension[]>((acc, type) => {
+    nativePickerOptions.extensions = options.types.reduce<FileExtension[]>((acc, type) => {
       if (!type.accept) {
         return acc
       }
       return acc.concat(...Object.values(type.accept))
     }, [])
+    nativePickerOptions.mimeTypes = options.types.flatMap((type) => Object.keys(type.accept || {}))
   }
 
   const paths = await FileSystem.showOpenFilePicker(nativePickerOptions)

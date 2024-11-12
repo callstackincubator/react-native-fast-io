@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { CompressionStream, fetch, showOpenFilePicker } from 'react-native-fast-io'
+import {
+  CompressionStream,
+  fetch,
+  OpenFilePickerOptions,
+  showOpenFilePicker,
+} from 'react-native-fast-io'
 
 export function FileSystemUI() {
   const [file, setFile] = useState<File | null>(null)
 
-  const pickFile = async () => {
-    const [fileHandle] = await showOpenFilePicker()
+  const pickFile = async (options?: OpenFilePickerOptions) => {
+    const [fileHandle] = await showOpenFilePicker(options)
     const file = await fileHandle.getFile()
     // @ts-ignore
     setFile(file)
@@ -35,8 +40,15 @@ export function FileSystemUI() {
     <View>
       <Text style={styles.header}>File System Test</Text>
 
-      <TouchableOpacity style={styles.button} onPress={pickFile}>
-        <Text style={styles.buttonText}>Pick File</Text>
+      <TouchableOpacity style={styles.button} onPress={() => pickFile()}>
+        <Text style={styles.buttonText}>Pick any file</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => pickFile({ types: [{ accept: { 'image/*': ['.png', '.jpg', '.jpeg'] } }] })}
+      >
+        <Text style={styles.buttonText}>Pick image</Text>
       </TouchableOpacity>
 
       {file && (

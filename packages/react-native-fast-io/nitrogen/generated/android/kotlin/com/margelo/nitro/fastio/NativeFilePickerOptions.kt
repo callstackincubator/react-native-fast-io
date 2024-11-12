@@ -19,5 +19,6 @@ import com.margelo.nitro.core.*
 data class NativeFilePickerOptions(
   val multiple: Boolean?,
   val startIn: String?,
-  val extensions: Array<String>?
+  val extensions: Array<String>?,
+  val mimeTypes: Array<String>?
 )
