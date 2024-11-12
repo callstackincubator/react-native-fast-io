@@ -11,13 +11,6 @@ import NitroModules
 import FastIOPrivate
 
 class HybridFileSystem : NSObject, UIDocumentPickerDelegate, HybridFileSystemSpec {
-  func createInputStream(path: String) -> any HybridInputStreamSpec {
-    guard let stream = InputStream(fileAtPath: path) else {
-      fatalError("Failed to create stream from \(path)")
-    }
-    return HybridInputStream(stream: stream)
-  }
-  
   func getMetadata(path: String) throws -> Metadata {
     let attributes = try FileManager.default.attributesOfItem(atPath: path)
     let fileURL = URL(fileURLWithPath: path)

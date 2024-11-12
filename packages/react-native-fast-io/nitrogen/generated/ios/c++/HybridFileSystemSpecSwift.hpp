@@ -12,8 +12,6 @@
 // Forward declaration of `HybridFileSystemSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridFileSystemSpecCxx; }
 
-// Forward declaration of `HybridInputStreamSpec` to properly resolve imports.
-namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 // Forward declaration of `Metadata` to properly resolve imports.
 namespace margelo::nitro::fastio { struct Metadata; }
 // Forward declaration of `WellKnownDirectory` to properly resolve imports.
@@ -21,10 +19,8 @@ namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 // Forward declaration of `NativeFilePickerOptions` to properly resolve imports.
 namespace margelo::nitro::fastio { struct NativeFilePickerOptions; }
 
-#include <memory>
-#include "HybridInputStreamSpec.hpp"
-#include <string>
 #include "Metadata.hpp"
+#include <string>
 #include "WellKnownDirectory.hpp"
 #include <future>
 #include <vector>
@@ -75,10 +71,6 @@ namespace margelo::nitro::fastio {
 
   public:
     // Methods
-    inline std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec> createInputStream(const std::string& path) override {
-      auto __result = _swiftPart.createInputStream(path);
-      return __result;
-    }
     inline Metadata getMetadata(const std::string& path) override {
       auto __result = _swiftPart.getMetadata(path);
       return __result;
