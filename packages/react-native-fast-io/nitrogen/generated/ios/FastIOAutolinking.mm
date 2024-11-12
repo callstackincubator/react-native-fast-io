@@ -13,7 +13,7 @@
 #include "HybridWebSocketManagerSpecSwift.hpp"
 #include "HybridFileSystemSpecSwift.hpp"
 #include "HybridNetworkSpecSwift.hpp"
-#include "HybridPassThroughStreamSpecSwift.hpp"
+#include "HybridDuplexStreamSpecSwift.hpp"
 
 @interface FastIOAutolinking : NSObject
 @end
@@ -46,9 +46,9 @@
     }
   );
   HybridObjectRegistry::registerHybridObjectConstructor(
-    "PassThroughStream",
+    "DuplexStream",
     []() -> std::shared_ptr<HybridObject> {
-      std::shared_ptr<margelo::nitro::fastio::HybridPassThroughStreamSpec> hybridObject = FastIO::FastIOAutolinking::createPassThroughStream();
+      std::shared_ptr<margelo::nitro::fastio::HybridDuplexStreamSpec> hybridObject = FastIO::FastIOAutolinking::createDuplexStream();
       return hybridObject;
     }
   );

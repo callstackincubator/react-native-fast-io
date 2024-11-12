@@ -1,4 +1,4 @@
-import { InputStream, OutputStream, PassThroughStream } from '../native/streams.nitro'
+import { DuplexStream, InputStream, OutputStream } from '../native/streams.nitro'
 
 const CHUNK_SIZE = 1024 * 64
 
@@ -59,10 +59,10 @@ export const toWritableStream = (outputStream: OutputStream) => {
 }
 
 export const fromReadableStream = (stream: ReadableStream): InputStream => {
-  const passThroughStream = new PassThroughStream()
+  const duplexStream = new DuplexStream()
 
-  const writableStream = toWritableStream(passThroughStream.outputStream)
+  const writableStream = toWritableStream(duplexStream.outputStream)
   stream.pipeTo(writableStream)
 
-  return passThroughStream.inputStream
+  return duplexStream.inputStream
 }
