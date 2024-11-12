@@ -17,7 +17,7 @@ export type NativeFilePickerOptions = {
   extensions?: string[]
 }
 
-interface FileSystem extends HybridObject<{ ios: 'swift' }> {
+interface FileSystem extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
   getMetadata(path: string): Metadata
   getWellKnownDirectoryPath(directory: WellKnownDirectory): string
 
