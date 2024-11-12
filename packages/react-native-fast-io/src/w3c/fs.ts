@@ -24,11 +24,12 @@ export class File extends Blob implements globalThis.File {
 class NativeFile extends File {
   nativeStream: ReadableStream<Uint8Array>
 
-  constructor({ name, path, size, lastModified }: Metadata) {
+  constructor({ name, path, type, size, lastModified }: Metadata) {
     const inputStream = FileSystem.createInputStream(path)
 
     super([], name, {
       lastModified,
+      type,
     })
 
     this.nativeStream = toReadableStream(inputStream)

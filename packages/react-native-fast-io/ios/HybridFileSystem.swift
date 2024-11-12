@@ -21,12 +21,15 @@ class HybridFileSystem : NSObject, UIDocumentPickerDelegate, HybridFileSystemSpe
   func getMetadata(path: String) throws -> Metadata {
     let attributes = try FileManager.default.attributesOfItem(atPath: path)
     let fileURL = URL(fileURLWithPath: path)
+    
+    let mimeType = UTType(filenameExtension: fileURL.pathExtension)?.preferredMIMEType ?? ""
 
     return Metadata.init(
       name: fileURL.lastPathComponent,
       path: path,
       root: "/",
       size: attributes[.size] as? Double ?? 0,
+      type: mimeType,
       lastModified: (attributes[.modificationDate] as? Date)?.timeIntervalSince1970 ?? 0 * 1000
     )
   }
