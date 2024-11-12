@@ -10,6 +10,12 @@
 // Forward declarations of C++ defined types
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
+// Forward declaration of `CompressionAlgorithm` to properly resolve imports.
+namespace margelo::nitro::fastio { enum class CompressionAlgorithm; }
+// Forward declaration of `HybridCompressorFactorySpec` to properly resolve imports.
+namespace margelo::nitro::fastio { class HybridCompressorFactorySpec; }
+// Forward declaration of `HybridCompressorSpec` to properly resolve imports.
+namespace margelo::nitro::fastio { class HybridCompressorSpec; }
 // Forward declaration of `HybridDuplexStreamSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridDuplexStreamSpec; }
 // Forward declaration of `HybridFileSystemSpec` to properly resolve imports.
@@ -36,6 +42,9 @@ namespace margelo::nitro::fastio { struct RequestOptions; }
 namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 
 // Include C++ defined types
+#include "CompressionAlgorithm.hpp"
+#include "HybridCompressorFactorySpec.hpp"
+#include "HybridCompressorSpec.hpp"
 #include "HybridDuplexStreamSpec.hpp"
 #include "HybridFileSystemSpec.hpp"
 #include "HybridInputStreamSpec.hpp"
@@ -66,6 +75,10 @@ namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 #include <NitroModules/PromiseHolder.hpp>
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridCompressorFactorySpecCxx` to properly resolve imports.
+namespace FastIO { class HybridCompressorFactorySpecCxx; }
+// Forward declaration of `HybridCompressorSpecCxx` to properly resolve imports.
+namespace FastIO { class HybridCompressorSpecCxx; }
 // Forward declaration of `HybridDuplexStreamSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridDuplexStreamSpecCxx; }
 // Forward declaration of `HybridFileSystemSpecCxx` to properly resolve imports.

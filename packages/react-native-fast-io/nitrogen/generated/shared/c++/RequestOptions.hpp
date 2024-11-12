@@ -25,6 +25,7 @@ namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 
 #include <string>
 #include "RequestMethod.hpp"
+#include <optional>
 #include <memory>
 #include "HybridInputStreamSpec.hpp"
 
@@ -37,10 +38,10 @@ namespace margelo::nitro::fastio {
   public:
     std::string url     SWIFT_PRIVATE;
     RequestMethod method     SWIFT_PRIVATE;
-    std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec> body     SWIFT_PRIVATE;
+    std::optional<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>> body     SWIFT_PRIVATE;
 
   public:
-    explicit RequestOptions(std::string url, RequestMethod method, std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec> body): url(url), method(method), body(body) {}
+    explicit RequestOptions(std::string url, RequestMethod method, std::optional<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>> body): url(url), method(method), body(body) {}
   };
 
 } // namespace margelo::nitro::fastio
@@ -57,14 +58,14 @@ namespace margelo::nitro {
       return RequestOptions(
         JSIConverter<std::string>::fromJSI(runtime, obj.getProperty(runtime, "url")),
         JSIConverter<RequestMethod>::fromJSI(runtime, obj.getProperty(runtime, "method")),
-        JSIConverter<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>::fromJSI(runtime, obj.getProperty(runtime, "body"))
+        JSIConverter<std::optional<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>>::fromJSI(runtime, obj.getProperty(runtime, "body"))
       );
     }
     static inline jsi::Value toJSI(jsi::Runtime& runtime, const RequestOptions& arg) {
       jsi::Object obj(runtime);
       obj.setProperty(runtime, "url", JSIConverter<std::string>::toJSI(runtime, arg.url));
       obj.setProperty(runtime, "method", JSIConverter<RequestMethod>::toJSI(runtime, arg.method));
-      obj.setProperty(runtime, "body", JSIConverter<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>::toJSI(runtime, arg.body));
+      obj.setProperty(runtime, "body", JSIConverter<std::optional<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>>::toJSI(runtime, arg.body));
       return obj;
     }
     static inline bool canConvert(jsi::Runtime& runtime, const jsi::Value& value) {
@@ -74,7 +75,7 @@ namespace margelo::nitro {
       jsi::Object obj = value.getObject(runtime);
       if (!JSIConverter<std::string>::canConvert(runtime, obj.getProperty(runtime, "url"))) return false;
       if (!JSIConverter<RequestMethod>::canConvert(runtime, obj.getProperty(runtime, "method"))) return false;
-      if (!JSIConverter<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>::canConvert(runtime, obj.getProperty(runtime, "body"))) return false;
+      if (!JSIConverter<std::optional<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>>::canConvert(runtime, obj.getProperty(runtime, "body"))) return false;
       return true;
     }
   };

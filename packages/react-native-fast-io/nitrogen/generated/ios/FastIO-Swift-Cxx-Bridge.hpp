@@ -12,6 +12,10 @@
 namespace NitroModules { class ArrayBufferHolder; }
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
+// Forward declaration of `HybridCompressorFactorySpec` to properly resolve imports.
+namespace margelo::nitro::fastio { class HybridCompressorFactorySpec; }
+// Forward declaration of `HybridCompressorSpec` to properly resolve imports.
+namespace margelo::nitro::fastio { class HybridCompressorSpec; }
 // Forward declaration of `HybridDuplexStreamSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridDuplexStreamSpec; }
 // Forward declaration of `HybridFileSystemSpec` to properly resolve imports.
@@ -30,6 +34,10 @@ namespace margelo::nitro::fastio { class HybridWebSocketSpec; }
 namespace margelo::nitro::fastio { struct NativeFilePickerOptions; }
 
 // Forward declarations of Swift defined types
+// Forward declaration of `HybridCompressorFactorySpecCxx` to properly resolve imports.
+namespace FastIO { class HybridCompressorFactorySpecCxx; }
+// Forward declaration of `HybridCompressorSpecCxx` to properly resolve imports.
+namespace FastIO { class HybridCompressorSpecCxx; }
 // Forward declaration of `HybridDuplexStreamSpecCxx` to properly resolve imports.
 namespace FastIO { class HybridDuplexStreamSpecCxx; }
 // Forward declaration of `HybridFileSystemSpecCxx` to properly resolve imports.
@@ -46,6 +54,8 @@ namespace FastIO { class HybridWebSocketManagerSpecCxx; }
 namespace FastIO { class HybridWebSocketSpecCxx; }
 
 // Include C++ defined types
+#include "HybridCompressorFactorySpec.hpp"
+#include "HybridCompressorSpec.hpp"
 #include "HybridDuplexStreamSpec.hpp"
 #include "HybridFileSystemSpec.hpp"
 #include "HybridInputStreamSpec.hpp"
@@ -151,6 +161,15 @@ namespace margelo::nitro::fastio::bridge::swift {
     return PromiseHolder<void>();
   }
   
+  // pragma MARK: std::optional<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>
+  /**
+   * Specialized version of `std::optional<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>`.
+   */
+  using std__optional_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__ = std::optional<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>;
+  inline std::optional<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>> create_std__optional_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__(const std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>& value) {
+    return std::optional<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>(value);
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridNetworkSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::fastio::HybridNetworkSpec>`.
@@ -166,6 +185,22 @@ namespace margelo::nitro::fastio::bridge::swift {
   using std__shared_ptr_margelo__nitro__fastio__HybridOutputStreamSpec_ = std::shared_ptr<margelo::nitro::fastio::HybridOutputStreamSpec>;
   std::shared_ptr<margelo::nitro::fastio::HybridOutputStreamSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridOutputStreamSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridOutputStreamSpec_(std__shared_ptr_margelo__nitro__fastio__HybridOutputStreamSpec_ cppType);
+  
+  // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridCompressorSpec>
+  /**
+   * Specialized version of `std::shared_ptr<margelo::nitro::fastio::HybridCompressorSpec>`.
+   */
+  using std__shared_ptr_margelo__nitro__fastio__HybridCompressorSpec_ = std::shared_ptr<margelo::nitro::fastio::HybridCompressorSpec>;
+  std::shared_ptr<margelo::nitro::fastio::HybridCompressorSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridCompressorSpec_(void* _Nonnull swiftUnsafePointer);
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridCompressorSpec_(std__shared_ptr_margelo__nitro__fastio__HybridCompressorSpec_ cppType);
+  
+  // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridCompressorFactorySpec>
+  /**
+   * Specialized version of `std::shared_ptr<margelo::nitro::fastio::HybridCompressorFactorySpec>`.
+   */
+  using std__shared_ptr_margelo__nitro__fastio__HybridCompressorFactorySpec_ = std::shared_ptr<margelo::nitro::fastio::HybridCompressorFactorySpec>;
+  std::shared_ptr<margelo::nitro::fastio::HybridCompressorFactorySpec> create_std__shared_ptr_margelo__nitro__fastio__HybridCompressorFactorySpec_(void* _Nonnull swiftUnsafePointer);
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridCompressorFactorySpec_(std__shared_ptr_margelo__nitro__fastio__HybridCompressorFactorySpec_ cppType);
   
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridDuplexStreamSpec>
   /**

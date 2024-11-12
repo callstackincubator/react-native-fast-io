@@ -7,7 +7,7 @@ export type RequestMethod = 'POST' | 'GET'
 export type RequestOptions = {
   url: string
   method: RequestMethod
-  body: InputStream
+  body?: InputStream
 }
 
 export interface Network extends HybridObject<{ ios: 'swift' }> {
