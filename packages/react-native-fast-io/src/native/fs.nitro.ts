@@ -14,7 +14,9 @@ type WellKnownDirectory = 'desktop' | 'documents' | 'downloads' | 'music' | 'pic
 export type NativeFilePickerOptions = {
   multiple?: boolean
   startIn?: string
+
   extensions?: string[]
+  mimeTypes?: string[]
 }
 
 interface FileSystem extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {

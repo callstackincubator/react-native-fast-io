@@ -38,6 +38,8 @@ namespace margelo::nitro::fastio {
       jni::local_ref<jni::JString> startIn = this->getFieldValue(fieldStartIn);
       static const auto fieldExtensions = clazz->getField<jni::JArrayClass<jni::JString>>("extensions");
       jni::local_ref<jni::JArrayClass<jni::JString>> extensions = this->getFieldValue(fieldExtensions);
+      static const auto fieldMimeTypes = clazz->getField<jni::JArrayClass<jni::JString>>("mimeTypes");
+      jni::local_ref<jni::JArrayClass<jni::JString>> mimeTypes = this->getFieldValue(fieldMimeTypes);
       return NativeFilePickerOptions(
         multiple != nullptr ? std::make_optional(static_cast<bool>(multiple->value())) : std::nullopt,
         startIn != nullptr ? std::make_optional(startIn->toStdString()) : std::nullopt,
@@ -47,6 +49,16 @@ namespace margelo::nitro::fastio {
           __vector.reserve(__size);
           for (size_t __i = 0; __i < __size; __i++) {
             auto __element = extensions->getElement(__i);
+            __vector.push_back(__element->toStdString());
+          }
+          return __vector;
+        }()) : std::nullopt,
+        mimeTypes != nullptr ? std::make_optional([&]() {
+          size_t __size = mimeTypes->size();
+          std::vector<std::string> __vector;
+          __vector.reserve(__size);
+          for (size_t __i = 0; __i < __size; __i++) {
+            auto __element = mimeTypes->getElement(__i);
             __vector.push_back(__element->toStdString());
           }
           return __vector;
@@ -68,6 +80,15 @@ namespace margelo::nitro::fastio {
           jni::local_ref<jni::JArrayClass<jni::JString>> __array = jni::JArrayClass<jni::JString>::newArray(__size);
           for (size_t __i = 0; __i < __size; __i++) {
             const auto& __element = value.extensions.value()[__i];
+            __array->setElement(__i, *jni::make_jstring(__element));
+          }
+          return __array;
+        }() : nullptr,
+        value.mimeTypes.has_value() ? [&]() {
+          size_t __size = value.mimeTypes.value().size();
+          jni::local_ref<jni::JArrayClass<jni::JString>> __array = jni::JArrayClass<jni::JString>::newArray(__size);
+          for (size_t __i = 0; __i < __size; __i++) {
+            const auto& __element = value.mimeTypes.value()[__i];
             __array->setElement(__i, *jni::make_jstring(__element));
           }
           return __array;
