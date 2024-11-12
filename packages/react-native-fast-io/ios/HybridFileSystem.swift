@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UniformTypeIdentifiers
 import NitroModules
 import FastIOPrivate
 
@@ -17,7 +18,7 @@ class HybridFileSystem : NSObject, UIDocumentPickerDelegate, HybridFileSystemSpe
     return HybridInputStream(stream: stream)
   }
   
-  func getFileMetadata(path: String) throws -> Metadata {
+  func getMetadata(path: String) throws -> Metadata {
     let attributes = try FileManager.default.attributesOfItem(atPath: path)
     let fileURL = URL(fileURLWithPath: path)
 
@@ -30,8 +31,31 @@ class HybridFileSystem : NSObject, UIDocumentPickerDelegate, HybridFileSystemSpe
     )
   }
   
+  func getWellKnownDirectoryPath(directory: WellKnownDirectory) throws -> String {
+    let url = switch directory {
+    case .desktop:
+      FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first
+    case .documents:
+      FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+    case .downloads:
+      FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first
+    case .music:
+      FileManager.default.urls(for: .musicDirectory, in: .userDomainMask).first
+    case .pictures:
+      FileManager.default.urls(for: .picturesDirectory, in: .userDomainMask).first
+    case .videos:
+      FileManager.default.urls(for: .moviesDirectory, in: .userDomainMask).first
+    }
+    
+    guard let url else {
+      throw RuntimeError.error(withMessage: "Directory '\(directory)' is not available")
+    }
+    
+    return url.path
+  }
+  
   private var filePicker: (promise: Promise<[String]>, vc: UIDocumentPickerViewController)?
-  func showOpenFilePicker() throws -> Promise<[String]> {
+  func showOpenFilePicker(options: NativeFilePickerOptions?) throws -> Promise<[String]> {
     if filePicker != nil {
       return Promise.rejected(withError: RuntimeError.error(withMessage: "File picker already open"))
     }
@@ -39,11 +63,24 @@ class HybridFileSystem : NSObject, UIDocumentPickerDelegate, HybridFileSystemSpe
     let promise = Promise<[String]>()
     
     DispatchQueue.main.async {
+      let utTypes: [UTType] = options?.extensions?
+        .compactMap { ext in
+          let cleanExt = ext.hasPrefix(".") ? String(ext.dropFirst()) : ext
+          return UTType(filenameExtension: cleanExt)
+        } ?? [.item]
+      
+
       let documentPicker = UIDocumentPickerViewController(
-        forOpeningContentTypes: [.item],
+        forOpeningContentTypes: utTypes,
         asCopy: true
       )
       documentPicker.delegate = self
+
+      documentPicker.allowsMultipleSelection = options?.multiple ?? false
+
+      if let startIn = options?.startIn {
+        documentPicker.directoryURL = URL(fileURLWithPath: startIn, isDirectory: true)
+      }
       
       guard let vc = RCTUtilsWrapper.getPresentedViewController() else {
         promise.reject(withError: RuntimeError.error(withMessage: "Cannot present file picker"))

@@ -1,4 +1,4 @@
-import { FileSystem, Metadata } from '../native/fs.nitro'
+import { FileSystem, Metadata, NativeFilePickerOptions } from '../native/fs.nitro'
 import { Blob } from './blob'
 import { toReadableStream } from './streams'
 
@@ -54,7 +54,7 @@ class FileSystemFileHandle implements globalThis.FileSystemFileHandle {
   #metadata: Metadata
 
   constructor(path: string) {
-    this.#metadata = FileSystem.getFileMetadata(path)
+    this.#metadata = FileSystem.getMetadata(path)
   }
 
   async getFile() {
@@ -79,10 +79,29 @@ class FileSystemFileHandle implements globalThis.FileSystemFileHandle {
 }
 
 export async function showOpenFilePicker(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  options?: OpenFilePickerOptions
+  options: OpenFilePickerOptions = {}
 ): Promise<FileSystemFileHandle[]> {
-  const paths = await FileSystem.showOpenFilePicker()
+  const nativePickerOptions: NativeFilePickerOptions = {}
+
+  if (options.startIn) {
+    nativePickerOptions.startIn = FileSystem.getWellKnownDirectoryPath(options.startIn)
+  }
+
+  if (options.multiple) {
+    nativePickerOptions.multiple = options.multiple
+  }
+
+  if (options.types) {
+    nativePickerOptions.extensions = options.types?.reduce<FileExtension[]>((acc, type) => {
+      if (!type.accept) {
+        return acc
+      }
+      return acc.concat(...Object.values(type.accept))
+    }, [])
+  }
+
+  const paths = await FileSystem.showOpenFilePicker(nativePickerOptions)
+
   return paths.map((path) => new FileSystemFileHandle(path))
 }
 

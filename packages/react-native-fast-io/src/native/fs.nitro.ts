@@ -10,11 +10,21 @@ export type Metadata = {
   lastModified: number
 }
 
+type WellKnownDirectory = 'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos'
+
+export type NativeFilePickerOptions = {
+  multiple?: boolean
+  startIn?: string
+  extensions?: string[]
+}
+
 export interface FileSystem extends HybridObject<{ ios: 'swift' }> {
   createInputStream(path: string): InputStream
-  getFileMetadata(path: string): Metadata
 
-  showOpenFilePicker(): Promise<string[]>
+  getMetadata(path: string): Metadata
+  getWellKnownDirectoryPath(directory: WellKnownDirectory): string
+
+  showOpenFilePicker(options?: NativeFilePickerOptions): Promise<string[]>
 }
 
 export const FileSystem = NitroModules.createHybridObject<FileSystem>('FileSystem')

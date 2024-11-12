@@ -26,6 +26,8 @@ namespace margelo::nitro::fastio { class HybridPassThroughStreamSpec; }
 namespace margelo::nitro::fastio { class HybridWebSocketManagerSpec; }
 // Forward declaration of `HybridWebSocketSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridWebSocketSpec; }
+// Forward declaration of `NativeFilePickerOptions` to properly resolve imports.
+namespace margelo::nitro::fastio { struct NativeFilePickerOptions; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridFileSystemSpecCxx` to properly resolve imports.
@@ -51,12 +53,14 @@ namespace FastIO { class HybridWebSocketSpecCxx; }
 #include "HybridPassThroughStreamSpec.hpp"
 #include "HybridWebSocketManagerSpec.hpp"
 #include "HybridWebSocketSpec.hpp"
+#include "NativeFilePickerOptions.hpp"
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/ArrayBufferHolder.hpp>
 #include <NitroModules/PromiseHolder.hpp>
 #include <functional>
 #include <future>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -92,6 +96,42 @@ namespace margelo::nitro::fastio::bridge::swift {
   using PromiseHolder_std__vector_std__string__ = PromiseHolder<std::vector<std::string>>;
   inline PromiseHolder<std::vector<std::string>> create_PromiseHolder_std__vector_std__string__() {
     return PromiseHolder<std::vector<std::string>>();
+  }
+  
+  // pragma MARK: std::optional<bool>
+  /**
+   * Specialized version of `std::optional<bool>`.
+   */
+  using std__optional_bool_ = std::optional<bool>;
+  inline std::optional<bool> create_std__optional_bool_(const bool& value) {
+    return std::optional<bool>(value);
+  }
+  
+  // pragma MARK: std::optional<std::string>
+  /**
+   * Specialized version of `std::optional<std::string>`.
+   */
+  using std__optional_std__string_ = std::optional<std::string>;
+  inline std::optional<std::string> create_std__optional_std__string_(const std::string& value) {
+    return std::optional<std::string>(value);
+  }
+  
+  // pragma MARK: std::optional<std::vector<std::string>>
+  /**
+   * Specialized version of `std::optional<std::vector<std::string>>`.
+   */
+  using std__optional_std__vector_std__string__ = std::optional<std::vector<std::string>>;
+  inline std::optional<std::vector<std::string>> create_std__optional_std__vector_std__string__(const std::vector<std::string>& value) {
+    return std::optional<std::vector<std::string>>(value);
+  }
+  
+  // pragma MARK: std::optional<NativeFilePickerOptions>
+  /**
+   * Specialized version of `std::optional<NativeFilePickerOptions>`.
+   */
+  using std__optional_NativeFilePickerOptions_ = std::optional<NativeFilePickerOptions>;
+  inline std::optional<NativeFilePickerOptions> create_std__optional_NativeFilePickerOptions_(const NativeFilePickerOptions& value) {
+    return std::optional<NativeFilePickerOptions>(value);
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridFileSystemSpec>

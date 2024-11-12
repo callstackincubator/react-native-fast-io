@@ -445,7 +445,10 @@ const styles = StyleSheet.create({
 
 // tbd: playground
 setTimeout(async () => {
-  const files = await showOpenFilePicker()
+  const files = await showOpenFilePicker({
+    startIn: 'desktop',
+    types: [{ description: 'PDF files', accept: { 'text/plain': ['.txt'] } }],
+  })
 
   if (!files[0]) {
     console.log('No file')
