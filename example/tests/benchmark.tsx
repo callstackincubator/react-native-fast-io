@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
 setTimeout(async () => {
   const files = await showOpenFilePicker({
     startIn: 'desktop',
-    types: [{ description: 'PDF files', accept: { 'text/plain': ['.txt'] } }],
+    types: [{ description: 'PDF files', accept: { 'application/pdf': ['.pdf'] } }],
   })
 
   if (!files[0]) {
