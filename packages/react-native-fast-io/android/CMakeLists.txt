@@ -8,6 +8,9 @@ set (CMAKE_CXX_STANDARD 20)
 # Define C++ library and add all sources
 add_library(${PACKAGE_NAME} SHARED
         src/main/cpp/cpp-adapter.cpp
+        src/main/cpp/HybridStreamFactory.cpp
+        ../cpp/HybridCompressor.cpp
+        ../cpp/HybridCompressorFactory.cpp       
 )
 
 # Add Nitrogen specs :)
@@ -16,14 +19,17 @@ include(${CMAKE_SOURCE_DIR}/../nitrogen/generated/android/FastIO+autolinking.cma
 # Set up local includes
 include_directories(
         "src/main/cpp"
-        # "../cpp"
+        "../cpp"
 )
 
+find_package(ZLIB REQUIRED)
 find_library(LOG_LIB log)
 
 # Link all libraries together
 target_link_libraries(
         ${PACKAGE_NAME}
         ${LOG_LIB}
+        ${ZLIB_LIBRARIES}
         android                                   # <-- Android core
 )
+

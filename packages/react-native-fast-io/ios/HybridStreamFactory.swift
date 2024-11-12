@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import FastIOPrivate
 
 class HybridStreamFactory : HybridStreamFactorySpec {
-  static let BUFFER_SIZE = 64 * 1024
+  static let BUFFER_SIZE = FASTIO_BUFFER_SIZE
   
   var bufferSize: Double {
     get {
