@@ -1,4 +1,5 @@
 module FastIOPrivate {
     header "../RCTUtilsWrapper.h"
+    header  "../../cpp/Constants.h"
     export *
 }

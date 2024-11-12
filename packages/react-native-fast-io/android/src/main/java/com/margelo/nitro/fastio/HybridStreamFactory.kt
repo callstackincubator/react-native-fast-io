@@ -5,7 +5,7 @@ import com.margelo.nitro.NitroModules
 
 class HybridStreamFactory : HybridStreamFactorySpec() {
     override val bufferSize: Double
-        get() = (64 * 1024).toDouble()
+        get() = getBufferSize().toDouble()
 
     override fun createInputStream(path: String): HybridInputStreamSpec {
         val context = NitroModules.applicationContext
@@ -20,4 +20,9 @@ class HybridStreamFactory : HybridStreamFactorySpec() {
 
     override val memorySize: Long
         get() = 0L
+
+    companion object {
+        @JvmStatic
+        private external fun getBufferSize(): Int
+    }
 } 
