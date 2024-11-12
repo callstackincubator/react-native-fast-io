@@ -25,6 +25,12 @@ export function FileSystemUI() {
     })
   }
 
+  const logContents = async () => {
+    for await (const chunk of file!.stream()) {
+      console.log(chunk)
+    }
+  }
+
   return (
     <View>
       <Text style={styles.header}>File System Test</Text>
@@ -46,6 +52,9 @@ export function FileSystemUI() {
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => sendFile('deflate-raw')}>
             <Text style={styles.buttonText}>Send Deflated Raw</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => logContents()}>
+            <Text style={styles.buttonText}>Log contents</Text>
           </TouchableOpacity>
         </View>
       )}
