@@ -8,8 +8,9 @@ set (CMAKE_CXX_STANDARD 20)
 # Define C++ library and add all sources
 add_library(${PACKAGE_NAME} SHARED
         src/main/cpp/cpp-adapter.cpp
+        src/main/cpp/HybridStreamFactory.cpp
         ../cpp/HybridCompressor.cpp
-        ../cpp/HybridCompressorFactory.cpp
+        ../cpp/HybridCompressorFactory.cpp       
 )
 
 # Add Nitrogen specs :)
