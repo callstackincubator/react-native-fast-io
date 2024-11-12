@@ -69,8 +69,9 @@ class HybridFileSystem : HybridFileSystemSpec() {
                     type = "*/*"
                     addCategory(Intent.CATEGORY_OPENABLE)
 
-                    // tbd: handle file extensions - must pass mime type 
-                    // on Android, will require updating code on iOS
+                    if (options?.mimeTypes != null) {
+                        putExtra(Intent.EXTRA_MIME_TYPES, options.mimeTypes)
+                    }
 
                     if (options?.multiple == true) {
                         putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)

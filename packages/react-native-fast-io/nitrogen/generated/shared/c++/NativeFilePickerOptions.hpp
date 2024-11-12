@@ -34,9 +34,10 @@ namespace margelo::nitro::fastio {
     std::optional<bool> multiple     SWIFT_PRIVATE;
     std::optional<std::string> startIn     SWIFT_PRIVATE;
     std::optional<std::vector<std::string>> extensions     SWIFT_PRIVATE;
+    std::optional<std::vector<std::string>> mimeTypes     SWIFT_PRIVATE;
 
   public:
-    explicit NativeFilePickerOptions(std::optional<bool> multiple, std::optional<std::string> startIn, std::optional<std::vector<std::string>> extensions): multiple(multiple), startIn(startIn), extensions(extensions) {}
+    explicit NativeFilePickerOptions(std::optional<bool> multiple, std::optional<std::string> startIn, std::optional<std::vector<std::string>> extensions, std::optional<std::vector<std::string>> mimeTypes): multiple(multiple), startIn(startIn), extensions(extensions), mimeTypes(mimeTypes) {}
   };
 
 } // namespace margelo::nitro::fastio
@@ -53,7 +54,8 @@ namespace margelo::nitro {
       return NativeFilePickerOptions(
         JSIConverter<std::optional<bool>>::fromJSI(runtime, obj.getProperty(runtime, "multiple")),
         JSIConverter<std::optional<std::string>>::fromJSI(runtime, obj.getProperty(runtime, "startIn")),
-        JSIConverter<std::optional<std::vector<std::string>>>::fromJSI(runtime, obj.getProperty(runtime, "extensions"))
+        JSIConverter<std::optional<std::vector<std::string>>>::fromJSI(runtime, obj.getProperty(runtime, "extensions")),
+        JSIConverter<std::optional<std::vector<std::string>>>::fromJSI(runtime, obj.getProperty(runtime, "mimeTypes"))
       );
     }
     static inline jsi::Value toJSI(jsi::Runtime& runtime, const NativeFilePickerOptions& arg) {
@@ -61,6 +63,7 @@ namespace margelo::nitro {
       obj.setProperty(runtime, "multiple", JSIConverter<std::optional<bool>>::toJSI(runtime, arg.multiple));
       obj.setProperty(runtime, "startIn", JSIConverter<std::optional<std::string>>::toJSI(runtime, arg.startIn));
       obj.setProperty(runtime, "extensions", JSIConverter<std::optional<std::vector<std::string>>>::toJSI(runtime, arg.extensions));
+      obj.setProperty(runtime, "mimeTypes", JSIConverter<std::optional<std::vector<std::string>>>::toJSI(runtime, arg.mimeTypes));
       return obj;
     }
     static inline bool canConvert(jsi::Runtime& runtime, const jsi::Value& value) {
@@ -71,6 +74,7 @@ namespace margelo::nitro {
       if (!JSIConverter<std::optional<bool>>::canConvert(runtime, obj.getProperty(runtime, "multiple"))) return false;
       if (!JSIConverter<std::optional<std::string>>::canConvert(runtime, obj.getProperty(runtime, "startIn"))) return false;
       if (!JSIConverter<std::optional<std::vector<std::string>>>::canConvert(runtime, obj.getProperty(runtime, "extensions"))) return false;
+      if (!JSIConverter<std::optional<std::vector<std::string>>>::canConvert(runtime, obj.getProperty(runtime, "mimeTypes"))) return false;
       return true;
     }
   };

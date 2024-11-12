@@ -18,7 +18,7 @@ public extension NativeFilePickerOptions {
   /**
    * Create a new instance of `NativeFilePickerOptions`.
    */
-  init(multiple: Bool?, startIn: String?, extensions: [String]?) {
+  init(multiple: Bool?, startIn: String?, extensions: [String]?, mimeTypes: [String]?) {
     self.init({ () -> bridge.std__optional_bool_ in
       if let __unwrappedValue = multiple {
         return bridge.create_std__optional_bool_(__unwrappedValue)
@@ -33,6 +33,18 @@ public extension NativeFilePickerOptions {
       }
     }(), { () -> bridge.std__optional_std__vector_std__string__ in
       if let __unwrappedValue = extensions {
+        return bridge.create_std__optional_std__vector_std__string__({ () -> bridge.std__vector_std__string_ in
+          var __vector = bridge.create_std__vector_std__string_(__unwrappedValue.count)
+          for __item in __unwrappedValue {
+            __vector.push_back(std.string(__item))
+          }
+          return __vector
+        }())
+      } else {
+        return .init()
+      }
+    }(), { () -> bridge.std__optional_std__vector_std__string__ in
+      if let __unwrappedValue = mimeTypes {
         return bridge.create_std__optional_std__vector_std__string__({ () -> bridge.std__vector_std__string_ in
           var __vector = bridge.create_std__vector_std__string_(__unwrappedValue.count)
           for __item in __unwrappedValue {
@@ -100,6 +112,35 @@ public extension NativeFilePickerOptions {
     @inline(__always)
     set {
       self.__extensions = { () -> bridge.std__optional_std__vector_std__string__ in
+        if let __unwrappedValue = newValue {
+          return bridge.create_std__optional_std__vector_std__string__({ () -> bridge.std__vector_std__string_ in
+            var __vector = bridge.create_std__vector_std__string_(__unwrappedValue.count)
+            for __item in __unwrappedValue {
+              __vector.push_back(std.string(__item))
+            }
+            return __vector
+          }())
+        } else {
+          return .init()
+        }
+      }()
+    }
+  }
+  
+  var mimeTypes: [String]? {
+    @inline(__always)
+    get {
+      return { () -> [String]? in
+        if let __unwrapped = self.__mimeTypes.value {
+          return __unwrapped.map({ __item in String(__item) })
+        } else {
+          return nil
+        }
+      }()
+    }
+    @inline(__always)
+    set {
+      self.__mimeTypes = { () -> bridge.std__optional_std__vector_std__string__ in
         if let __unwrappedValue = newValue {
           return bridge.create_std__optional_std__vector_std__string__({ () -> bridge.std__vector_std__string_ in
             var __vector = bridge.create_std__vector_std__string_(__unwrappedValue.count)
