@@ -102,7 +102,7 @@ export async function showOpenFilePicker(
   }
 
   const paths = await FileSystem.showOpenFilePicker(nativePickerOptions)
-
+  console.log(paths)
   return paths.map((path) => new FileSystemFileHandle(path))
 }
 
