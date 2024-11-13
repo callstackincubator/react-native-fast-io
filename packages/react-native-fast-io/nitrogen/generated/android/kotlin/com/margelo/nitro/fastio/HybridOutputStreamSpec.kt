@@ -43,11 +43,7 @@ abstract class HybridOutputStreamSpec: HybridObject() {
   // Methods
   @DoNotStrip
   @Keep
-  abstract fun hasSpaceAvailable(): Boolean
-  
-  @DoNotStrip
-  @Keep
-  abstract fun write(buffer: ArrayBuffer, maxLength: Double): Double
+  abstract fun write(buffer: ArrayBuffer): Promise<Unit>
   
   @DoNotStrip
   @Keep

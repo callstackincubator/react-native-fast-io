@@ -173,6 +173,15 @@ namespace margelo::nitro::fastio::bridge::swift {
   std::shared_ptr<margelo::nitro::fastio::HybridNetworkSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridNetworkSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridNetworkSpec_(std__shared_ptr_margelo__nitro__fastio__HybridNetworkSpec_ cppType);
   
+  // pragma MARK: PromiseHolder<std::shared_ptr<ArrayBuffer>>
+  /**
+   * Specialized version of `PromiseHolder<std::shared_ptr<ArrayBuffer>>`.
+   */
+  using PromiseHolder_std__shared_ptr_ArrayBuffer__ = PromiseHolder<std::shared_ptr<ArrayBuffer>>;
+  inline PromiseHolder<std::shared_ptr<ArrayBuffer>> create_PromiseHolder_std__shared_ptr_ArrayBuffer__() {
+    return PromiseHolder<std::shared_ptr<ArrayBuffer>>();
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridOutputStreamSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::fastio::HybridOutputStreamSpec>`.

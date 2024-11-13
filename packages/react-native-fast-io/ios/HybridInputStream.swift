@@ -15,16 +15,36 @@ class HybridInputStream : HybridInputStreamSpec {
     self.stream = stream
   }
   
-  func hasBytesAvailable() throws -> Bool {
-    stream.hasBytesAvailable
-  }
-  
   func open() throws -> Void {
     stream.open()
   }
   
-  func read(buffer: ArrayBufferHolder, maxLength: Double) throws -> Double {
-    Double(stream.read(buffer.data, maxLength: Int(maxLength)))
+  func read() throws -> Promise<ArrayBufferHolder> {
+    let promise = Promise<ArrayBufferHolder>()
+
+    Task {
+      let buffer = ArrayBufferHolder.allocate(size: Int(HybridStreamFactory.BUFFER_SIZE))
+      let bytesRead = stream.read(buffer.data, maxLength: buffer.size)
+      
+      switch bytesRead {
+      case 0:  // End of stream
+        promise.resolve(withResult: ArrayBufferHolder.allocate(size: 0))
+        
+      case buffer.size:  // Full buffer used
+        promise.resolve(withResult: buffer)
+        
+      case 1...:  // Partially filled, needs slice
+        let slice = ArrayBufferHolder.allocate(size: bytesRead)
+        memcpy(slice.data, buffer.data, bytesRead)
+        promise.resolve(withResult: slice)
+        
+      default:  // Error
+        promise.reject(withError: stream.streamError ?? 
+          RuntimeError.error(withMessage: "Unexpected error reading stream"))
+      }
+    }
+    
+    return promise
   }
   
   func close() {

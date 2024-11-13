@@ -43,11 +43,7 @@ abstract class HybridInputStreamSpec: HybridObject() {
   // Methods
   @DoNotStrip
   @Keep
-  abstract fun hasBytesAvailable(): Boolean
-  
-  @DoNotStrip
-  @Keep
-  abstract fun read(buffer: ArrayBuffer, maxLength: Double): Double
+  abstract fun read(): Promise<ArrayBuffer>
   
   @DoNotStrip
   @Keep

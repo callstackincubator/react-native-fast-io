@@ -51,8 +51,7 @@ namespace margelo::nitro::fastio {
 
   public:
     // Methods
-    bool hasBytesAvailable() override;
-    double read(const std::shared_ptr<ArrayBuffer>& buffer, double maxLength) override;
+    std::future<std::shared_ptr<ArrayBuffer>> read() override;
     void open() override;
     void close() override;
 

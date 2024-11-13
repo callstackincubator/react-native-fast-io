@@ -32,8 +32,7 @@ public protocol HybridOutputStreamSpec: AnyObject, HybridObjectSpec {
   
 
   // Methods
-  func hasSpaceAvailable() throws -> Bool
-  func write(buffer: ArrayBufferHolder, maxLength: Double) throws -> Double
+  func write(buffer: ArrayBufferHolder) throws -> Promise<Void>
   func open() throws -> Void
   func close() throws -> Void
 }

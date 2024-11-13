@@ -1,35 +1,17 @@
-import {
-  CompressorFactory,
-  DuplexStream,
-  InputStream,
-  OutputStream,
-  StreamFactory,
-} from '../native/streams.nitro'
+import { CompressorFactory, DuplexStream, InputStream, OutputStream } from '../native/streams.nitro'
 
 export const toReadableStream = (inputStream: InputStream) => {
   const stream = new ReadableStream<Uint8Array>({
     start() {
       inputStream.open()
     },
-    pull(controller) {
-      const buffer = new ArrayBuffer(StreamFactory.bufferSize)
-
-      if (!inputStream.hasBytesAvailable()) {
-        inputStream.close()
+    async pull(controller) {
+      const buffer = await inputStream.read()
+      if (buffer.byteLength == 0) {
         controller.close()
         return
       }
-
-      const bytesRead = inputStream.read(buffer, StreamFactory.bufferSize)
-      if (bytesRead < 0) {
-        inputStream.close()
-        controller.error('Error reading from stream.')
-        return
-      }
-
-      if (bytesRead > 0) {
-        controller.enqueue(new Uint8Array(buffer.slice(0, bytesRead)))
-      }
+      controller.enqueue(new Uint8Array(buffer))
     },
     cancel() {
       inputStream.close()
@@ -48,16 +30,7 @@ export const toWritableStream = (outputStream: OutputStream) => {
       if (chunk.byteLength === 0) {
         return
       }
-
-      // tbd: implement better backpressure mechanism
-      while (!outputStream.hasSpaceAvailable()) {
-        await new Promise((resolve) => setTimeout(resolve, 1))
-      }
-
-      const bytesWritten = outputStream.write(chunk.buffer, chunk.byteLength)
-      if (bytesWritten < 0) {
-        throw new Error('Failed to write to output stream')
-      }
+      await outputStream.write(chunk.buffer)
     },
     close() {
       outputStream.close()
@@ -94,8 +67,10 @@ export class CompressionStream implements globalThis.CompressionStream {
         }
       },
       flush(controller) {
+        console.log('flushing')
         const finalData = compressor.finalize()
         if (finalData.byteLength > 0) {
+          console.log(finalData.byteLength)
           controller.enqueue(new Uint8Array(finalData))
         }
       },

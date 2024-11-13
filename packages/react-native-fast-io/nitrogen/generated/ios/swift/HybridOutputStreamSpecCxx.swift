@@ -99,21 +99,16 @@ public class HybridOutputStreamSpecCxx {
 
   // Methods
   @inline(__always)
-  public func hasSpaceAvailable() -> Bool {
+  public func write(buffer: ArrayBufferHolder) -> bridge.PromiseHolder_void_ {
     do {
-      let __result = try self.__implementation.hasSpaceAvailable()
-      return __result
-    } catch {
-      let __message = "\(error.localizedDescription)"
-      fatalError("Swift errors can currently not be propagated to C++! See https://github.com/swiftlang/swift/issues/75290 (Error: \(__message))")
-    }
-  }
-  
-  @inline(__always)
-  public func write(buffer: ArrayBufferHolder, maxLength: Double) -> Double {
-    do {
-      let __result = try self.__implementation.write(buffer: buffer, maxLength: maxLength)
-      return __result
+      let __result = try self.__implementation.write(buffer: buffer)
+      return { () -> bridge.PromiseHolder_void_ in
+        let __promiseHolder = bridge.create_PromiseHolder_void_()
+        __result
+          .then({ __result in __promiseHolder.resolve() })
+          .catch({ __error in __promiseHolder.reject(std.string(String(describing: __error))) })
+        return __promiseHolder
+      }()
     } catch {
       let __message = "\(error.localizedDescription)"
       fatalError("Swift errors can currently not be propagated to C++! See https://github.com/swiftlang/swift/issues/75290 (Error: \(__message))")

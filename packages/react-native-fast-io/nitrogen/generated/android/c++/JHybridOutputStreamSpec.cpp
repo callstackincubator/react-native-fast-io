@@ -10,6 +10,8 @@
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
 
+#include <future>
+#include <NitroModules/JPromise.hpp>
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/JArrayBuffer.hpp>
 
@@ -34,15 +36,20 @@ namespace margelo::nitro::fastio {
   
 
   // Methods
-  bool JHybridOutputStreamSpec::hasSpaceAvailable() {
-    static const auto method = _javaPart->getClass()->getMethod<jboolean()>("hasSpaceAvailable");
-    auto __result = method(_javaPart);
-    return static_cast<bool>(__result);
-  }
-  double JHybridOutputStreamSpec::write(const std::shared_ptr<ArrayBuffer>& buffer, double maxLength) {
-    static const auto method = _javaPart->getClass()->getMethod<double(jni::alias_ref<JArrayBuffer::javaobject> /* buffer */, double /* maxLength */)>("write");
-    auto __result = method(_javaPart, JArrayBuffer::wrap(buffer), maxLength);
-    return __result;
+  std::future<void> JHybridOutputStreamSpec::write(const std::shared_ptr<ArrayBuffer>& buffer) {
+    static const auto method = _javaPart->getClass()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<JArrayBuffer::javaobject> /* buffer */)>("write");
+    auto __result = method(_javaPart, JArrayBuffer::wrap(buffer));
+    return [&]() {
+      auto __promise = std::make_shared<std::promise<void>>();
+      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
+        __promise->set_value();
+      });
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JString>& __message) {
+        std::runtime_error __error(__message->toStdString());
+        __promise->set_exception(std::make_exception_ptr(__error));
+      });
+      return __promise->get_future();
+    }();
   }
   void JHybridOutputStreamSpec::open() {
     static const auto method = _javaPart->getClass()->getMethod<void()>("open");
