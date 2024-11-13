@@ -23,24 +23,20 @@ class HybridInputStream : HybridInputStreamSpec {
     let promise = Promise<ArrayBufferHolder>()
 
     Task {
-      let buffer = ArrayBufferHolder.allocate(size: Int(HybridStreamFactory.BUFFER_SIZE))
-      let bytesRead = stream.read(buffer.data, maxLength: buffer.size)
+      let size = Int(HybridStreamFactory.BUFFER_SIZE)
+      let data = UnsafeMutablePointer<UInt8>.allocate(capacity: size)
       
-      switch bytesRead {
-      case 0:  // End of stream
-        promise.resolve(withResult: ArrayBufferHolder.allocate(size: 0))
-        
-      case buffer.size:  // Full buffer used
-        promise.resolve(withResult: buffer)
-        
-      case 1...:  // Partially filled, needs slice
-        let slice = ArrayBufferHolder.allocate(size: bytesRead)
-        memcpy(slice.data, buffer.data, bytesRead)
-        promise.resolve(withResult: slice)
-        
-      default:  // Error
-        promise.reject(withError: stream.streamError ?? 
-          RuntimeError.error(withMessage: "Unexpected error reading stream"))
+      let bytesRead = stream.read(data, maxLength: size)
+      
+      let deleteFunc = {
+        data.deallocate()
+      }
+      
+      if (bytesRead >= 0) {
+        promise.resolve(withResult: ArrayBufferHolder.wrap(dataWithoutCopy: data, size: bytesRead, onDelete: deleteFunc))
+      } else {
+        deleteFunc()
+        promise.reject(withError: stream.streamError ?? RuntimeError.error(withMessage: "Unexpected error reading stream"))
       }
     }
     
