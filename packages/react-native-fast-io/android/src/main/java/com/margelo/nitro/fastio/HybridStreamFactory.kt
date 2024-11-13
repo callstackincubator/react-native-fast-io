@@ -23,6 +23,9 @@ class HybridStreamFactory : HybridStreamFactorySpec() {
 
     companion object {
         @JvmStatic
+        val BUFFER_SIZE: Int = getBufferSize()
+
+        @JvmStatic
         private external fun getBufferSize(): Int
     }
 } 

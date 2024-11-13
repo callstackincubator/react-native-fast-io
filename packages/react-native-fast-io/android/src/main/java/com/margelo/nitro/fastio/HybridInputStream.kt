@@ -8,7 +8,7 @@ class HybridInputStream(private val stream: InputStream) : HybridInputStreamSpec
     override fun read(): Promise<ArrayBuffer> {
         return Promise<ArrayBuffer>().apply {
             try {
-                val bytes = ByteArray(64 * 1024)
+                val bytes = ByteArray(HybridStreamFactory.BUFFER_SIZE)
                 val bytesRead = stream.read(bytes, 0, bytes.size)
 
                 when {
