@@ -74,7 +74,7 @@ class HybridFileSystem : HybridFileSystemSpec() {
                     }
                 }
 
-                activity.startActivityForResult(intent, Companion.FILE_PICKER_REQUEST_CODE)
+                activity.startActivityForResult(intent, FILE_PICKER_REQUEST_CODE)
                 pendingPromise = this
 
             } catch (e: Exception) {
