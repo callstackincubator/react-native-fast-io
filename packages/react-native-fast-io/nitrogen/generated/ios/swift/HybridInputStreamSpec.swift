@@ -32,8 +32,7 @@ public protocol HybridInputStreamSpec: AnyObject, HybridObjectSpec {
   
 
   // Methods
-  func hasBytesAvailable() throws -> Bool
-  func read(buffer: ArrayBufferHolder, maxLength: Double) throws -> Double
+  func read() throws -> Promise<ArrayBufferHolder>
   func open() throws -> Void
   func close() throws -> Void
 }

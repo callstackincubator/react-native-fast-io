@@ -1,16 +1,14 @@
 import { getHybridObjectConstructor, HybridObject, NitroModules } from 'react-native-nitro-modules'
 
 export interface InputStream extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
-  hasBytesAvailable(): boolean
-  read(buffer: ArrayBuffer, maxLength: number): number
+  read(): Promise<ArrayBuffer>
 
   open(): void
   close(): void
 }
 
 export interface OutputStream extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
-  hasSpaceAvailable(): boolean
-  write(buffer: ArrayBuffer, maxLength: number): number
+  write(buffer: ArrayBuffer): Promise<void>
 
   open(): void
   close(): void

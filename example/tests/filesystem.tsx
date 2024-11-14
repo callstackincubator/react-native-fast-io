@@ -32,7 +32,7 @@ export function FileSystemUI() {
 
   const logContents = async () => {
     for await (const chunk of file!.stream()) {
-      console.log(chunk)
+      console.log('Chunk length: ', chunk.length)
     }
   }
 

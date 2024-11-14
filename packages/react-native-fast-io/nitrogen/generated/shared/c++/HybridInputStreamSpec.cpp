@@ -14,7 +14,6 @@ namespace margelo::nitro::fastio {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
-      prototype.registerHybridMethod("hasBytesAvailable", &HybridInputStreamSpec::hasBytesAvailable);
       prototype.registerHybridMethod("read", &HybridInputStreamSpec::read);
       prototype.registerHybridMethod("open", &HybridInputStreamSpec::open);
       prototype.registerHybridMethod("close", &HybridInputStreamSpec::close);

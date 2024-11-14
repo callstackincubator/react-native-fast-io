@@ -51,8 +51,7 @@ namespace margelo::nitro::fastio {
 
   public:
     // Methods
-    bool hasSpaceAvailable() override;
-    double write(const std::shared_ptr<ArrayBuffer>& buffer, double maxLength) override;
+    std::future<void> write(const std::shared_ptr<ArrayBuffer>& buffer) override;
     void open() override;
     void close() override;
 

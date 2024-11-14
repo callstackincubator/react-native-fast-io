@@ -1,22 +1,37 @@
 package com.margelo.nitro.fastio
 
 import com.margelo.nitro.core.ArrayBuffer
+import com.margelo.nitro.core.Promise
+import java.io.OutputStream
 
-class HybridOutputStream : HybridOutputStreamSpec() {
-    override fun hasSpaceAvailable(): Boolean {
-        throw NotImplementedError("HybridOutputStream.hasSpaceAvailable() not implemented")
-    }
+class HybridOutputStream(private val stream: OutputStream) : HybridOutputStreamSpec() {
+    
+    override fun write(buffer: ArrayBuffer): Promise<Unit> {
+        val byteBuffer = buffer.getBuffer(false)
+        val bytes = ByteArray(buffer.size)
+        byteBuffer.get(bytes)
 
-    override fun write(buffer: ArrayBuffer, maxLength: Double): Double {
-        throw NotImplementedError("HybridOutputStream.write() not implemented")
+        return Promise<Unit>().apply {
+            try {
+                stream.write(bytes)
+                resolve(Unit)
+            } catch (e: Exception) {
+                reject(Error(e.message))
+            }
+        }
     }
 
     override fun open() {
-        throw NotImplementedError("HybridOutputStream.open() not implemented")
+        // No explicit open needed for Java OutputStreams
     }
 
     override fun close() {
-        throw NotImplementedError("HybridOutputStream.close() not implemented")
+        try {
+            stream.flush()
+            stream.close()
+        } catch (e: Exception) {
+            println("Error closing stream: ${e.message}")
+        }
     }
 
     override val memorySize: Long

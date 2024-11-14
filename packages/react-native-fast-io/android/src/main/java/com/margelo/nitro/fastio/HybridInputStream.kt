@@ -1,44 +1,46 @@
 package com.margelo.nitro.fastio
 
 import com.margelo.nitro.core.ArrayBuffer
+import com.margelo.nitro.core.Promise
 import java.io.InputStream
 
 class HybridInputStream(private val stream: InputStream) : HybridInputStreamSpec() {
-    private var isOpen = true
+    override fun read(): Promise<ArrayBuffer> {
+        return Promise<ArrayBuffer>().apply {
+            try {
+                val bytes = ByteArray(HybridStreamFactory.BUFFER_SIZE)
+                val bytesRead = stream.read(bytes, 0, bytes.size)
 
-    override fun hasBytesAvailable(): Boolean {
-        if (!isOpen) return false
+                when {
+                    bytesRead == -1 -> {
+                        // End of stream
+                        resolve(ArrayBuffer.allocate(0))
+                    }
+                    bytesRead > 0 -> {
+                        val arrayBuffer = ArrayBuffer.allocate(bytesRead)
 
-        return try {
-            stream.available() > 0
-        } catch (e: Exception) {
-            false
+                        val destBuffer = arrayBuffer.getBuffer(false)
+                        destBuffer.put(bytes, 0, bytesRead)
+
+                        resolve(arrayBuffer)
+                    }
+                    else -> {
+                        // Error case
+                        reject(Error("Unexpected error reading stream"))
+                    }
+                }
+            } catch (e: Exception) {
+                reject(Error(e.message))
+            }
         }
-    }
-
-    override fun read(buffer: ArrayBuffer, maxLength: Double): Double {
-        val byteBuffer = buffer.getBuffer(false)
-
-        val tempBuffer = ByteArray(minOf(maxLength.toInt(), buffer.size))
-
-        val bytesRead = stream.read(tempBuffer, 0, tempBuffer.size)
-
-        if (bytesRead > 0) {
-            byteBuffer.put(tempBuffer, 0, bytesRead)
-        }
-
-        return bytesRead.toDouble()
     }
 
     override fun open() {
-        // no-op
+        // No explicit open needed for Java InputStreams
     }
 
     override fun close() {
-        if (!isOpen) return
-
         stream.close()
-        isOpen = false
     }
 
     override val memorySize: Long

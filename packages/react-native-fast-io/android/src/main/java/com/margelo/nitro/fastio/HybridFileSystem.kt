@@ -13,10 +13,6 @@ class HybridFileSystem : HybridFileSystemSpec() {
     private val context = NitroModules.applicationContext
         ?: throw RuntimeException("Application context is missing")
 
-    init {
-        context.addActivityEventListener(activityEventListener)
-    }
-
     override fun getMetadata(path: String): Metadata {
         val uri = Uri.parse(path)
         val document = DocumentFile.fromSingleUri(context, uri)
@@ -87,57 +83,61 @@ class HybridFileSystem : HybridFileSystemSpec() {
         }
     }
 
-    companion object {
-        private const val FILE_PICKER_REQUEST_CODE = 1001
-        private var pendingPromise: Promise<Array<String>>? = null
+    private var pendingPromise: Promise<Array<String>>? = null
 
-        val activityEventListener = object : BaseActivityEventListener() {
-            override fun onActivityResult(
-                activity: Activity,
-                requestCode: Int,
-                resultCode: Int,
-                data: Intent?
-            ) {
-                handleActivityResult(requestCode, resultCode, data)
-            }
+    private val activityEventListener = object : BaseActivityEventListener() {
+        override fun onActivityResult(
+            activity: Activity,
+            requestCode: Int,
+            resultCode: Int,
+            data: Intent?
+        ) {
+            handleActivityResult(requestCode, resultCode, data)
         }
+    }.also { listener ->
+        // tbd: register/deregister accordingly
+        context.addActivityEventListener(listener)
+    }
 
-        fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            if (requestCode == FILE_PICKER_REQUEST_CODE) {
-                val promise = pendingPromise
-                    ?: throw RuntimeException("Promise missing")
+    private fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == FILE_PICKER_REQUEST_CODE) {
+            val promise = pendingPromise
+                ?: throw RuntimeException("Promise missing")
 
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    try {
-                        val paths = mutableListOf<String>()
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                try {
+                    val paths = mutableListOf<String>()
 
-                        if (data.clipData != null) {
-                            // Multiple files
-                            for (i in 0 until data.clipData!!.itemCount) {
-                                data.clipData!!.getItemAt(i).uri.toString().let {
-                                    paths.add(it)
-                                }
-                            }
-                        } else {
-                            // Single file
-                            data.data?.toString()?.let {
+                    if (data.clipData != null) {
+                        // Multiple files
+                        for (i in 0 until data.clipData!!.itemCount) {
+                            data.clipData!!.getItemAt(i).uri.toString().let {
                                 paths.add(it)
                             }
                         }
-
-                        promise.resolve(paths.toTypedArray())
-                    } catch (e: Exception) {
-                        promise.reject(Error(e.message))
+                    } else {
+                        // Single file
+                        data.data?.toString()?.let {
+                            paths.add(it)
+                        }
                     }
-                } else {
-                    promise.reject(Error("File picker cancelled"))
-                }
 
-                pendingPromise = null
+                    promise.resolve(paths.toTypedArray())
+                } catch (e: Exception) {
+                    promise.reject(Error(e.message))
+                }
+            } else {
+                promise.reject(Error("File picker cancelled"))
             }
+
+            pendingPromise = null
         }
     }
 
     override val memorySize: Long
         get() = 0L
-} 
+
+    companion object {
+        private const val FILE_PICKER_REQUEST_CODE = 1001
+    }
+}

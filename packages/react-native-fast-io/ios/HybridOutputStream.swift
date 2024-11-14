@@ -15,16 +15,26 @@ class HybridOutputStream : HybridOutputStreamSpec {
     self.stream = stream
   }
   
-  func hasSpaceAvailable() throws -> Bool {
-    stream.hasSpaceAvailable
-  }
-  
   func open() throws -> Void {
     stream.open()
   }
   
-  func write(buffer: ArrayBufferHolder, maxLength: Double) throws -> Double {
-    Double(stream.write(buffer.data, maxLength: Int(maxLength)))
+  func write(buffer: ArrayBufferHolder) throws -> Promise<Void> {
+    let promise = Promise<Void>()
+    
+    let data = buffer.data
+    let length = buffer.size
+    
+    Task {
+      let bytesWritten = stream.write(data, maxLength: length)
+      if (bytesWritten == length) {
+        promise.resolve(withResult: ())
+      } else {
+        promise.reject(withError: stream.streamError ?? RuntimeError.error(withMessage: "Unexpected error writing to stream"))
+      }
+    }
+    
+    return promise
   }
   
   func close() {
