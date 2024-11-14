@@ -12,7 +12,7 @@ class HybridDuplexStream : HybridDuplexStreamSpec {
   var outputStream: (any HybridOutputStreamSpec)
   
   init() {
-    var inputStreamRef: InputStream? = InputStream() 
+    var inputStreamRef: InputStream? = InputStream()
     var outputStreamRef: OutputStream? = OutputStream(toMemory: ())
     
     Stream.getBoundStreams(withBufferSize: Int(HybridStreamFactory.BUFFER_SIZE), inputStream: &inputStreamRef, outputStream: &outputStreamRef)

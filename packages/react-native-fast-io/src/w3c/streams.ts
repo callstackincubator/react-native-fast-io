@@ -59,18 +59,12 @@ export class CompressionStream implements globalThis.CompressionStream {
 
     const { readable, writable } = new TransformStream<Uint8Array>({
       transform(chunk, controller) {
-        try {
-          const compressedData = compressor.compress(chunk.buffer)
-          controller.enqueue(new Uint8Array(compressedData))
-        } catch (error) {
-          console.error(error)
-        }
+        const compressedData = compressor.compress(chunk.buffer)
+        controller.enqueue(new Uint8Array(compressedData))
       },
       flush(controller) {
-        console.log('flushing')
         const finalData = compressor.finalize()
         if (finalData.byteLength > 0) {
-          console.log(finalData.byteLength)
           controller.enqueue(new Uint8Array(finalData))
         }
       },
