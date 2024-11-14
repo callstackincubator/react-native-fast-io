@@ -1,14 +1,24 @@
 package com.margelo.nitro.fastio
 
+import java.io.PipedInputStream
+import java.io.PipedOutputStream
+
 class HybridDuplexStream : HybridDuplexStreamSpec() {
-    override var inputStream: HybridInputStreamSpec
-        get() = throw NotImplementedError("HybridDuplexStream.inputStream getter not implemented")
-        set(_) = throw NotImplementedError("HybridDuplexStream.inputStream setter not implemented")
+    private val pipedInputStream = PipedInputStream(HybridStreamFactory.BUFFER_SIZE)
+    private val pipedOutputStream = PipedOutputStream(pipedInputStream)
 
-    override var outputStream: HybridOutputStreamSpec
-        get() = throw NotImplementedError("HybridDuplexStream.outputStream getter not implemented")
-        set(_) = throw NotImplementedError("HybridDuplexStream.outputStream setter not implemented")
-
+    override var inputStream = HybridInputStream(pipedInputStream) as HybridInputStreamSpec
+    override var outputStream = HybridOutputStream(pipedOutputStream) as HybridOutputStreamSpec
+    
     override val memorySize: Long
-        get() = 0L
+        get() = inputStream.memorySize + outputStream.memorySize
+
+    fun close() {
+        try {
+            outputStream.close()
+            inputStream.close()
+        } catch (e: Exception) {
+            println("Error closing duplex stream: ${e.message}")
+        }
+    }
 } 
