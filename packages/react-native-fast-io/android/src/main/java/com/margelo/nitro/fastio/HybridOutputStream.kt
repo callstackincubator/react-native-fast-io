@@ -11,13 +11,8 @@ class HybridOutputStream(private val stream: OutputStream) : HybridOutputStreamS
         val bytes = ByteArray(buffer.size)
         byteBuffer.get(bytes)
 
-        return Promise<Unit>().apply {
-            try {
-                stream.write(bytes)
-                resolve(Unit)
-            } catch (e: Exception) {
-                reject(Error(e.message))
-            }
+        return Promise.async {
+            stream.write(bytes)
         }
     }
 
