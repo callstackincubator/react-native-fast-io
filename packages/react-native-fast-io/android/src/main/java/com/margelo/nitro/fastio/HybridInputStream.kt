@@ -4,33 +4,29 @@ import com.margelo.nitro.core.ArrayBuffer
 import com.margelo.nitro.core.Promise
 import java.io.InputStream
 
-class HybridInputStream(private val stream: InputStream) : HybridInputStreamSpec() {
+class HybridInputStream(public val stream: InputStream) : HybridInputStreamSpec() {
     override fun read(): Promise<ArrayBuffer> {
-        return Promise<ArrayBuffer>().apply {
-            try {
-                val bytes = ByteArray(HybridStreamFactory.BUFFER_SIZE)
-                val bytesRead = stream.read(bytes, 0, bytes.size)
+        return Promise.async {
+            val bytes = ByteArray(HybridStreamFactory.BUFFER_SIZE)
+            val bytesRead = stream.read(bytes, 0, bytes.size)
 
-                when {
-                    bytesRead == -1 -> {
-                        // End of stream
-                        resolve(ArrayBuffer.allocate(0))
-                    }
-                    bytesRead > 0 -> {
-                        val arrayBuffer = ArrayBuffer.allocate(bytesRead)
-
-                        val destBuffer = arrayBuffer.getBuffer(false)
-                        destBuffer.put(bytes, 0, bytesRead)
-
-                        resolve(arrayBuffer)
-                    }
-                    else -> {
-                        // Error case
-                        reject(Error("Unexpected error reading stream"))
-                    }
+            when {
+                bytesRead == -1 -> {
+                    // End of stream
+                    ArrayBuffer.allocate(0)
                 }
-            } catch (e: Exception) {
-                reject(Error(e.message))
+                bytesRead > 0 -> {
+                    val arrayBuffer = ArrayBuffer.allocate(bytesRead)
+
+                    val destBuffer = arrayBuffer.getBuffer(false)
+                    destBuffer.put(bytes, 0, bytesRead)
+
+                    arrayBuffer
+                }
+                else -> {
+                    // Error case
+                    throw Error("Unexpected error reading stream")
+                }
             }
         }
     }
