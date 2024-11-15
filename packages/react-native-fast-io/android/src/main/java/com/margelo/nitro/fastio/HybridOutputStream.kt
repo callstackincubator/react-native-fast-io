@@ -5,7 +5,6 @@ import com.margelo.nitro.core.Promise
 import java.io.OutputStream
 
 class HybridOutputStream(private val stream: OutputStream) : HybridOutputStreamSpec() {
-    
     override fun write(buffer: ArrayBuffer): Promise<Unit> {
         val byteBuffer = buffer.getBuffer(false)
         val bytes = ByteArray(buffer.size)

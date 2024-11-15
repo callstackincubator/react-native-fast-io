@@ -4,7 +4,7 @@ import com.margelo.nitro.core.ArrayBuffer
 import com.margelo.nitro.core.Promise
 import java.io.InputStream
 
-class HybridInputStream(public val stream: InputStream) : HybridInputStreamSpec() {
+class HybridInputStream(val stream: InputStream) : HybridInputStreamSpec() {
     override fun read(): Promise<ArrayBuffer> {
         return Promise.async {
             val bytes = ByteArray(HybridStreamFactory.BUFFER_SIZE)
@@ -12,8 +12,8 @@ class HybridInputStream(public val stream: InputStream) : HybridInputStreamSpec(
 
             when {
                 bytesRead == -1 -> {
-                    // End of stream
-                    ArrayBuffer.allocate(0)
+                    val emptyBuffer = ArrayBuffer.allocate(0)
+                    emptyBuffer
                 }
                 bytesRead > 0 -> {
                     val arrayBuffer = ArrayBuffer.allocate(bytesRead)
@@ -24,7 +24,6 @@ class HybridInputStream(public val stream: InputStream) : HybridInputStreamSpec(
                     arrayBuffer
                 }
                 else -> {
-                    // Error case
                     throw Error("Unexpected error reading stream")
                 }
             }

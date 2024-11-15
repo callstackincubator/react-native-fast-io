@@ -1,44 +1,49 @@
 package com.margelo.nitro.fastio
 
-import android.util.Log
 import com.margelo.nitro.core.Promise
 import java.net.HttpURLConnection
 import java.net.URL
 
 class HybridNetwork : HybridNetworkSpec() {
     override fun request(opts: RequestOptions): Promise<Unit> {
-         return Promise.async {
-             val connection = URL(opts.url).openConnection() as HttpURLConnection
+        return Promise.async {
+            val connection = URL(opts.url).openConnection() as HttpURLConnection
 
-             connection.apply {
-                 requestMethod = opts.method.name.uppercase()
-                 doInput = true
+            try {
+                connection.apply {
+                    requestMethod = opts.method.name.uppercase()
+                    doInput = true
+                    doOutput = opts.body != null
 
-                 opts.body?.let { hybridStream ->
-                     (hybridStream as HybridInputStream).stream.use { input ->
-                         outputStream.use { output ->
-                             val buffer = ByteArray(HybridStreamFactory.BUFFER_SIZE)
-                             var bytesRead: Int
+                    connect()
 
-                             while (input.read(buffer).also { bytesRead = it } != -1) {
-                                 output.write(buffer, 0, bytesRead)
-                                 output.flush()  // Important: flush each chunk
-                             }
-                         }
-                     }
-                 }
+                    opts.body?.let { hybridStream ->
+                        (hybridStream as HybridInputStream).stream.use { input ->
+                            outputStream.buffered().use { output ->
+                                val buffer = ByteArray(HybridStreamFactory.BUFFER_SIZE)
+                                var bytesRead: Int
+                                var totalBytes = 0
 
-                 connect()
+                                while (input.read(buffer).also { bytesRead = it } != -1) {
+                                    output.write(buffer, 0, bytesRead)
+                                    output.flush()
+                                    totalBytes += bytesRead
+                                }
+                            }
+                        }
+                    }
 
-                 if (responseCode in 200..299) {
-                     // tbd
-                 } else {
-                     throw Error("HTTP Error: $responseCode")
-                 }
-             }
+                    val code = responseCode
 
-             connection.disconnect()
-         }
+                    if (code !in 200..299) {
+                        val errorBody = errorStream?.bufferedReader()?.readText() ?: "Unknown error"
+                        throw Error("HTTP Error $code: $errorBody")
+                    }
+                }
+            } finally {
+                connection.disconnect()
+            }
+        }
     }
 
     override val memorySize: Long
