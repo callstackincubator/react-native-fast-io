@@ -1,34 +1,24 @@
 import { CompressorFactory, DuplexStream, InputStream, OutputStream } from '../native/streams.nitro'
 
 export const toReadableStream = (inputStream: InputStream) => {
-  console.log('Creating ReadableStream')
-  const stream = new ReadableStream<Uint8Array>(
-    {
-      start() {
-        inputStream.open()
-      },
-      async pull(controller) {
-        const buffer = await inputStream.read()
-        if (buffer.byteLength == 0) {
-          controller.close()
-          return
-        }
-
-        const chunk = new Uint8Array(buffer)
-        controller.enqueue(chunk)
-      },
-      cancel() {
-        inputStream.close()
-      },
+  const stream = new ReadableStream<Uint8Array>({
+    start() {
+      inputStream.open()
     },
-    {
-      // Add explicit strategy to control pulls
-      highWaterMark: 1, // Pull one chunk at a time
-      size(chunk) {
-        return chunk.length
-      },
-    }
-  )
+    async pull(controller) {
+      const buffer = await inputStream.read()
+      if (buffer.byteLength == 0) {
+        controller.close()
+        return
+      }
+
+      const chunk = new Uint8Array(buffer)
+      controller.enqueue(chunk)
+    },
+    cancel() {
+      inputStream.close()
+    },
+  })
 
   return stream
 }
