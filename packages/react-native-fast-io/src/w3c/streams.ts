@@ -11,7 +11,9 @@ export const toReadableStream = (inputStream: InputStream) => {
         controller.close()
         return
       }
-      controller.enqueue(new Uint8Array(buffer))
+
+      const chunk = new Uint8Array(buffer)
+      controller.enqueue(chunk)
     },
     cancel() {
       inputStream.close()

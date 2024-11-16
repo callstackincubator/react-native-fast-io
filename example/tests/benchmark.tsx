@@ -76,7 +76,7 @@ const TESTS = [
   },
 ]
 
-const BASE_URL = Platform.OS === 'android' ? 'ws://10.0.2.2' : 'ws://localhost'
+export const BASE_URL = Platform.OS === 'android' ? '10.0.2.2' : 'localhost'
 
 export function BenchmarkUI() {
   return (
@@ -278,7 +278,7 @@ async function runSingleTest(opts: TestCase): Promise<TestResult> {
   const { Ws, port, messageCount, testCase, payload } = opts
 
   return new Promise((resolve) => {
-    const ws = new Ws(`${BASE_URL}:${port}`)
+    const ws = new Ws(`ws://${BASE_URL}:${port}`)
     let outgoingTime: number
     let incomingTime: number
     let received = 0

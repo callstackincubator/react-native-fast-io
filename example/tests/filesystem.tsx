@@ -7,6 +7,8 @@ import {
   showOpenFilePicker,
 } from 'react-native-fast-io'
 
+import { BASE_URL } from './benchmark'
+
 export function FileSystemUI() {
   const [file, setFile] = useState<File | null>(null)
 
@@ -21,10 +23,9 @@ export function FileSystemUI() {
     if (!file) {
       return
     }
-
     const body = compression ? file.stream().pipeThrough(new CompressionStream(compression)) : file
 
-    await fetch('http://localhost:3002/upload', {
+    await fetch(`http://${BASE_URL}:3002/upload`, {
       method: 'POST',
       body,
     })
