@@ -2,8 +2,6 @@ package com.margelo.nitro.fastio
 
 import com.margelo.nitro.core.ArrayBuffer
 import com.margelo.nitro.core.Promise
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.OutputStream
 
 class HybridOutputStream(private val stream: OutputStream) : HybridOutputStreamSpec() {
@@ -13,9 +11,7 @@ class HybridOutputStream(private val stream: OutputStream) : HybridOutputStreamS
         byteBuffer.get(bytes)
 
         return Promise.async {
-            withContext(Dispatchers.IO) {
-                stream.write(bytes)
-            }
+            stream.write(bytes)
         }
     }
 
