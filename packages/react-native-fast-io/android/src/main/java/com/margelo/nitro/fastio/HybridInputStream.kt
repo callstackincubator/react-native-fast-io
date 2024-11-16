@@ -2,29 +2,35 @@ package com.margelo.nitro.fastio
 
 import com.margelo.nitro.core.ArrayBuffer
 import com.margelo.nitro.core.Promise
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.InputStream
 
 class HybridInputStream(val stream: InputStream) : HybridInputStreamSpec() {
     override fun read(): Promise<ArrayBuffer> {
         return Promise.async {
-            val bytes = ByteArray(HybridStreamFactory.BUFFER_SIZE)
-            val bytesRead = stream.read(bytes, 0, bytes.size)
+            withContext(Dispatchers.IO) {
+                val bytes = ByteArray(HybridStreamFactory.BUFFER_SIZE)
+                val bytesRead = stream.read(bytes, 0, bytes.size)
 
-            when {
-                bytesRead == -1 -> {
-                    val emptyBuffer = ArrayBuffer.allocate(0)
-                    emptyBuffer
-                }
-                bytesRead > 0 -> {
-                    val arrayBuffer = ArrayBuffer.allocate(bytesRead)
+                when {
+                    bytesRead == -1 -> {
+                        val emptyBuffer = ArrayBuffer.allocate(0)
+                        emptyBuffer
+                    }
 
-                    val destBuffer = arrayBuffer.getBuffer(false)
-                    destBuffer.put(bytes, 0, bytesRead)
+                    bytesRead > 0 -> {
+                        val arrayBuffer = ArrayBuffer.allocate(bytesRead)
 
-                    arrayBuffer
-                }
-                else -> {
-                    throw Error("Unexpected error reading stream")
+                        val destBuffer = arrayBuffer.getBuffer(false)
+                        destBuffer.put(bytes, 0, bytesRead)
+
+                        arrayBuffer
+                    }
+
+                    else -> {
+                        throw Error("Unexpected error reading stream")
+                    }
                 }
             }
         }
