@@ -1,18 +1,15 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import {
-  CompressionStream,
-  fetch,
-  OpenFilePickerOptions,
-  showOpenFilePicker,
-} from 'react-native-fast-io'
+import { fetch } from 'react-native-fast-io/fetch'
+import { showOpenFilePicker } from 'react-native-fast-io/fs'
+import { CompressionStream } from 'react-native-fast-io/streams'
 
 import { BASE_URL } from './benchmark'
 
 export function FileSystemUI() {
   const [file, setFile] = useState<File | null>(null)
 
-  const pickFile = async (options?: OpenFilePickerOptions) => {
+  const pickFile = async (options?: Parameters<typeof showOpenFilePicker>[0]) => {
     const [fileHandle] = await showOpenFilePicker(options)
     const file = await fileHandle.getFile()
     // @ts-ignore

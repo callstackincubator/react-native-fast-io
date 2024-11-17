@@ -4,9 +4,6 @@
     "paths": {
       "event-target-shim": ["./node_modules/event-target-shim"],
     },
-    "lib": ["es2020", "dom", "DOM.AsyncIterable"],
-    "types": [
-      "./src/w3c/fs.d.ts"
-    ]
+    "lib": ["es2020", "dom", "DOM.AsyncIterable"]
   }
 }
