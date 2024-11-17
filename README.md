@@ -31,13 +31,28 @@ npm install react-native-fast-io --save
   - Streams, e.g. `web-streams-polyfill/polyfill`
   - AsyncIterator, e.g. `@azure/core-asynciterator-polyfill`
 
-## Usage
+### Usage
 
-This library includes:
-- [`WebSocket`](docs/ws.md)
-- [`fetch`](docs/network.md)
-- [`Blob`](docs/blob.md)
-- [`ReadableStream` and `WritableStream`](docs/streams.md)
+> [!NOTE]
+> If you have enabled `unstable_enablePackageExports` in Metro config, you can import each module individually.
+
+```ts
+// With `unstable_enablePackageExports` enabled
+import { WebSocket } from 'react-native-fast-io/ws'
+
+// Otherwise
+import { WebSocket } from 'react-native-fast-io'
+```
+
+## What's included
+
+| Name | W3C | Status |
+|------|-----|--------|
+| [`WebSocket`](docs/ws.md) | [WebSocket API](https://websockets.spec.whatwg.org/) | Beta |
+| [`fetch`](docs/network.md) | [Fetch API](https://fetch.spec.whatwg.org/) | Work In Progress |
+| [`FileSystem`](docs/fs.md) | [File System Access API](https://wicg.github.io/file-system-access/) | Work In Progress |
+| [`Blob`](docs/blob.md) | [Blob API](https://w3c.github.io/FileAPI/#blob-section) | Work In Progress |
+| [`Streams`](docs/streams.md) | [Streams API](https://streams.spec.whatwg.org/) | Work In Progress |
 
 For details, consult each module's documentation. Unless otherwise specified, all methods work as per W3C specifications.
 
