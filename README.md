@@ -54,7 +54,7 @@ import { WebSocket } from 'react-native-fast-io'
 | Blob | [📖](docs/blob.md) | [Blob API](https://w3c.github.io/FileAPI/#blob-section) | Work In Progress 🚧 |
 | Streams | [📖](docs/streams.md) | [Streams API](https://streams.spec.whatwg.org/) | Work In Progress 🚧 |
 
-> [!INFO]
+> [!TIP]
 > Unless otherwise specified, all methods work as per W3C specifications. For details, consult each module's documentation.
 
 ## Made with ❤️ at Callstack
