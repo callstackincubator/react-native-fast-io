@@ -1,7 +1,7 @@
 {
   "name": "react-native-fast-io",
   "version": "0.2.0",
-  "description": "FastIO",
+  "description": "Modern IO for React Native, built on top of Nitro and Web standards",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "./lib/typescript/commonjs/src/index.d.ts",
