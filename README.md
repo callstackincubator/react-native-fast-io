@@ -46,15 +46,16 @@ import { WebSocket } from 'react-native-fast-io'
 
 ## What's included
 
-| Name | W3C | Status |
-|------|-----|--------|
-| [`WebSocket`](docs/ws.md) | [WebSocket API](https://websockets.spec.whatwg.org/) | Beta |
-| [`Fetch`](docs/fetch.md) | [Fetch API](https://fetch.spec.whatwg.org/) | Work In Progress |
-| [`FileSystem`](docs/fs.md) | [File System Access API](https://wicg.github.io/file-system-access/) | Work In Progress |
-| [`Blob`](docs/blob.md) | [Blob API](https://w3c.github.io/FileAPI/#blob-section) | Work In Progress |
-| [`Streams`](docs/streams.md) | [Streams API](https://streams.spec.whatwg.org/) | Work In Progress |
+| Name | Docs | W3C | Status |
+|------|------|-----|--------|
+| WebSocket | [📖](docs/ws.md) | [WebSocket API](https://websockets.spec.whatwg.org/) | Beta ✅ |
+| Fetch | [📖](docs/fetch.md) | [Fetch API](https://fetch.spec.whatwg.org/) | Work In Progress 🚧 |
+| FileSystem | [📖](docs/fs.md) | [File System Access API](https://wicg.github.io/file-system-access/) | Work In Progress 🚧 |
+| Blob | [📖](docs/blob.md) | [Blob API](https://w3c.github.io/FileAPI/#blob-section) | Work In Progress 🚧 |
+| Streams | [📖](docs/streams.md) | [Streams API](https://streams.spec.whatwg.org/) | Work In Progress 🚧 |
 
-For details, consult each module's documentation. Unless otherwise specified, all methods work as per W3C specifications.
+> [!INFO]
+> Unless otherwise specified, all methods work as per W3C specifications. For details, consult each module's documentation.
 
 ## Made with ❤️ at Callstack
 
