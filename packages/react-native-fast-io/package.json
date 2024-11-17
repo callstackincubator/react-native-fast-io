@@ -7,6 +7,44 @@
   "types": "./lib/typescript/commonjs/src/index.d.ts",
   "react-native": "src/index",
   "source": "src/index",
+  "exports": {
+    ".": {
+      "types": "./lib/typescript/commonjs/src/index.d.ts",
+      "import": "./lib/module/index.js",
+      "require": "./lib/commonjs/index.js",
+      "react-native": "./src/index"
+    },
+    "./fs": {
+      "types": "./lib/typescript/commonjs/src/w3c/fs.d.ts",
+      "import": "./lib/module/w3c/fs.js",
+      "require": "./lib/commonjs/w3c/fs.js",
+      "react-native": "./src/w3c/fs"
+    },
+    "./blob": {
+      "types": "./lib/typescript/commonjs/src/w3c/blob.d.ts",
+      "import": "./lib/module/w3c/blob.js",
+      "require": "./lib/commonjs/w3c/blob.js",
+      "react-native": "./src/w3c/blob"
+    },
+    "./network": {
+      "types": "./lib/typescript/commonjs/src/w3c/network.d.ts",
+      "import": "./lib/module/w3c/network.js",
+      "require": "./lib/commonjs/w3c/network.js",
+      "react-native": "./src/w3c/network"
+    },
+    "./streams": {
+      "types": "./lib/typescript/commonjs/src/w3c/streams.d.ts",
+      "import": "./lib/module/w3c/streams.js",
+      "require": "./lib/commonjs/w3c/streams.js",
+      "react-native": "./src/w3c/streams"
+    },
+    "./ws": {
+      "types": "./lib/typescript/commonjs/src/w3c/ws.d.ts",
+      "import": "./lib/module/w3c/ws.js",
+      "require": "./lib/commonjs/w3c/ws.js",
+      "react-native": "./src/w3c/ws"
+    }
+  },
   "scripts": {
     "codegen": "npx nitro-codegen",
     "prepare": "bob build"

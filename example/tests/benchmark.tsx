@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { WebSocket as FastWS } from 'react-native-fast-io'
+import { WebSocket as FastWS } from 'react-native-fast-io/ws'
 
 import {
   CHAT_PAYLOAD,
