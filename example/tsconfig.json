@@ -1,3 +1,10 @@
 {
-  "extends": ".."
+  "extends": "..",
+  "compilerOptions": {
+    "resolvePackageJsonExports": false,
+    "paths": {
+      "react-native-fast-io": ["../packages/react-native-fast-io/src/index.ts"],
+      "react-native-fast-io/*": ["../packages/react-native-fast-io/src/w3c/*"]
+    }
+  }
 }

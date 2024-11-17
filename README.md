@@ -49,7 +49,7 @@ import { WebSocket } from 'react-native-fast-io'
 | Name | W3C | Status |
 |------|-----|--------|
 | [`WebSocket`](docs/ws.md) | [WebSocket API](https://websockets.spec.whatwg.org/) | Beta |
-| [`fetch`](docs/network.md) | [Fetch API](https://fetch.spec.whatwg.org/) | Work In Progress |
+| [`Fetch`](docs/fetch.md) | [Fetch API](https://fetch.spec.whatwg.org/) | Work In Progress |
 | [`FileSystem`](docs/fs.md) | [File System Access API](https://wicg.github.io/file-system-access/) | Work In Progress |
 | [`Blob`](docs/blob.md) | [Blob API](https://w3c.github.io/FileAPI/#blob-section) | Work In Progress |
 | [`Streams`](docs/streams.md) | [Streams API](https://streams.spec.whatwg.org/) | Work In Progress |
