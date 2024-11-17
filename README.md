@@ -33,9 +33,6 @@ npm install react-native-fast-io --save
 
 ### Usage
 
-> [!NOTE]
-> If you have enabled `unstable_enablePackageExports` in Metro config, you can import each module individually.
-
 ```ts
 // With `unstable_enablePackageExports` enabled
 import { WebSocket } from 'react-native-fast-io/ws'
