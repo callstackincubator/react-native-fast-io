@@ -1,21 +1,31 @@
 {
   "name": "react-native-fast-io",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "FastIO",
-  "main": "src/index.ts",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "./lib/typescript/commonjs/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
   "scripts": {
-    "codegen": "npx nitro-codegen"
+    "codegen": "npx nitro-codegen",
+    "prepare": "bob build"
   },
   "homepage": "https://github.com/callstackincubator/react-native-fast-io",
   "license": "MIT",
   "files": [
     "src",
-    "android",
-    "!android/build",
-    "!android/.cxx",
+    "!src/__tests__",
+    "lib",
+    "android/build.gradle",
+    "android/gradle.properties",
+    "android/CMakeLists.txt",
+    "android/src",
+    "ios",
+    "cpp",
     "nitrogen",
     "ios",
-    "nitro.json"
+    "FastIO.podspec"
   ],
   "author": "Mike Grabowski <grabbou@gmail.com>",
   "peerDependencies": {
@@ -26,7 +36,8 @@
     "event-target-shim": "^6.0.2"
   },
   "devDependencies": {
-    "nitro-codegen": "^0.15.0"
+    "nitro-codegen": "^0.15.0",
+    "react-native-builder-bob": "^0.32.1"
   },
   "keywords": [
     "react-native",
@@ -37,5 +48,30 @@
     "nitro",
     "react-native-nitro-modules",
     "nitrogen"
-  ]
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "esm": true,
+          "tsc": "../../node_modules/.bin/tsc"
+        }
+      ]
+    ]
+  }
 }

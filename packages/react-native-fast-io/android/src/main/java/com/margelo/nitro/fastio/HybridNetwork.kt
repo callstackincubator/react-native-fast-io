@@ -8,7 +8,7 @@ import java.net.URL
 
 class HybridNetwork : HybridNetworkSpec() {
     override fun request(opts: RequestOptions): Promise<Unit> {
-        Promise.async(CoroutineScope(Dispatchers.IO)) {
+       Promise.async(CoroutineScope(Dispatchers.IO)) {
             val connection = URL(opts.url).openConnection() as HttpURLConnection
             connection.apply {
                 requestMethod = opts.method.name.uppercase()
