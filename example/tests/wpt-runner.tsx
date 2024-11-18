@@ -43,8 +43,8 @@ function useWptRunner() {
     });
   }, [tests]);
 
-  const testsStats = useMemo<Record<number, number>>(() => {
     const groups = Object.create(null);
+  const testsStats = useMemo<Record<TestStatus, number>>(() => {
     sortedTests.forEach(t => {
       if (t.status in groups) {
         groups[t.status]++;
@@ -80,7 +80,14 @@ function useWptRunner() {
   };
 }
 
-export function WebPlatformTestOutput({ title, areTestsRunning, sortedTests, testsStats }) {
+type WebPlatformTestOutputProps = { title: string; } & ReturnType<typeof useWptRunner>
+  
+export function WebPlatformTestOutput({
+  title,
+  areTestsRunning,
+  sortedTests,
+  testsStats,
+}: WebPlatformTestOutputProps) {
   return (
     <View>
       <Text style={styles.header}>{title}</Text>
