@@ -7,29 +7,29 @@ import './wpt/streams'
 
 // Compression tests
 import { CompressionStream } from 'react-native-fast-io/streams'
-global.CompressionStream = CompressionStream;
+global.CompressionStream = CompressionStream
 import './wpt/compression'
 
 function colorForTestStatus(status: number) {
   switch (status) {
     case 0: //TestStatus.PASS:
-      return 'green';
+      return 'green'
     case 1: //TestStatus.FAIL:
-      return 'red';
+      return 'red'
     case 2: //TestStatus.TIMEOUT:
-      return 'pink';
+      return 'pink'
     case 3: //TestStatus.NOTRUN:
-      return 'black';
+      return 'black'
     case 4: //TestStatus.PRECONDITION_FAILED:
-      return 'darkred';
+      return 'darkred'
     default:
-      return 'black';
+      return 'black'
   }
 }
 
 function useWptRunner() {
-  const [areTestsRunning, setAreTestRunning] = useState<boolean | null>(null);
-  const [tests, setTests] = useState<Record<string, Test>>({});
+  const [areTestsRunning, setAreTestRunning] = useState<boolean | null>(null)
+  const [tests, setTests] = useState<Record<string, Test>>({})
 
   const sortedTests = useMemo(() => {
     return Object.values(tests).sort((a, b) => {
@@ -41,43 +41,43 @@ function useWptRunner() {
         return (a.index || 0) - (b.index || 0)
       }
     });
-  }, [tests]);
+  }, [tests])
 
-    const groups = Object.create(null);
   const testsStats = useMemo<Record<TestStatus, number>>(() => {
+    const groups = Object.create(null)
     sortedTests.forEach(t => {
       if (t.status in groups) {
-        groups[t.status]++;
+        groups[t.status]++
       } else {
-        groups[t.status] = 1;
+        groups[t.status] = 1
       }
-    });
-    return groups;
-  }, [sortedTests]);
+    })
+    return groups
+  }, [sortedTests])
 
   useEffect(() => {
     add_start_callback(() => {
       // NOTE(mario): The first test has been started
-      setAreTestRunning(true);
-    });
+      setAreTestRunning(true)
+    })
     add_test_state_callback((test: Test) => {
       // NOTE(mario): Called when test's state changed
       setTests((oldState) => ({
         ...oldState,
         [test.name]: test,
-      }));
-    });
+      }))
+    })
     add_completion_callback(() => {
       // NOTE(mario): All tests have completed
-      setAreTestRunning(false);
-    });
-  }, []);
+      setAreTestRunning(false)
+    })
+  }, [])
 
   return {
     areTestsRunning,
     sortedTests,
     testsStats,
-  };
+  }
 }
 
 type WebPlatformTestOutputProps = { title: string; } & ReturnType<typeof useWptRunner>
@@ -146,7 +146,7 @@ export function WebPlatformTestOutput({
 }
 
 export function WebPlatformTestRunner() {
-  const { areTestsRunning, sortedTests, testsStats } = useWptRunner();
+  const { areTestsRunning, sortedTests, testsStats } = useWptRunner()
 
   return (
     <WebPlatformTestOutput
