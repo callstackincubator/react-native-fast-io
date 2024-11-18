@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import './wpt/resources/testharness'
 
 // Stream tests
@@ -89,7 +89,16 @@ export function WebPlatformTestOutput({
   sortedTests,
   testsStats,
 }: WebPlatformTestOutputProps) {
-  const [areResultsUnfolded, setAreResultsUnfolded] = useState(false);
+  const [areResultsUnfolded, setAreResultsUnfolded] = useState(false)
+
+  const [filterPattern, setFilterPattern] = useState('')
+  const filteredTests = useMemo(() => {
+    const regexp = new RegExp(filterPattern, 'i')
+    return (filterPattern === '')
+      ? sortedTests
+      : sortedTests.filter(t => t.name.match(regexp)
+    )
+  }, [filterPattern, sortedTests])
 
   return (
     <View>
@@ -114,40 +123,48 @@ export function WebPlatformTestOutput({
         <Text style={styles.buttonText}>{ areResultsUnfolded ? 'Hide' : 'Show'} results</Text>
       </TouchableOpacity>
 
-      {areResultsUnfolded && (<FlatList
-        data={sortedTests}
-        renderItem={({item}) => {
-          const test = item;
-          return (
-            <View>
-              <View style={{
-                flexDirection: 'row',
-                minHeight: 40,
-              }}>
-                <Text style={{
-                  flexWrap: 'wrap',
-                  fontWeight: 'bold',
-                  color: colorForTestStatus(test.status),
-                }}>
-                  {test.name}
-                </Text>
-                <Text style={{
-                  color: colorForTestStatus(test.status),
-                }}>
-                  {test.format_status()}
-                </Text>
-              </View>
-              {test.status === 1 && (<Text>{test.message}</Text>)}
-            </View>
-          );
-        }}
-        ItemSeparatorComponent={() => (
-        <View style={{
-          height: 1,
-          backgroundColor: 'grey',
-        }}/>)}
-      />)
-      }
+      {areResultsUnfolded && (
+        <>
+          <TextInput
+            placeholder='Name filter pattern'
+            value={filterPattern}
+            onChangeText={setFilterPattern}
+          />
+          <FlatList
+            data={filteredTests}
+            renderItem={({item}) => {
+              const test = item
+              return (
+                <View>
+                  <View style={{
+                    flexDirection: 'row',
+                    minHeight: 40,
+                  }}>
+                    <Text style={{
+                      flexWrap: 'wrap',
+                      fontWeight: 'bold',
+                      color: colorForTestStatus(test.status),
+                    }}>
+                      {test.name}
+                    </Text>
+                    <Text style={{
+                      color: colorForTestStatus(test.status),
+                    }}>
+                      {test.format_status()}
+                    </Text>
+                  </View>
+                  {test.status === 1 && (<Text>{test.message}</Text>)}
+                </View>
+              )
+            }}
+            ItemSeparatorComponent={() => (
+            <View style={{
+              height: 1,
+              backgroundColor: 'grey',
+            }}/>)}
+          />
+        </>
+      )}
     </View>
   )
 }
