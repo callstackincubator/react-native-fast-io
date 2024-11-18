@@ -24,7 +24,7 @@ import './readable-streams/general.any'
 import './readable-streams/default-reader.any'
 import './readable-streams/owning-type-video-frame.any'
 
-import './transferable/transform-stream-members.any'
+// import './transferable/transform-stream-members.any'
 
 import './piping/throwing-options.any'
 import './piping/multiple-propagation.any'
