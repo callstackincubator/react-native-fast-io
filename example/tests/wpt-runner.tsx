@@ -4,8 +4,7 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 // NOTE(mario): Import the original test harness
 import './wpt/resources/testharness'
 
-// NOTE(mario): Import an example test to run
-import './wpt/streams/readable-byte-streams/general.any'
+import './wpt/streams';
 
 function colorForTestStatus(status: number) {
   switch (status) {
