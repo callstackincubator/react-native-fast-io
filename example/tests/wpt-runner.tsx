@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useMemo, useState } from 'react'
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 // NOTE(mario): Import the original test harness
 import './wpt/resources/testharness'
@@ -40,10 +40,17 @@ export function WebPlatformTestRunner() {
     });
   }, [tests]);
 
-  const testsStats = useMemo(() => ({
-    passed: sortedTests.filter(t => t.status === 0).length,
-    failed: sortedTests.filter(t => t.status === 1).length,
-  }), [sortedTests]);
+  const testsStats = useMemo<Record<number, number>>(() => {
+    const groups = Object.create(null);
+    sortedTests.forEach(t => {
+      if (t.status in groups) {
+        groups[t.status]++;
+      } else {
+        groups[t.status] = 1;
+      }
+    });
+    return groups;
+  }, [sortedTests]);
 
   useEffect(() => {
     console.log("HELLO: ==================>", add_start_callback);
@@ -72,14 +79,20 @@ export function WebPlatformTestRunner() {
       <Text style={styles.header}>Web Platform Tests (adapted)</Text>
 
       <View style={{ flexDirection: 'row' }}>
-        <Text style={{ color: 'green' }}>{ testsStats.passed } passed</Text>
+        <Text style={{ color: colorForTestStatus(0) }}>{ testsStats?.[0] ?? 0 } passed</Text>
         <Text>, </Text>
-        <Text style={{ color: 'red' }}>{ testsStats.failed } failed</Text>
+        <Text style={{ color: colorForTestStatus(1) }}>{ testsStats?.[1] ?? 0 } failed</Text>
+        <Text>, </Text>
+        <Text style={{ color: colorForTestStatus(2) }}>{ testsStats?.[2] ?? 0 } timed out</Text>
+        <Text>, </Text>
+        <Text style={{ color: colorForTestStatus(3) }}>{ testsStats?.[3] ?? 0 } pending</Text>
       </View>
 
+      { areTestsRunning && <ActivityIndicator /> || (
       <TouchableOpacity style={styles.button} onPress={() => {}}>
         <Text style={styles.buttonText}>Reload tests</Text>
       </TouchableOpacity>
+      )}
 
       <FlatList
         data={sortedTests}
