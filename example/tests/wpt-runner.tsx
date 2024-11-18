@@ -1,10 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-
-// NOTE(mario): Import the original test harness
 import './wpt/resources/testharness'
 
-import './wpt/streams';
+// Stream tests
+import './wpt/streams'
+
+// Compression tests
+import { CompressionStream } from 'react-native-fast-io/streams'
+global.CompressionStream = CompressionStream;
+import './wpt/compression'
 
 function colorForTestStatus(status: number) {
   switch (status) {
@@ -23,8 +27,7 @@ function colorForTestStatus(status: number) {
   }
 }
 
-
-export function WebPlatformTestRunner() {
+function useWptRunner() {
   const [areTestsRunning, setAreTestRunning] = useState<boolean | null>(null);
   const [tests, setTests] = useState<Record<string, Test>>({});
 
@@ -53,15 +56,12 @@ export function WebPlatformTestRunner() {
   }, [sortedTests]);
 
   useEffect(() => {
-    console.log("HELLO: ==================>", add_start_callback);
     add_start_callback(() => {
       // NOTE(mario): The first test has been started
-      console.log("TESTS STARTED");
       setAreTestRunning(true);
     });
     add_test_state_callback((test: Test) => {
       // NOTE(mario): Called when test's state changed
-      console.log("TEST STATE CHANGED:", test);
       setTests((oldState) => ({
         ...oldState,
         [test.name]: test,
@@ -69,14 +69,21 @@ export function WebPlatformTestRunner() {
     });
     add_completion_callback(() => {
       // NOTE(mario): All tests have completed
-      console.log("ALL TESTS COMPLETED!");
       setAreTestRunning(false);
     });
   }, []);
 
+  return {
+    areTestsRunning,
+    sortedTests,
+    testsStats,
+  };
+}
+
+export function WebPlatformTestOutput({ title, areTestsRunning, sortedTests, testsStats }) {
   return (
     <View>
-      <Text style={styles.header}>Web Platform Tests (adapted)</Text>
+      <Text style={styles.header}>{title}</Text>
 
       <View style={{ flexDirection: 'row' }}>
         <Text style={{ color: colorForTestStatus(0) }}>{ testsStats?.[0] ?? 0 } passed</Text>
@@ -100,7 +107,10 @@ export function WebPlatformTestRunner() {
           const test = item;
           return (
             <View>
-              <View style={{ flexDirection: 'row', minHeight: 40 }}>
+              <View style={{
+                flexDirection: 'row',
+                minHeight: 40,
+              }}>
                 <Text style={{
                   flexWrap: 'wrap',
                   fontWeight: 'bold',
@@ -125,6 +135,19 @@ export function WebPlatformTestRunner() {
         }}/>)}
       />
     </View>
+  )
+}
+
+export function WebPlatformTestRunner() {
+  const { areTestsRunning, sortedTests, testsStats } = useWptRunner();
+
+  return (
+    <WebPlatformTestOutput
+      title="Web Platform Tests"
+      areTestsRunning={areTestsRunning}
+      sortedTests={sortedTests}
+      testsStats={testsStats}
+    />
   )
 }
 
