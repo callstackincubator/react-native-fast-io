@@ -56,6 +56,7 @@ function useWptRunner() {
   }, [sortedTests])
 
   useEffect(() => {
+    setAreTestRunning(true)
     add_start_callback(() => {
       // NOTE(mario): The first test has been started
       setAreTestRunning(true)
@@ -88,6 +89,8 @@ export function WebPlatformTestOutput({
   sortedTests,
   testsStats,
 }: WebPlatformTestOutputProps) {
+  const [areResultsUnfolded, setAreResultsUnfolded] = useState(false);
+
   return (
     <View>
       <Text style={styles.header}>{title}</Text>
@@ -102,13 +105,16 @@ export function WebPlatformTestOutput({
         <Text style={{ color: colorForTestStatus(3) }}>{ testsStats?.[3] ?? 0 } pending</Text>
       </View>
 
-      { areTestsRunning && <ActivityIndicator /> || (
-      <TouchableOpacity style={styles.button} onPress={() => {}}>
-        <Text style={styles.buttonText}>Reload tests</Text>
-      </TouchableOpacity>
-      )}
+      {areTestsRunning && (<ActivityIndicator />)}
 
-      <FlatList
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => setAreResultsUnfolded((old) => !old)}
+      >
+        <Text style={styles.buttonText}>{ areResultsUnfolded ? 'Hide' : 'Show'} results</Text>
+      </TouchableOpacity>
+
+      {areResultsUnfolded && (<FlatList
         data={sortedTests}
         renderItem={({item}) => {
           const test = item;
@@ -140,7 +146,8 @@ export function WebPlatformTestOutput({
           height: 1,
           backgroundColor: 'grey',
         }}/>)}
-      />
+      />)
+      }
     </View>
   )
 }
