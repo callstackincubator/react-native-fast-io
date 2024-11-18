@@ -2,13 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { ActivityIndicator, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import './wpt/resources/testharness'
 
-// Stream tests
-import './wpt/streams'
-
 // Compression tests
 import { CompressionStream } from 'react-native-fast-io/streams'
 global.CompressionStream = CompressionStream
 import './wpt/compression'
+
+// Stream tests
+import './wpt/streams' // FIXME(mario): One of the tests hangs...
 
 function colorForTestStatus(status: number) {
   switch (status) {
@@ -35,12 +35,12 @@ function useWptRunner() {
     return Object.values(tests).sort((a, b) => {
       if (a.status != b.status) {
         // Sort by status (descending)
-        return b.status - a.status; // inverted
+        return b.status - a.status // inverted
       } else {
         // If statuses are the same, then sort by index (ascending)
         return (a.index || 0) - (b.index || 0)
       }
-    });
+    })
   }, [tests])
 
   const testsStats = useMemo<Record<TestStatus, number>>(() => {
