@@ -19,14 +19,18 @@
 > This library is still under development. Use at your own risk.
 
 ```
+// Install the package
 npm install react-native-fast-io --save
+
+// Optionally, install polyfills
+npm install @callstack/web-polyfills --save
 ```
 
 ### Prerequisites
 
 - React Native 0.76 or higher
 - Nitro Modules
-- Polyfills:
+- Polyfills (e.g. `@callstack/web-polyfills`), including:
   - TextDecoder, e.g. `@bacons/text-decoder`
   - Streams, e.g. `web-streams-polyfill/polyfill`
   - AsyncIterator, e.g. `@azure/core-asynciterator-polyfill`
@@ -34,6 +38,9 @@ npm install react-native-fast-io --save
 ### Usage
 
 ```ts
+// First, import the polyfills
+import '@callstack/web-polyfills'
+
 // With `unstable_enablePackageExports` enabled
 import { WebSocket } from 'react-native-fast-io/ws'
 

@@ -4,7 +4,7 @@
   "description": "Modern IO for React Native, built on top of Nitro and Web standards",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
-  "types": "./lib/typescript/commonjs/src/index.d.ts",
+  "types": "./lib/typescript/commonjs/index.d.ts",
   "react-native": "src/index",
   "source": "src/index",
   "exports": {
@@ -14,7 +14,7 @@
       "react-native": "./src/index"
     },
     "./*": {
-      "types": "./lib/typescript/commonjs/src/w3c/*.d.ts",
+      "types": "./lib/typescript/commonjs/w3c/*.d.ts",
       "import": "./lib/module/w3c/*.js",
       "require": "./lib/commonjs/w3c/*.js",
       "react-native": "./src/w3c/*"

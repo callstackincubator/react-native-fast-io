@@ -1,0 +1,57 @@
+{
+  "name": "@callstack/web-polyfills",
+  "version": "0.1.0",
+  "description": "Polyfills required for FastIO to work in React Native",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "./lib/typescript/commonjs/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "scripts": {
+    "prepare": "bob build"
+  },
+  "homepage": "https://github.com/callstackincubator/react-native-fast-io",
+  "license": "MIT",
+  "files": [
+    "src",
+    "!src/__tests__",
+    "lib"
+  ],
+  "author": "Mike Grabowski <grabbou@gmail.com>",
+  "dependencies": {
+    "@azure/core-asynciterator-polyfill": "^1.0.2",
+    "@bacons/text-decoder": "^0.0.0",
+    "web-streams-polyfill": "^4.0.0"
+  },
+  "keywords": [
+    "react-native",
+    "polyfills",
+    "text-decoder",
+    "web-streams"
+  ],
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "esm": true,
+          "tsc": "../../node_modules/.bin/tsc"
+        }
+      ]
+    ]
+  }
+}
