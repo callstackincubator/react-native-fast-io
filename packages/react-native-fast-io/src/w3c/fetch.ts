@@ -1,6 +1,7 @@
 import { Network, RequestMethod } from '../native/network.nitro'
 import { Blob } from './blob'
-import { fromReadableStream } from './streams'
+import { File } from './fs'
+import { fromReadableStream, ReadableStream } from './streams'
 
 export function fetch(
   url: string,

@@ -1,3 +1,5 @@
+import { ReadableStream, TransformStream, WritableStream } from 'web-streams-polyfill'
+
 import { CompressorFactory, DuplexStream, InputStream, OutputStream } from '../native/streams.nitro'
 
 export const toReadableStream = (inputStream: InputStream) => {
@@ -76,3 +78,5 @@ export class CompressionStream implements globalThis.CompressionStream {
     this.writable = writable
   }
 }
+
+export { ReadableStream, TransformStream, WritableStream }
