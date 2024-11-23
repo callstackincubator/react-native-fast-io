@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { fetch } from 'react-native-fast-io/fetch'
-import { showOpenFilePicker } from 'react-native-fast-io/fs'
+import { File, showOpenFilePicker } from 'react-native-fast-io/fs'
 import { CompressionStream } from 'react-native-fast-io/streams'
 
 import { BASE_URL } from './benchmark'

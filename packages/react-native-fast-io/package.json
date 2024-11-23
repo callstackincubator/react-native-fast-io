@@ -46,7 +46,9 @@
     "react-native-nitro-modules": "^0.15.0"
   },
   "dependencies": {
-    "event-target-shim": "^6.0.2"
+    "event-target-shim": "^6.0.2",
+    "@bacons/text-decoder": "^0.0.0",
+    "web-streams-polyfill": "^4.0.0"
   },
   "devDependencies": {
     "nitro-codegen": "^0.15.0",

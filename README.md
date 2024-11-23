@@ -26,10 +26,6 @@ npm install react-native-fast-io --save
 
 - React Native 0.76 or higher
 - Nitro Modules
-- Polyfills:
-  - TextDecoder, e.g. `@bacons/text-decoder`
-  - Streams, e.g. `web-streams-polyfill/polyfill`
-  - AsyncIterator, e.g. `@azure/core-asynciterator-polyfill`
 
 ### Usage
 

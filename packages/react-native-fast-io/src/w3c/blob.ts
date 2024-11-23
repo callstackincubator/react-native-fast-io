@@ -1,3 +1,6 @@
+import { ReadableStream } from './streams'
+import { TextDecoder } from './text'
+
 export class Blob implements globalThis.Blob {
   private parts: Array<BlobPart>
 
