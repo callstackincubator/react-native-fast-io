@@ -9,7 +9,7 @@ module.exports = {
   },
   dependencies: {
     [pkg.name]: {
-      root: path.join(__dirname, '..', '..', 'packages', 'react-native-fast-io'),
+      root: path.join(__dirname, '..', 'packages', 'react-native-fast-io'),
     },
   },
 }
