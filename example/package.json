@@ -8,10 +8,10 @@
     "server": "bun server/index.ts"
   },
   "dependencies": {
+    "@azure/core-asynciterator-polyfill": "^1.0.2",
     "cli-table3": "^0.6.5",
     "react": "18.3.1",
     "react-native": "0.76.0",
-    "react-native-fast-io": "0.1.1",
     "react-native-nitro-modules": "^0.15.0"
   },
   "devDependencies": {

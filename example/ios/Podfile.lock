@@ -1,7 +1,7 @@
 PODS:
   - boost (1.84.0)
   - DoubleConversion (1.1.6)
-  - FastIO (0.1.1):
+  - FastIO (0.1.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -1558,7 +1558,7 @@ PODS:
 DEPENDENCIES:
   - boost (from `../../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
-  - FastIO (from `../../node_modules/react-native-fast-io`)
+  - FastIO (from `../../packages/react-native-fast-io`)
   - FBLazyVector (from `../../node_modules/react-native/Libraries/FBLazyVector`)
   - fmt (from `../../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../../node_modules/react-native/third-party-podspecs/glog.podspec`)
@@ -1634,7 +1634,7 @@ EXTERNAL SOURCES:
   DoubleConversion:
     :podspec: "../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   FastIO:
-    :path: "../../node_modules/react-native-fast-io"
+    :path: "../../packages/react-native-fast-io"
   FBLazyVector:
     :path: "../../node_modules/react-native/Libraries/FBLazyVector"
   fmt:
@@ -1764,7 +1764,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: 1dca942403ed9342f98334bf4c3621f011aa7946
   DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
-  FastIO: 58c29380cf3ea0dfc4e65554dfa51a43a1468b9a
+  FastIO: e17f05b029f123359d7936e83deda78d965d683a
   FBLazyVector: aa59bef5c46e93168bffcf3dc37ee1e176de799a
   fmt: 10c6e61f4be25dc963c36bd73fc7b1705fe975be
   glog: 08b301085f15bcbb6ff8632a8ebaf239aae04e6a
