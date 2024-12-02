@@ -78,7 +78,7 @@ class HybridFileSystem : NSObject, UIDocumentPickerDelegate, HybridFileSystemSpe
         documentPicker.directoryURL = URL(fileURLWithPath: startIn, isDirectory: true)
       }
       
-      guard let vc = RCTUtilsWrapper.getPresentedViewController() else {
+      guard let vc = RCTPresentedViewController() else {
         promise.reject(withError: RuntimeError.error(withMessage: "Cannot present file picker"))
         return
       }
