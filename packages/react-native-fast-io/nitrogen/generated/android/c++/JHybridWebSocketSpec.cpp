@@ -13,6 +13,7 @@ namespace NitroModules { class ArrayBuffer; }
 #include <string>
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/JArrayBuffer.hpp>
+#include <NitroModules/JUnit.hpp>
 #include <functional>
 #include "JFunc_void_std__string.hpp"
 #include "JFunc_void_double_std__string.hpp"

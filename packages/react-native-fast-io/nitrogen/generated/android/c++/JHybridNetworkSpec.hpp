@@ -51,7 +51,7 @@ namespace margelo::nitro::fastio {
 
   public:
     // Methods
-    std::future<void> request(const RequestOptions& opts) override;
+    std::shared_ptr<Promise<void>> request(const RequestOptions& opts) override;
 
   private:
     friend HybridBase;

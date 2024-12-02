@@ -53,7 +53,7 @@ namespace margelo::nitro::fastio {
     // Methods
     Metadata getMetadata(const std::string& path) override;
     std::string getWellKnownDirectoryPath(WellKnownDirectory directory) override;
-    std::future<std::vector<std::string>> showOpenFilePicker(const std::optional<NativeFilePickerOptions>& options) override;
+    std::shared_ptr<Promise<std::vector<std::string>>> showOpenFilePicker(const std::optional<NativeFilePickerOptions>& options) override;
 
   private:
     friend HybridBase;

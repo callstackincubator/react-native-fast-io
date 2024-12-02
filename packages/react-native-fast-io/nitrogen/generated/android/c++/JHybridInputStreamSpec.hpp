@@ -51,7 +51,7 @@ namespace margelo::nitro::fastio {
 
   public:
     // Methods
-    std::future<std::shared_ptr<ArrayBuffer>> read() override;
+    std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>> read() override;
     void open() override;
     void close() override;
 

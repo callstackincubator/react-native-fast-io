@@ -21,5 +21,9 @@ enum class WellKnownDirectory {
   DOWNLOADS,
   MUSIC,
   PICTURES,
-  VIDEOS
+  VIDEOS;
+
+  @DoNotStrip
+  @Keep
+  private val _ordinal = ordinal
 }

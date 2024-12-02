@@ -121,7 +121,7 @@ public class HybridFileSystemSpecCxx {
   }
   
   @inline(__always)
-  public func showOpenFilePicker(options: bridge.std__optional_NativeFilePickerOptions_) -> bridge.PromiseHolder_std__vector_std__string__ {
+  public func showOpenFilePicker(options: bridge.std__optional_NativeFilePickerOptions_) -> bridge.std__shared_ptr_Promise_std__vector_std__string___ {
     do {
       let __result = try self.__implementation.showOpenFilePicker(options: { () -> NativeFilePickerOptions? in
         if let __unwrapped = options.value {
@@ -130,18 +130,18 @@ public class HybridFileSystemSpecCxx {
           return nil
         }
       }())
-      return { () -> bridge.PromiseHolder_std__vector_std__string__ in
-        let __promiseHolder = bridge.create_PromiseHolder_std__vector_std__string__()
+      return { () -> bridge.std__shared_ptr_Promise_std__vector_std__string___ in
+        let __promise = bridge.create_std__shared_ptr_Promise_std__vector_std__string___()
         __result
-          .then({ __result in __promiseHolder.resolve({ () -> bridge.std__vector_std__string_ in
+          .then({ __result in __promise.pointee.resolve({ () -> bridge.std__vector_std__string_ in
         var __vector = bridge.create_std__vector_std__string_(__result.count)
         for __item in __result {
           __vector.push_back(std.string(__item))
         }
         return __vector
       }()) })
-          .catch({ __error in __promiseHolder.reject(std.string(String(describing: __error))) })
-        return __promiseHolder
+          .catch({ __error in __promise.pointee.reject(__error.toCpp()) })
+        return __promise
       }()
     } catch {
       let __message = "\(error.localizedDescription)"

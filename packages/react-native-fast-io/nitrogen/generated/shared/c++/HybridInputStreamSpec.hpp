@@ -16,7 +16,7 @@
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
 
-#include <future>
+#include <NitroModules/Promise.hpp>
 #include <NitroModules/ArrayBuffer.hpp>
 
 namespace margelo::nitro::fastio {
@@ -50,7 +50,7 @@ namespace margelo::nitro::fastio {
 
     public:
       // Methods
-      virtual std::future<std::shared_ptr<ArrayBuffer>> read() = 0;
+      virtual std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>> read() = 0;
       virtual void open() = 0;
       virtual void close() = 0;
 

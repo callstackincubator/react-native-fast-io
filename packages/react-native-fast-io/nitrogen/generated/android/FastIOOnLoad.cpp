@@ -23,6 +23,7 @@
 #include "JFunc_void_std__shared_ptr_ArrayBuffer_.hpp"
 #include "JHybridWebSocketManagerSpec.hpp"
 #include <NitroModules/JNISharedPtr.hpp>
+#include <NitroModules/DefaultConstructableObject.hpp>
 #include "HybridCompressorFactory.hpp"
 
 namespace margelo::nitro::fastio {
@@ -52,15 +53,8 @@ int initialize(JavaVM* vm) {
     HybridObjectRegistry::registerHybridObjectConstructor(
       "WebSocketManager",
       []() -> std::shared_ptr<HybridObject> {
-        static auto javaClass = jni::findClassStatic("com/margelo/nitro/fastio/HybridWebSocketManager");
-        static auto defaultConstructor = javaClass->getConstructor<JHybridWebSocketManagerSpec::javaobject()>();
-    
-        auto instance = javaClass->newObject(defaultConstructor);
-    #ifdef NITRO_DEBUG
-        if (instance == nullptr) [[unlikely]] {
-          throw std::runtime_error("Failed to create an instance of \"JHybridWebSocketManagerSpec\" - the constructor returned null!");
-        }
-    #endif
+        static DefaultConstructableObject<JHybridWebSocketManagerSpec::javaobject> object("com/margelo/nitro/fastio/HybridWebSocketManager");
+        auto instance = object.create();
         auto globalRef = jni::make_global(instance);
         return JNISharedPtr::make_shared_from_jni<JHybridWebSocketManagerSpec>(globalRef);
       }
@@ -68,15 +62,8 @@ int initialize(JavaVM* vm) {
     HybridObjectRegistry::registerHybridObjectConstructor(
       "FileSystem",
       []() -> std::shared_ptr<HybridObject> {
-        static auto javaClass = jni::findClassStatic("com/margelo/nitro/fastio/HybridFileSystem");
-        static auto defaultConstructor = javaClass->getConstructor<JHybridFileSystemSpec::javaobject()>();
-    
-        auto instance = javaClass->newObject(defaultConstructor);
-    #ifdef NITRO_DEBUG
-        if (instance == nullptr) [[unlikely]] {
-          throw std::runtime_error("Failed to create an instance of \"JHybridFileSystemSpec\" - the constructor returned null!");
-        }
-    #endif
+        static DefaultConstructableObject<JHybridFileSystemSpec::javaobject> object("com/margelo/nitro/fastio/HybridFileSystem");
+        auto instance = object.create();
         auto globalRef = jni::make_global(instance);
         return JNISharedPtr::make_shared_from_jni<JHybridFileSystemSpec>(globalRef);
       }
@@ -84,15 +71,8 @@ int initialize(JavaVM* vm) {
     HybridObjectRegistry::registerHybridObjectConstructor(
       "Network",
       []() -> std::shared_ptr<HybridObject> {
-        static auto javaClass = jni::findClassStatic("com/margelo/nitro/fastio/HybridNetwork");
-        static auto defaultConstructor = javaClass->getConstructor<JHybridNetworkSpec::javaobject()>();
-    
-        auto instance = javaClass->newObject(defaultConstructor);
-    #ifdef NITRO_DEBUG
-        if (instance == nullptr) [[unlikely]] {
-          throw std::runtime_error("Failed to create an instance of \"JHybridNetworkSpec\" - the constructor returned null!");
-        }
-    #endif
+        static DefaultConstructableObject<JHybridNetworkSpec::javaobject> object("com/margelo/nitro/fastio/HybridNetwork");
+        auto instance = object.create();
         auto globalRef = jni::make_global(instance);
         return JNISharedPtr::make_shared_from_jni<JHybridNetworkSpec>(globalRef);
       }
@@ -100,15 +80,8 @@ int initialize(JavaVM* vm) {
     HybridObjectRegistry::registerHybridObjectConstructor(
       "DuplexStream",
       []() -> std::shared_ptr<HybridObject> {
-        static auto javaClass = jni::findClassStatic("com/margelo/nitro/fastio/HybridDuplexStream");
-        static auto defaultConstructor = javaClass->getConstructor<JHybridDuplexStreamSpec::javaobject()>();
-    
-        auto instance = javaClass->newObject(defaultConstructor);
-    #ifdef NITRO_DEBUG
-        if (instance == nullptr) [[unlikely]] {
-          throw std::runtime_error("Failed to create an instance of \"JHybridDuplexStreamSpec\" - the constructor returned null!");
-        }
-    #endif
+        static DefaultConstructableObject<JHybridDuplexStreamSpec::javaobject> object("com/margelo/nitro/fastio/HybridDuplexStream");
+        auto instance = object.create();
         auto globalRef = jni::make_global(instance);
         return JNISharedPtr::make_shared_from_jni<JHybridDuplexStreamSpec>(globalRef);
       }
@@ -125,15 +98,8 @@ int initialize(JavaVM* vm) {
     HybridObjectRegistry::registerHybridObjectConstructor(
       "StreamFactory",
       []() -> std::shared_ptr<HybridObject> {
-        static auto javaClass = jni::findClassStatic("com/margelo/nitro/fastio/HybridStreamFactory");
-        static auto defaultConstructor = javaClass->getConstructor<JHybridStreamFactorySpec::javaobject()>();
-    
-        auto instance = javaClass->newObject(defaultConstructor);
-    #ifdef NITRO_DEBUG
-        if (instance == nullptr) [[unlikely]] {
-          throw std::runtime_error("Failed to create an instance of \"JHybridStreamFactorySpec\" - the constructor returned null!");
-        }
-    #endif
+        static DefaultConstructableObject<JHybridStreamFactorySpec::javaobject> object("com/margelo/nitro/fastio/HybridStreamFactory");
+        auto instance = object.create();
         auto globalRef = jni::make_global(instance);
         return JNISharedPtr::make_shared_from_jni<JHybridStreamFactorySpec>(globalRef);
       }

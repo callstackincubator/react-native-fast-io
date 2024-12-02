@@ -17,5 +17,9 @@ import com.facebook.proguard.annotations.DoNotStrip
 @Keep
 enum class RequestMethod {
   POST,
-  GET
+  GET;
+
+  @DoNotStrip
+  @Keep
+  private val _ordinal = ordinal
 }

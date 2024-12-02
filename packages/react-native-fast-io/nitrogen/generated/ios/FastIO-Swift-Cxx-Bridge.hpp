@@ -61,9 +61,9 @@ namespace FastIO { class HybridWebSocketSpecCxx; }
 #include "NativeFilePickerOptions.hpp"
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/ArrayBufferHolder.hpp>
-#include <NitroModules/PromiseHolder.hpp>
+#include <NitroModules/Promise.hpp>
+#include <exception>
 #include <functional>
-#include <future>
 #include <memory>
 #include <optional>
 #include <string>
@@ -86,13 +86,69 @@ namespace margelo::nitro::fastio::bridge::swift {
     return vector;
   }
   
-  // pragma MARK: PromiseHolder<std::vector<std::string>>
+  // pragma MARK: std::shared_ptr<Promise<std::vector<std::string>>>
   /**
-   * Specialized version of `PromiseHolder<std::vector<std::string>>`.
+   * Specialized version of `std::shared_ptr<Promise<std::vector<std::string>>>`.
    */
-  using PromiseHolder_std__vector_std__string__ = PromiseHolder<std::vector<std::string>>;
-  inline PromiseHolder<std::vector<std::string>> create_PromiseHolder_std__vector_std__string__() {
-    return PromiseHolder<std::vector<std::string>>();
+  using std__shared_ptr_Promise_std__vector_std__string___ = std::shared_ptr<Promise<std::vector<std::string>>>;
+  inline std::shared_ptr<Promise<std::vector<std::string>>> create_std__shared_ptr_Promise_std__vector_std__string___() {
+    return Promise<std::vector<std::string>>::create();
+  }
+  
+  // pragma MARK: std::function<void(const std::vector<std::string>& /* result */)>
+  /**
+   * Specialized version of `std::function<void(const std::vector<std::string>&)>`.
+   */
+  using Func_void_std__vector_std__string_ = std::function<void(const std::vector<std::string>& /* result */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::vector<std::string>& / * result * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__vector_std__string__Wrapper final {
+  public:
+    explicit Func_void_std__vector_std__string__Wrapper(const std::function<void(const std::vector<std::string>& /* result */)>& func): _function(func) {}
+    explicit Func_void_std__vector_std__string__Wrapper(std::function<void(const std::vector<std::string>& /* result */)>&& func): _function(std::move(func)) {}
+    inline void call(std::vector<std::string> result) const {
+      _function(result);
+    }
+  private:
+    std::function<void(const std::vector<std::string>& /* result */)> _function;
+  };
+  inline Func_void_std__vector_std__string_ create_Func_void_std__vector_std__string_(void* _Nonnull closureHolder, void(* _Nonnull call)(void* _Nonnull /* closureHolder */, std::vector<std::string>), void(* _Nonnull destroy)(void* _Nonnull)) {
+    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
+    return Func_void_std__vector_std__string_([sharedClosureHolder, call](const std::vector<std::string>& result) -> void {
+      call(sharedClosureHolder.get(), result);
+    });
+  }
+  inline std::shared_ptr<Func_void_std__vector_std__string__Wrapper> share_Func_void_std__vector_std__string_(const Func_void_std__vector_std__string_& value) {
+    return std::make_shared<Func_void_std__vector_std__string__Wrapper>(value);
+  }
+  
+  // pragma MARK: std::function<void(const std::exception_ptr& /* error */)>
+  /**
+   * Specialized version of `std::function<void(const std::exception_ptr&)>`.
+   */
+  using Func_void_std__exception_ptr = std::function<void(const std::exception_ptr& /* error */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::exception_ptr& / * error * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__exception_ptr_Wrapper final {
+  public:
+    explicit Func_void_std__exception_ptr_Wrapper(const std::function<void(const std::exception_ptr& /* error */)>& func): _function(func) {}
+    explicit Func_void_std__exception_ptr_Wrapper(std::function<void(const std::exception_ptr& /* error */)>&& func): _function(std::move(func)) {}
+    inline void call(std::exception_ptr error) const {
+      _function(error);
+    }
+  private:
+    std::function<void(const std::exception_ptr& /* error */)> _function;
+  };
+  inline Func_void_std__exception_ptr create_Func_void_std__exception_ptr(void* _Nonnull closureHolder, void(* _Nonnull call)(void* _Nonnull /* closureHolder */, std::exception_ptr), void(* _Nonnull destroy)(void* _Nonnull)) {
+    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
+    return Func_void_std__exception_ptr([sharedClosureHolder, call](const std::exception_ptr& error) -> void {
+      call(sharedClosureHolder.get(), error);
+    });
+  }
+  inline std::shared_ptr<Func_void_std__exception_ptr_Wrapper> share_Func_void_std__exception_ptr(const Func_void_std__exception_ptr& value) {
+    return std::make_shared<Func_void_std__exception_ptr_Wrapper>(value);
   }
   
   // pragma MARK: std::optional<bool>
@@ -139,13 +195,41 @@ namespace margelo::nitro::fastio::bridge::swift {
   std::shared_ptr<margelo::nitro::fastio::HybridFileSystemSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridFileSystemSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridFileSystemSpec_(std__shared_ptr_margelo__nitro__fastio__HybridFileSystemSpec_ cppType);
   
-  // pragma MARK: PromiseHolder<void>
+  // pragma MARK: std::shared_ptr<Promise<void>>
   /**
-   * Specialized version of `PromiseHolder<void>`.
+   * Specialized version of `std::shared_ptr<Promise<void>>`.
    */
-  using PromiseHolder_void_ = PromiseHolder<void>;
-  inline PromiseHolder<void> create_PromiseHolder_void_() {
-    return PromiseHolder<void>();
+  using std__shared_ptr_Promise_void__ = std::shared_ptr<Promise<void>>;
+  inline std::shared_ptr<Promise<void>> create_std__shared_ptr_Promise_void__() {
+    return Promise<void>::create();
+  }
+  
+  // pragma MARK: std::function<void()>
+  /**
+   * Specialized version of `std::function<void()>`.
+   */
+  using Func_void = std::function<void()>;
+  /**
+   * Wrapper class for a `std::function<void()>`, this can be used from Swift.
+   */
+  class Func_void_Wrapper final {
+  public:
+    explicit Func_void_Wrapper(const std::function<void()>& func): _function(func) {}
+    explicit Func_void_Wrapper(std::function<void()>&& func): _function(std::move(func)) {}
+    inline void call() const {
+      _function();
+    }
+  private:
+    std::function<void()> _function;
+  };
+  inline Func_void create_Func_void(void* _Nonnull closureHolder, void(* _Nonnull call)(void* _Nonnull /* closureHolder */), void(* _Nonnull destroy)(void* _Nonnull)) {
+    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
+    return Func_void([sharedClosureHolder, call]() -> void {
+      call(sharedClosureHolder.get());
+    });
+  }
+  inline std::shared_ptr<Func_void_Wrapper> share_Func_void(const Func_void& value) {
+    return std::make_shared<Func_void_Wrapper>(value);
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>
@@ -173,13 +257,41 @@ namespace margelo::nitro::fastio::bridge::swift {
   std::shared_ptr<margelo::nitro::fastio::HybridNetworkSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridNetworkSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridNetworkSpec_(std__shared_ptr_margelo__nitro__fastio__HybridNetworkSpec_ cppType);
   
-  // pragma MARK: PromiseHolder<std::shared_ptr<ArrayBuffer>>
+  // pragma MARK: std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>>
   /**
-   * Specialized version of `PromiseHolder<std::shared_ptr<ArrayBuffer>>`.
+   * Specialized version of `std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>>`.
    */
-  using PromiseHolder_std__shared_ptr_ArrayBuffer__ = PromiseHolder<std::shared_ptr<ArrayBuffer>>;
-  inline PromiseHolder<std::shared_ptr<ArrayBuffer>> create_PromiseHolder_std__shared_ptr_ArrayBuffer__() {
-    return PromiseHolder<std::shared_ptr<ArrayBuffer>>();
+  using std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer___ = std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>>;
+  inline std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>> create_std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer___() {
+    return Promise<std::shared_ptr<ArrayBuffer>>::create();
+  }
+  
+  // pragma MARK: std::function<void(const std::shared_ptr<ArrayBuffer>& /* result */)>
+  /**
+   * Specialized version of `std::function<void(const std::shared_ptr<ArrayBuffer>&)>`.
+   */
+  using Func_void_std__shared_ptr_ArrayBuffer_ = std::function<void(const std::shared_ptr<ArrayBuffer>& /* result */)>;
+  /**
+   * Wrapper class for a `std::function<void(const std::shared_ptr<ArrayBuffer>& / * result * /)>`, this can be used from Swift.
+   */
+  class Func_void_std__shared_ptr_ArrayBuffer__Wrapper final {
+  public:
+    explicit Func_void_std__shared_ptr_ArrayBuffer__Wrapper(const std::function<void(const std::shared_ptr<ArrayBuffer>& /* result */)>& func): _function(func) {}
+    explicit Func_void_std__shared_ptr_ArrayBuffer__Wrapper(std::function<void(const std::shared_ptr<ArrayBuffer>& /* result */)>&& func): _function(std::move(func)) {}
+    inline void call(ArrayBufferHolder result) const {
+      _function(result.getArrayBuffer());
+    }
+  private:
+    std::function<void(const std::shared_ptr<ArrayBuffer>& /* result */)> _function;
+  };
+  inline Func_void_std__shared_ptr_ArrayBuffer_ create_Func_void_std__shared_ptr_ArrayBuffer_(void* _Nonnull closureHolder, void(* _Nonnull call)(void* _Nonnull /* closureHolder */, ArrayBufferHolder), void(* _Nonnull destroy)(void* _Nonnull)) {
+    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
+    return Func_void_std__shared_ptr_ArrayBuffer_([sharedClosureHolder, call](const std::shared_ptr<ArrayBuffer>& result) -> void {
+      call(sharedClosureHolder.get(), ArrayBufferHolder(result));
+    });
+  }
+  inline std::shared_ptr<Func_void_std__shared_ptr_ArrayBuffer__Wrapper> share_Func_void_std__shared_ptr_ArrayBuffer_(const Func_void_std__shared_ptr_ArrayBuffer_& value) {
+    return std::make_shared<Func_void_std__shared_ptr_ArrayBuffer__Wrapper>(value);
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridOutputStreamSpec>
@@ -260,34 +372,6 @@ namespace margelo::nitro::fastio::bridge::swift {
   }
   inline std::shared_ptr<Func_void_double_std__string_Wrapper> share_Func_void_double_std__string(const Func_void_double_std__string& value) {
     return std::make_shared<Func_void_double_std__string_Wrapper>(value);
-  }
-  
-  // pragma MARK: std::function<void(const std::shared_ptr<ArrayBuffer>& /* buffer */)>
-  /**
-   * Specialized version of `std::function<void(const std::shared_ptr<ArrayBuffer>&)>`.
-   */
-  using Func_void_std__shared_ptr_ArrayBuffer_ = std::function<void(const std::shared_ptr<ArrayBuffer>& /* buffer */)>;
-  /**
-   * Wrapper class for a `std::function<void(const std::shared_ptr<ArrayBuffer>& / * buffer * /)>`, this can be used from Swift.
-   */
-  class Func_void_std__shared_ptr_ArrayBuffer__Wrapper final {
-  public:
-    explicit Func_void_std__shared_ptr_ArrayBuffer__Wrapper(const std::function<void(const std::shared_ptr<ArrayBuffer>& /* buffer */)>& func): _function(func) {}
-    explicit Func_void_std__shared_ptr_ArrayBuffer__Wrapper(std::function<void(const std::shared_ptr<ArrayBuffer>& /* buffer */)>&& func): _function(std::move(func)) {}
-    inline void call(ArrayBufferHolder buffer) const {
-      _function(buffer.getArrayBuffer());
-    }
-  private:
-    std::function<void(const std::shared_ptr<ArrayBuffer>& /* buffer */)> _function;
-  };
-  inline Func_void_std__shared_ptr_ArrayBuffer_ create_Func_void_std__shared_ptr_ArrayBuffer_(void* _Nonnull closureHolder, void(* _Nonnull call)(void* _Nonnull /* closureHolder */, ArrayBufferHolder), void(* _Nonnull destroy)(void* _Nonnull)) {
-    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
-    return Func_void_std__shared_ptr_ArrayBuffer_([sharedClosureHolder, call](const std::shared_ptr<ArrayBuffer>& buffer) -> void {
-      call(sharedClosureHolder.get(), ArrayBufferHolder(buffer));
-    });
-  }
-  inline std::shared_ptr<Func_void_std__shared_ptr_ArrayBuffer__Wrapper> share_Func_void_std__shared_ptr_ArrayBuffer_(const Func_void_std__shared_ptr_ArrayBuffer_& value) {
-    return std::make_shared<Func_void_std__shared_ptr_ArrayBuffer__Wrapper>(value);
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec>

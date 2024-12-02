@@ -17,8 +17,7 @@ namespace NitroModules { class ArrayBuffer; }
 // Forward declaration of `ArrayBufferHolder` to properly resolve imports.
 namespace NitroModules { class ArrayBufferHolder; }
 
-#include <future>
-#include <NitroModules/PromiseHolder.hpp>
+#include <NitroModules/Promise.hpp>
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/ArrayBufferHolder.hpp>
 
@@ -65,9 +64,9 @@ namespace margelo::nitro::fastio {
 
   public:
     // Methods
-    inline std::future<void> write(const std::shared_ptr<ArrayBuffer>& buffer) override {
+    inline std::shared_ptr<Promise<void>> write(const std::shared_ptr<ArrayBuffer>& buffer) override {
       auto __result = _swiftPart.write(ArrayBufferHolder(buffer));
-      return __result.getFuture();
+      return __result;
     }
     inline void open() override {
       _swiftPart.open();

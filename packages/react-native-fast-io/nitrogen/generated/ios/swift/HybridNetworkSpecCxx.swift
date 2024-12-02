@@ -99,15 +99,15 @@ public class HybridNetworkSpecCxx {
 
   // Methods
   @inline(__always)
-  public func request(opts: RequestOptions) -> bridge.PromiseHolder_void_ {
+  public func request(opts: RequestOptions) -> bridge.std__shared_ptr_Promise_void__ {
     do {
       let __result = try self.__implementation.request(opts: opts)
-      return { () -> bridge.PromiseHolder_void_ in
-        let __promiseHolder = bridge.create_PromiseHolder_void_()
+      return { () -> bridge.std__shared_ptr_Promise_void__ in
+        let __promise = bridge.create_std__shared_ptr_Promise_void__()
         __result
-          .then({ __result in __promiseHolder.resolve() })
-          .catch({ __error in __promiseHolder.reject(std.string(String(describing: __error))) })
-        return __promiseHolder
+          .then({ __result in __promise.pointee.resolve() })
+          .catch({ __error in __promise.pointee.reject(__error.toCpp()) })
+        return __promise
       }()
     } catch {
       let __message = "\(error.localizedDescription)"

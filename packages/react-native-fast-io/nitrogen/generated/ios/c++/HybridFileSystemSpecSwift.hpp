@@ -22,9 +22,8 @@ namespace margelo::nitro::fastio { struct NativeFilePickerOptions; }
 #include "Metadata.hpp"
 #include <string>
 #include "WellKnownDirectory.hpp"
-#include <future>
+#include <NitroModules/Promise.hpp>
 #include <vector>
-#include <NitroModules/PromiseHolder.hpp>
 #include <optional>
 #include "NativeFilePickerOptions.hpp"
 
@@ -79,9 +78,9 @@ namespace margelo::nitro::fastio {
       auto __result = _swiftPart.getWellKnownDirectoryPath(static_cast<int>(directory));
       return __result;
     }
-    inline std::future<std::vector<std::string>> showOpenFilePicker(const std::optional<NativeFilePickerOptions>& options) override {
+    inline std::shared_ptr<Promise<std::vector<std::string>>> showOpenFilePicker(const std::optional<NativeFilePickerOptions>& options) override {
       auto __result = _swiftPart.showOpenFilePicker(options);
-      return __result.getFuture();
+      return __result;
     }
 
   private:

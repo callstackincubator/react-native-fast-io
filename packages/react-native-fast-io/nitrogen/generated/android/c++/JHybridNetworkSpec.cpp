@@ -14,7 +14,7 @@ namespace margelo::nitro::fastio { enum class RequestMethod; }
 // Forward declaration of `HybridInputStreamSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 
-#include <future>
+#include <NitroModules/Promise.hpp>
 #include <NitroModules/JPromise.hpp>
 #include "RequestOptions.hpp"
 #include "JRequestOptions.hpp"
@@ -48,19 +48,19 @@ namespace margelo::nitro::fastio {
   
 
   // Methods
-  std::future<void> JHybridNetworkSpec::request(const RequestOptions& opts) {
+  std::shared_ptr<Promise<void>> JHybridNetworkSpec::request(const RequestOptions& opts) {
     static const auto method = _javaPart->getClass()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<JRequestOptions> /* opts */)>("request");
     auto __result = method(_javaPart, JRequestOptions::fromCpp(opts));
     return [&]() {
-      auto __promise = std::make_shared<std::promise<void>>();
+      auto __promise = Promise<void>::create();
       __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
-        __promise->set_value();
+        __promise->resolve();
       });
-      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JString>& __message) {
-        std::runtime_error __error(__message->toStdString());
-        __promise->set_exception(std::make_exception_ptr(__error));
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
       });
-      return __promise->get_future();
+      return __promise;
     }();
   }
 

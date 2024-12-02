@@ -16,7 +16,7 @@
 // Forward declaration of `RequestOptions` to properly resolve imports.
 namespace margelo::nitro::fastio { struct RequestOptions; }
 
-#include <future>
+#include <NitroModules/Promise.hpp>
 #include "RequestOptions.hpp"
 
 namespace margelo::nitro::fastio {
@@ -50,7 +50,7 @@ namespace margelo::nitro::fastio {
 
     public:
       // Methods
-      virtual std::future<void> request(const RequestOptions& opts) = 0;
+      virtual std::shared_ptr<Promise<void>> request(const RequestOptions& opts) = 0;
 
     protected:
       // Hybrid Setup

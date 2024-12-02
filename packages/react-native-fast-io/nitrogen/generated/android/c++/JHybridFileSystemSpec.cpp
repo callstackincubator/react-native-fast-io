@@ -17,7 +17,7 @@ namespace margelo::nitro::fastio { struct NativeFilePickerOptions; }
 #include "Metadata.hpp"
 #include "JMetadata.hpp"
 #include <string>
-#include <future>
+#include <NitroModules/Promise.hpp>
 #include <vector>
 #include <NitroModules/JPromise.hpp>
 #include "WellKnownDirectory.hpp"
@@ -57,14 +57,14 @@ namespace margelo::nitro::fastio {
     auto __result = method(_javaPart, JWellKnownDirectory::fromCpp(directory));
     return __result->toStdString();
   }
-  std::future<std::vector<std::string>> JHybridFileSystemSpec::showOpenFilePicker(const std::optional<NativeFilePickerOptions>& options) {
+  std::shared_ptr<Promise<std::vector<std::string>>> JHybridFileSystemSpec::showOpenFilePicker(const std::optional<NativeFilePickerOptions>& options) {
     static const auto method = _javaPart->getClass()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<JNativeFilePickerOptions> /* options */)>("showOpenFilePicker");
     auto __result = method(_javaPart, options.has_value() ? JNativeFilePickerOptions::fromCpp(options.value()) : nullptr);
     return [&]() {
-      auto __promise = std::make_shared<std::promise<std::vector<std::string>>>();
+      auto __promise = Promise<std::vector<std::string>>::create();
       __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
         auto __result = jni::static_ref_cast<jni::JArrayClass<jni::JString>>(__boxedResult);
-        __promise->set_value([&]() {
+        __promise->resolve([&]() {
           size_t __size = __result->size();
           std::vector<std::string> __vector;
           __vector.reserve(__size);
@@ -75,11 +75,11 @@ namespace margelo::nitro::fastio {
           return __vector;
         }());
       });
-      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JString>& __message) {
-        std::runtime_error __error(__message->toStdString());
-        __promise->set_exception(std::make_exception_ptr(__error));
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
       });
-      return __promise->get_future();
+      return __promise;
     }();
   }
 
