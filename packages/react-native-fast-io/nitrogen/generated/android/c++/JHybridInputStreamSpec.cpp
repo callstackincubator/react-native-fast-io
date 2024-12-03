@@ -10,10 +10,11 @@
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
 
-#include <future>
+#include <NitroModules/Promise.hpp>
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/JPromise.hpp>
 #include <NitroModules/JArrayBuffer.hpp>
+#include <NitroModules/JUnit.hpp>
 
 namespace margelo::nitro::fastio {
 
@@ -36,20 +37,20 @@ namespace margelo::nitro::fastio {
   
 
   // Methods
-  std::future<std::shared_ptr<ArrayBuffer>> JHybridInputStreamSpec::read() {
+  std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>> JHybridInputStreamSpec::read() {
     static const auto method = _javaPart->getClass()->getMethod<jni::local_ref<JPromise::javaobject>()>("read");
     auto __result = method(_javaPart);
     return [&]() {
-      auto __promise = std::make_shared<std::promise<std::shared_ptr<ArrayBuffer>>>();
+      auto __promise = Promise<std::shared_ptr<ArrayBuffer>>::create();
       __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
         auto __result = jni::static_ref_cast<JArrayBuffer::javaobject>(__boxedResult);
-        __promise->set_value(__result->cthis()->getArrayBuffer());
+        __promise->resolve(__result->cthis()->getArrayBuffer());
       });
-      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JString>& __message) {
-        std::runtime_error __error(__message->toStdString());
-        __promise->set_exception(std::make_exception_ptr(__error));
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
       });
-      return __promise->get_future();
+      return __promise;
     }();
   }
   void JHybridInputStreamSpec::open() {

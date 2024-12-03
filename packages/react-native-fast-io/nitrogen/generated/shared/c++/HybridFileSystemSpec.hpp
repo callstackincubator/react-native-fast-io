@@ -23,7 +23,7 @@ namespace margelo::nitro::fastio { struct NativeFilePickerOptions; }
 #include "Metadata.hpp"
 #include <string>
 #include "WellKnownDirectory.hpp"
-#include <future>
+#include <NitroModules/Promise.hpp>
 #include <vector>
 #include <optional>
 #include "NativeFilePickerOptions.hpp"
@@ -61,7 +61,7 @@ namespace margelo::nitro::fastio {
       // Methods
       virtual Metadata getMetadata(const std::string& path) = 0;
       virtual std::string getWellKnownDirectoryPath(WellKnownDirectory directory) = 0;
-      virtual std::future<std::vector<std::string>> showOpenFilePicker(const std::optional<NativeFilePickerOptions>& options) = 0;
+      virtual std::shared_ptr<Promise<std::vector<std::string>>> showOpenFilePicker(const std::optional<NativeFilePickerOptions>& options) = 0;
 
     protected:
       // Hybrid Setup

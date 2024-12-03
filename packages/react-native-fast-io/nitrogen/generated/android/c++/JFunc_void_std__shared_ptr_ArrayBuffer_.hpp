@@ -13,6 +13,7 @@
 #include <functional>
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/JArrayBuffer.hpp>
+#include <NitroModules/JUnit.hpp>
 
 namespace margelo::nitro::fastio {
 

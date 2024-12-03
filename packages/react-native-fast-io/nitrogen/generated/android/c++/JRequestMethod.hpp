@@ -28,7 +28,7 @@ namespace margelo::nitro::fastio {
     [[maybe_unused]]
     RequestMethod toCpp() const {
       static const auto clazz = javaClassStatic();
-      static const auto fieldOrdinal = clazz->getField<int>("ordinal");
+      static const auto fieldOrdinal = clazz->getField<int>("_ordinal");
       int ordinal = this->getFieldValue(fieldOrdinal);
       return static_cast<RequestMethod>(ordinal);
     }

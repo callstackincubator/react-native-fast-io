@@ -43,7 +43,7 @@
   "author": "Mike Grabowski <grabbou@gmail.com>",
   "peerDependencies": {
     "react-native": "^0.76.0",
-    "react-native-nitro-modules": "^0.15.0"
+    "react-native-nitro-modules": "^0.18.0"
   },
   "dependencies": {
     "event-target-shim": "^6.0.2",
@@ -51,7 +51,7 @@
     "web-streams-polyfill": "^4.0.0"
   },
   "devDependencies": {
-    "nitro-codegen": "^0.15.0",
+    "nitro-codegen": "^0.18.0",
     "react-native-builder-bob": "^0.32.1"
   },
   "keywords": [

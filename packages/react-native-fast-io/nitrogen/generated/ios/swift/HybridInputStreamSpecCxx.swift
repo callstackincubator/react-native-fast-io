@@ -99,15 +99,15 @@ public class HybridInputStreamSpecCxx {
 
   // Methods
   @inline(__always)
-  public func read() -> bridge.PromiseHolder_std__shared_ptr_ArrayBuffer__ {
+  public func read() -> bridge.std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer___ {
     do {
       let __result = try self.__implementation.read()
-      return { () -> bridge.PromiseHolder_std__shared_ptr_ArrayBuffer__ in
-        let __promiseHolder = bridge.create_PromiseHolder_std__shared_ptr_ArrayBuffer__()
+      return { () -> bridge.std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer___ in
+        let __promise = bridge.create_std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer___()
         __result
-          .then({ __result in __promiseHolder.resolve(__result.getArrayBuffer()) })
-          .catch({ __error in __promiseHolder.reject(std.string(String(describing: __error))) })
-        return __promiseHolder
+          .then({ __result in __promise.pointee.resolve(__result.getArrayBuffer()) })
+          .catch({ __error in __promise.pointee.reject(__error.toCpp()) })
+        return __promise
       }()
     } catch {
       let __message = "\(error.localizedDescription)"

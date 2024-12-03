@@ -19,8 +19,7 @@ namespace margelo::nitro::fastio { enum class RequestMethod; }
 // Forward declaration of `HybridInputStreamSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 
-#include <future>
-#include <NitroModules/PromiseHolder.hpp>
+#include <NitroModules/Promise.hpp>
 #include "RequestOptions.hpp"
 #include <string>
 #include "RequestMethod.hpp"
@@ -71,9 +70,9 @@ namespace margelo::nitro::fastio {
 
   public:
     // Methods
-    inline std::future<void> request(const RequestOptions& opts) override {
+    inline std::shared_ptr<Promise<void>> request(const RequestOptions& opts) override {
       auto __result = _swiftPart.request(opts);
-      return __result.getFuture();
+      return __result;
     }
 
   private:
