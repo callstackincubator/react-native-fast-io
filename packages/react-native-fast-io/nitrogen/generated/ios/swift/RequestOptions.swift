@@ -22,9 +22,8 @@ public extension RequestOptions {
     self.init(std.string(url), method, { () -> bridge.std__optional_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__ in
       if let __unwrappedValue = body {
         return bridge.create_std__optional_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__({ () -> bridge.std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ in
-          let __cxxWrapped = HybridInputStreamSpecCxx(__unwrappedValue)
-          let __pointer = HybridInputStreamSpecCxxUnsafe.toUnsafe(__cxxWrapped)
-          return bridge.create_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(__pointer)
+          let __cxxWrapped = __unwrappedValue.getCxxWrapper()
+          return __cxxWrapped.getCxxPart()
         }())
       } else {
         return .init()
@@ -61,7 +60,7 @@ public extension RequestOptions {
         if let __unwrapped = self.__body.value {
           return { () -> HybridInputStreamSpec in
             let __unsafePointer = bridge.get_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(__unwrapped)
-            let __instance = HybridInputStreamSpecCxxUnsafe.fromUnsafe(__unsafePointer)
+            let __instance = HybridInputStreamSpec_cxx.fromUnsafe(__unsafePointer)
             return __instance.getHybridInputStreamSpec()
           }()
         } else {
@@ -74,9 +73,8 @@ public extension RequestOptions {
       self.__body = { () -> bridge.std__optional_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__ in
         if let __unwrappedValue = newValue {
           return bridge.create_std__optional_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__({ () -> bridge.std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ in
-            let __cxxWrapped = HybridInputStreamSpecCxx(__unwrappedValue)
-            let __pointer = HybridInputStreamSpecCxxUnsafe.toUnsafe(__cxxWrapped)
-            return bridge.create_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(__pointer)
+            let __cxxWrapped = __unwrappedValue.getCxxWrapper()
+            return __cxxWrapped.getCxxPart()
           }())
         } else {
           return .init()

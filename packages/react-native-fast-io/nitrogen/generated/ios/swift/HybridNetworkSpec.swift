@@ -8,29 +8,42 @@
 import Foundation
 import NitroModules
 
-/**
- * A Swift protocol representing the Network HybridObject.
- * Implement this protocol to create Swift-based instances of Network.
- *
- * When implementing this protocol, make sure to initialize `hybridContext` - example:
- * ```
- * public class HybridNetwork : HybridNetworkSpec {
- *   // Initialize HybridContext
- *   var hybridContext = margelo.nitro.HybridContext()
- *
- *   // Return size of the instance to inform JS GC about memory pressure
- *   var memorySize: Int {
- *     return getSizeOf(self)
- *   }
- *
- *   // ...
- * }
- * ```
- */
-public protocol HybridNetworkSpec: AnyObject, HybridObjectSpec {
+/// See ``HybridNetworkSpec``
+public protocol HybridNetworkSpec_protocol: AnyObject {
   // Properties
   
 
   // Methods
   func request(opts: RequestOptions) throws -> Promise<Void>
 }
+
+/// See ``HybridNetworkSpec``
+public class HybridNetworkSpec_base: HybridObjectSpec {
+  private weak var cxxWrapper: HybridNetworkSpec_cxx? = nil
+  public func getCxxWrapper() -> HybridNetworkSpec_cxx {
+  #if DEBUG
+    guard self is HybridNetworkSpec else {
+      fatalError("`self` is not a `HybridNetworkSpec`! Did you accidentally inherit from `HybridNetworkSpec_base` instead of `HybridNetworkSpec`?")
+    }
+  #endif
+    if let cxxWrapper = self.cxxWrapper {
+      return cxxWrapper
+    } else {
+      let cxxWrapper = HybridNetworkSpec_cxx(self as! HybridNetworkSpec)
+      self.cxxWrapper = cxxWrapper
+      return cxxWrapper
+    }
+  }
+  public var memorySize: Int { return 0 }
+}
+
+/**
+ * A Swift base-protocol representing the Network HybridObject.
+ * Implement this protocol to create Swift-based instances of Network.
+ * ```swift
+ * class HybridNetwork : HybridNetworkSpec {
+ *   // ...
+ * }
+ * ```
+ */
+public typealias HybridNetworkSpec = HybridNetworkSpec_protocol & HybridNetworkSpec_base

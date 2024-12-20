@@ -8,26 +8,8 @@
 import Foundation
 import NitroModules
 
-/**
- * A Swift protocol representing the WebSocket HybridObject.
- * Implement this protocol to create Swift-based instances of WebSocket.
- *
- * When implementing this protocol, make sure to initialize `hybridContext` - example:
- * ```
- * public class HybridWebSocket : HybridWebSocketSpec {
- *   // Initialize HybridContext
- *   var hybridContext = margelo.nitro.HybridContext()
- *
- *   // Return size of the instance to inform JS GC about memory pressure
- *   var memorySize: Int {
- *     return getSizeOf(self)
- *   }
- *
- *   // ...
- * }
- * ```
- */
-public protocol HybridWebSocketSpec: AnyObject, HybridObjectSpec {
+/// See ``HybridWebSocketSpec``
+public protocol HybridWebSocketSpec_protocol: AnyObject {
   // Properties
   
 
@@ -43,3 +25,34 @@ public protocol HybridWebSocketSpec: AnyObject, HybridObjectSpec {
   func onMessage(callback: @escaping ((_ message: String) -> Void)) throws -> Void
   func onArrayBuffer(callback: @escaping ((_ buffer: ArrayBufferHolder) -> Void)) throws -> Void
 }
+
+/// See ``HybridWebSocketSpec``
+public class HybridWebSocketSpec_base: HybridObjectSpec {
+  private weak var cxxWrapper: HybridWebSocketSpec_cxx? = nil
+  public func getCxxWrapper() -> HybridWebSocketSpec_cxx {
+  #if DEBUG
+    guard self is HybridWebSocketSpec else {
+      fatalError("`self` is not a `HybridWebSocketSpec`! Did you accidentally inherit from `HybridWebSocketSpec_base` instead of `HybridWebSocketSpec`?")
+    }
+  #endif
+    if let cxxWrapper = self.cxxWrapper {
+      return cxxWrapper
+    } else {
+      let cxxWrapper = HybridWebSocketSpec_cxx(self as! HybridWebSocketSpec)
+      self.cxxWrapper = cxxWrapper
+      return cxxWrapper
+    }
+  }
+  public var memorySize: Int { return 0 }
+}
+
+/**
+ * A Swift base-protocol representing the WebSocket HybridObject.
+ * Implement this protocol to create Swift-based instances of WebSocket.
+ * ```swift
+ * class HybridWebSocket : HybridWebSocketSpec {
+ *   // ...
+ * }
+ * ```
+ */
+public typealias HybridWebSocketSpec = HybridWebSocketSpec_protocol & HybridWebSocketSpec_base

@@ -10,7 +10,32 @@ import UniformTypeIdentifiers
 import NitroModules
 import FastIOPrivate
 
-class HybridFileSystem : NSObject, UIDocumentPickerDelegate, HybridFileSystemSpec {
+class HybridFileSystem : HybridFileSystemSpec {
+  private class PickerDelegate: NSObject, UIDocumentPickerDelegate {
+    weak var delegate: HybridFileSystem?
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+      controller.dismiss(animated: true, completion: nil)
+      
+      delegate?.filePicker?.promise.resolve(withResult: urls.map { $0.path })
+      delegate?.filePicker = nil
+    }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+      controller.dismiss(animated: true, completion: nil)
+      
+      delegate?.filePicker?.promise.resolve(withResult: [])
+      delegate?.filePicker = nil
+    }
+  }
+  
+  private var pickerDelegate = PickerDelegate()
+  
+  override init() {
+    super.init()
+    self.pickerDelegate.delegate = self
+  }
+  
   func getMetadata(path: String) throws -> Metadata {
     let attributes = try FileManager.default.attributesOfItem(atPath: path)
     let fileURL = URL(fileURLWithPath: path)
@@ -70,7 +95,7 @@ class HybridFileSystem : NSObject, UIDocumentPickerDelegate, HybridFileSystemSpe
         forOpeningContentTypes: utTypes,
         asCopy: true
       )
-      documentPicker.delegate = self
+      documentPicker.delegate = self.pickerDelegate
 
       documentPicker.allowsMultipleSelection = options?.multiple ?? false
 
@@ -89,27 +114,6 @@ class HybridFileSystem : NSObject, UIDocumentPickerDelegate, HybridFileSystemSpe
     }
     
     return promise
-  }
-  
-  func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-    controller.dismiss(animated: true, completion: nil)
-    
-    filePicker?.promise.resolve(withResult: urls.map { $0.path })
-    filePicker = nil
-  }
-  
-  func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-    controller.dismiss(animated: true, completion: nil)
-    
-    filePicker?.promise.resolve(withResult: [])
-    filePicker = nil
-  }
-  
-  var hybridContext = margelo.nitro.HybridContext()
-  
-  // Return size of the instance to inform JS GC about memory pressure
-  var memorySize: Int {
-    return getSizeOf(self)
   }
   
   deinit {

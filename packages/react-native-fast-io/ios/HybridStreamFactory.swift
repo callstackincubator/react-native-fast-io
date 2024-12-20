@@ -23,9 +23,4 @@ class HybridStreamFactory : HybridStreamFactorySpec {
     }
     return HybridInputStream(stream: stream)
   }
-  
-  var hybridContext = margelo.nitro.HybridContext()
-  var memorySize: Int {
-    return getSizeOf(self)
-  }
 }

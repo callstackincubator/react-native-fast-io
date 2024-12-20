@@ -9,8 +9,8 @@
 
 #include "HybridWebSocketManagerSpec.hpp"
 
-// Forward declaration of `HybridWebSocketManagerSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridWebSocketManagerSpecCxx; }
+// Forward declaration of `HybridWebSocketManagerSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridWebSocketManagerSpec_cxx; }
 
 // Forward declaration of `HybridWebSocketSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridWebSocketSpec; }
@@ -20,36 +20,30 @@ namespace margelo::nitro::fastio { class HybridWebSocketSpec; }
 #include <string>
 #include <vector>
 
-#if __has_include(<NitroModules/HybridContext.hpp>)
-#include <NitroModules/HybridContext.hpp>
-#else
-#error NitroModules cannot be found! Are you sure you installed NitroModules properly?
-#endif
-
 #include "FastIO-Swift-Cxx-Umbrella.hpp"
 
 namespace margelo::nitro::fastio {
 
   /**
-   * The C++ part of HybridWebSocketManagerSpecCxx.swift.
+   * The C++ part of HybridWebSocketManagerSpec_cxx.swift.
    *
-   * HybridWebSocketManagerSpecSwift (C++) accesses HybridWebSocketManagerSpecCxx (Swift), and might
+   * HybridWebSocketManagerSpecSwift (C++) accesses HybridWebSocketManagerSpec_cxx (Swift), and might
    * contain some additional bridging code for C++ <> Swift interop.
    *
    * Since this obviously introduces an overhead, I hope at some point in
-   * the future, HybridWebSocketManagerSpecCxx can directly inherit from the C++ class HybridWebSocketManagerSpec
+   * the future, HybridWebSocketManagerSpec_cxx can directly inherit from the C++ class HybridWebSocketManagerSpec
    * to simplify the whole structure and memory management.
    */
   class HybridWebSocketManagerSpecSwift: public virtual HybridWebSocketManagerSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridWebSocketManagerSpecSwift(const FastIO::HybridWebSocketManagerSpecCxx& swiftPart):
+    explicit HybridWebSocketManagerSpecSwift(const FastIO::HybridWebSocketManagerSpec_cxx& swiftPart):
       HybridObject(HybridWebSocketManagerSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline FastIO::HybridWebSocketManagerSpecCxx getSwiftPart() noexcept { return _swiftPart; }
+    inline FastIO::HybridWebSocketManagerSpec_cxx getSwiftPart() noexcept { return _swiftPart; }
 
   public:
     // Get memory pressure
@@ -65,11 +59,15 @@ namespace margelo::nitro::fastio {
     // Methods
     inline std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec> create(const std::string& url, const std::vector<std::string>& protocols) override {
       auto __result = _swiftPart.create(url, protocols);
-      return __result;
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
 
   private:
-    FastIO::HybridWebSocketManagerSpecCxx _swiftPart;
+    FastIO::HybridWebSocketManagerSpec_cxx _swiftPart;
   };
 
 } // namespace margelo::nitro::fastio

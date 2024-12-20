@@ -29,7 +29,7 @@ namespace margelo::nitro::fastio {
 
   public:
     void call(double code, jni::alias_ref<jni::JString> reason) {
-      return _func(code, reason->toStdString());
+      _func(code, reason->toStdString());
     }
 
   public:

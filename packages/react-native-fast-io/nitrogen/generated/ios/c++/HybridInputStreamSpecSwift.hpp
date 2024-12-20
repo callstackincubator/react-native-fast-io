@@ -9,8 +9,8 @@
 
 #include "HybridInputStreamSpec.hpp"
 
-// Forward declaration of `HybridInputStreamSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridInputStreamSpecCxx; }
+// Forward declaration of `HybridInputStreamSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridInputStreamSpec_cxx; }
 
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
@@ -21,36 +21,30 @@ namespace NitroModules { class ArrayBufferHolder; }
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/ArrayBufferHolder.hpp>
 
-#if __has_include(<NitroModules/HybridContext.hpp>)
-#include <NitroModules/HybridContext.hpp>
-#else
-#error NitroModules cannot be found! Are you sure you installed NitroModules properly?
-#endif
-
 #include "FastIO-Swift-Cxx-Umbrella.hpp"
 
 namespace margelo::nitro::fastio {
 
   /**
-   * The C++ part of HybridInputStreamSpecCxx.swift.
+   * The C++ part of HybridInputStreamSpec_cxx.swift.
    *
-   * HybridInputStreamSpecSwift (C++) accesses HybridInputStreamSpecCxx (Swift), and might
+   * HybridInputStreamSpecSwift (C++) accesses HybridInputStreamSpec_cxx (Swift), and might
    * contain some additional bridging code for C++ <> Swift interop.
    *
    * Since this obviously introduces an overhead, I hope at some point in
-   * the future, HybridInputStreamSpecCxx can directly inherit from the C++ class HybridInputStreamSpec
+   * the future, HybridInputStreamSpec_cxx can directly inherit from the C++ class HybridInputStreamSpec
    * to simplify the whole structure and memory management.
    */
   class HybridInputStreamSpecSwift: public virtual HybridInputStreamSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridInputStreamSpecSwift(const FastIO::HybridInputStreamSpecCxx& swiftPart):
+    explicit HybridInputStreamSpecSwift(const FastIO::HybridInputStreamSpec_cxx& swiftPart):
       HybridObject(HybridInputStreamSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline FastIO::HybridInputStreamSpecCxx getSwiftPart() noexcept { return _swiftPart; }
+    inline FastIO::HybridInputStreamSpec_cxx getSwiftPart() noexcept { return _swiftPart; }
 
   public:
     // Get memory pressure
@@ -66,17 +60,27 @@ namespace margelo::nitro::fastio {
     // Methods
     inline std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>> read() override {
       auto __result = _swiftPart.read();
-      return __result;
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
     inline void open() override {
-      _swiftPart.open();
+      auto __result = _swiftPart.open();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void close() override {
-      _swiftPart.close();
+      auto __result = _swiftPart.close();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
 
   private:
-    FastIO::HybridInputStreamSpecCxx _swiftPart;
+    FastIO::HybridInputStreamSpec_cxx _swiftPart;
   };
 
 } // namespace margelo::nitro::fastio

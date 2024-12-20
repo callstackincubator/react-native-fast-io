@@ -7,7 +7,7 @@
     "./example"
   ],
   "scripts": {
-    "codegen": "(cd ./packages/react-native-fast-io && npm run codegen) && (cd ./example/ios && pod install)",
+    "codegen": "(cd ./packages/react-native-fast-io && npm run codegen) && (cd ./example/ios && pod install) && (cd ./example/android && ./gradlew clean && ./gradlew build)",
     "test": "vitest",
     "release": "release-it"
   },

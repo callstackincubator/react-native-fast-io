@@ -8,26 +8,8 @@
 import Foundation
 import NitroModules
 
-/**
- * A Swift protocol representing the InputStream HybridObject.
- * Implement this protocol to create Swift-based instances of InputStream.
- *
- * When implementing this protocol, make sure to initialize `hybridContext` - example:
- * ```
- * public class HybridInputStream : HybridInputStreamSpec {
- *   // Initialize HybridContext
- *   var hybridContext = margelo.nitro.HybridContext()
- *
- *   // Return size of the instance to inform JS GC about memory pressure
- *   var memorySize: Int {
- *     return getSizeOf(self)
- *   }
- *
- *   // ...
- * }
- * ```
- */
-public protocol HybridInputStreamSpec: AnyObject, HybridObjectSpec {
+/// See ``HybridInputStreamSpec``
+public protocol HybridInputStreamSpec_protocol: AnyObject {
   // Properties
   
 
@@ -36,3 +18,34 @@ public protocol HybridInputStreamSpec: AnyObject, HybridObjectSpec {
   func open() throws -> Void
   func close() throws -> Void
 }
+
+/// See ``HybridInputStreamSpec``
+public class HybridInputStreamSpec_base: HybridObjectSpec {
+  private weak var cxxWrapper: HybridInputStreamSpec_cxx? = nil
+  public func getCxxWrapper() -> HybridInputStreamSpec_cxx {
+  #if DEBUG
+    guard self is HybridInputStreamSpec else {
+      fatalError("`self` is not a `HybridInputStreamSpec`! Did you accidentally inherit from `HybridInputStreamSpec_base` instead of `HybridInputStreamSpec`?")
+    }
+  #endif
+    if let cxxWrapper = self.cxxWrapper {
+      return cxxWrapper
+    } else {
+      let cxxWrapper = HybridInputStreamSpec_cxx(self as! HybridInputStreamSpec)
+      self.cxxWrapper = cxxWrapper
+      return cxxWrapper
+    }
+  }
+  public var memorySize: Int { return 0 }
+}
+
+/**
+ * A Swift base-protocol representing the InputStream HybridObject.
+ * Implement this protocol to create Swift-based instances of InputStream.
+ * ```swift
+ * class HybridInputStream : HybridInputStreamSpec {
+ *   // ...
+ * }
+ * ```
+ */
+public typealias HybridInputStreamSpec = HybridInputStreamSpec_protocol & HybridInputStreamSpec_base

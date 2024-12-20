@@ -8,26 +8,8 @@
 import Foundation
 import NitroModules
 
-/**
- * A Swift protocol representing the DuplexStream HybridObject.
- * Implement this protocol to create Swift-based instances of DuplexStream.
- *
- * When implementing this protocol, make sure to initialize `hybridContext` - example:
- * ```
- * public class HybridDuplexStream : HybridDuplexStreamSpec {
- *   // Initialize HybridContext
- *   var hybridContext = margelo.nitro.HybridContext()
- *
- *   // Return size of the instance to inform JS GC about memory pressure
- *   var memorySize: Int {
- *     return getSizeOf(self)
- *   }
- *
- *   // ...
- * }
- * ```
- */
-public protocol HybridDuplexStreamSpec: AnyObject, HybridObjectSpec {
+/// See ``HybridDuplexStreamSpec``
+public protocol HybridDuplexStreamSpec_protocol: AnyObject {
   // Properties
   var inputStream: (any HybridInputStreamSpec) { get set }
   var outputStream: (any HybridOutputStreamSpec) { get set }
@@ -35,3 +17,34 @@ public protocol HybridDuplexStreamSpec: AnyObject, HybridObjectSpec {
   // Methods
   
 }
+
+/// See ``HybridDuplexStreamSpec``
+public class HybridDuplexStreamSpec_base: HybridObjectSpec {
+  private weak var cxxWrapper: HybridDuplexStreamSpec_cxx? = nil
+  public func getCxxWrapper() -> HybridDuplexStreamSpec_cxx {
+  #if DEBUG
+    guard self is HybridDuplexStreamSpec else {
+      fatalError("`self` is not a `HybridDuplexStreamSpec`! Did you accidentally inherit from `HybridDuplexStreamSpec_base` instead of `HybridDuplexStreamSpec`?")
+    }
+  #endif
+    if let cxxWrapper = self.cxxWrapper {
+      return cxxWrapper
+    } else {
+      let cxxWrapper = HybridDuplexStreamSpec_cxx(self as! HybridDuplexStreamSpec)
+      self.cxxWrapper = cxxWrapper
+      return cxxWrapper
+    }
+  }
+  public var memorySize: Int { return 0 }
+}
+
+/**
+ * A Swift base-protocol representing the DuplexStream HybridObject.
+ * Implement this protocol to create Swift-based instances of DuplexStream.
+ * ```swift
+ * class HybridDuplexStream : HybridDuplexStreamSpec {
+ *   // ...
+ * }
+ * ```
+ */
+public typealias HybridDuplexStreamSpec = HybridDuplexStreamSpec_protocol & HybridDuplexStreamSpec_base
