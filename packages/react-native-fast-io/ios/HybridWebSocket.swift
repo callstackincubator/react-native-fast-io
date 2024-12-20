@@ -24,6 +24,8 @@ class HybridWebSocket : HybridWebSocketSpec {
     urlSession = URLSession(configuration: .default, delegate: delegate, delegateQueue: nil)
     ws = urlSession.webSocketTask(with: URL(string: url)!, protocols: protocols)
     
+    super.init()
+    
     delegate.onOpen = { [weak self] selectedProtocol in
       self?.onOpen?(selectedProtocol ?? "")
     }
@@ -125,11 +127,6 @@ class HybridWebSocket : HybridWebSocketSpec {
   
   func onError(callback: @escaping ((String) -> Void)) {
     onError = callback
-  }
-  
-  var hybridContext = margelo.nitro.HybridContext()
-  var memorySize: Int {
-    return getSizeOf(self)
   }
   
   deinit {

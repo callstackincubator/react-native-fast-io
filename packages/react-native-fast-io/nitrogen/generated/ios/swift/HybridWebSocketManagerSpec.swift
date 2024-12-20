@@ -8,29 +8,42 @@
 import Foundation
 import NitroModules
 
-/**
- * A Swift protocol representing the WebSocketManager HybridObject.
- * Implement this protocol to create Swift-based instances of WebSocketManager.
- *
- * When implementing this protocol, make sure to initialize `hybridContext` - example:
- * ```
- * public class HybridWebSocketManager : HybridWebSocketManagerSpec {
- *   // Initialize HybridContext
- *   var hybridContext = margelo.nitro.HybridContext()
- *
- *   // Return size of the instance to inform JS GC about memory pressure
- *   var memorySize: Int {
- *     return getSizeOf(self)
- *   }
- *
- *   // ...
- * }
- * ```
- */
-public protocol HybridWebSocketManagerSpec: AnyObject, HybridObjectSpec {
+/// See ``HybridWebSocketManagerSpec``
+public protocol HybridWebSocketManagerSpec_protocol: AnyObject {
   // Properties
   
 
   // Methods
   func create(url: String, protocols: [String]) throws -> (any HybridWebSocketSpec)
 }
+
+/// See ``HybridWebSocketManagerSpec``
+public class HybridWebSocketManagerSpec_base: HybridObjectSpec {
+  private weak var cxxWrapper: HybridWebSocketManagerSpec_cxx? = nil
+  public func getCxxWrapper() -> HybridWebSocketManagerSpec_cxx {
+  #if DEBUG
+    guard self is HybridWebSocketManagerSpec else {
+      fatalError("`self` is not a `HybridWebSocketManagerSpec`! Did you accidentally inherit from `HybridWebSocketManagerSpec_base` instead of `HybridWebSocketManagerSpec`?")
+    }
+  #endif
+    if let cxxWrapper = self.cxxWrapper {
+      return cxxWrapper
+    } else {
+      let cxxWrapper = HybridWebSocketManagerSpec_cxx(self as! HybridWebSocketManagerSpec)
+      self.cxxWrapper = cxxWrapper
+      return cxxWrapper
+    }
+  }
+  public var memorySize: Int { return 0 }
+}
+
+/**
+ * A Swift base-protocol representing the WebSocketManager HybridObject.
+ * Implement this protocol to create Swift-based instances of WebSocketManager.
+ * ```swift
+ * class HybridWebSocketManager : HybridWebSocketManagerSpec {
+ *   // ...
+ * }
+ * ```
+ */
+public typealias HybridWebSocketManagerSpec = HybridWebSocketManagerSpec_protocol & HybridWebSocketManagerSpec_base

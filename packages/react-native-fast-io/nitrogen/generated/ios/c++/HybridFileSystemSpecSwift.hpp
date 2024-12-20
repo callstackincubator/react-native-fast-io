@@ -9,8 +9,8 @@
 
 #include "HybridFileSystemSpec.hpp"
 
-// Forward declaration of `HybridFileSystemSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridFileSystemSpecCxx; }
+// Forward declaration of `HybridFileSystemSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridFileSystemSpec_cxx; }
 
 // Forward declaration of `Metadata` to properly resolve imports.
 namespace margelo::nitro::fastio { struct Metadata; }
@@ -27,36 +27,30 @@ namespace margelo::nitro::fastio { struct NativeFilePickerOptions; }
 #include <optional>
 #include "NativeFilePickerOptions.hpp"
 
-#if __has_include(<NitroModules/HybridContext.hpp>)
-#include <NitroModules/HybridContext.hpp>
-#else
-#error NitroModules cannot be found! Are you sure you installed NitroModules properly?
-#endif
-
 #include "FastIO-Swift-Cxx-Umbrella.hpp"
 
 namespace margelo::nitro::fastio {
 
   /**
-   * The C++ part of HybridFileSystemSpecCxx.swift.
+   * The C++ part of HybridFileSystemSpec_cxx.swift.
    *
-   * HybridFileSystemSpecSwift (C++) accesses HybridFileSystemSpecCxx (Swift), and might
+   * HybridFileSystemSpecSwift (C++) accesses HybridFileSystemSpec_cxx (Swift), and might
    * contain some additional bridging code for C++ <> Swift interop.
    *
    * Since this obviously introduces an overhead, I hope at some point in
-   * the future, HybridFileSystemSpecCxx can directly inherit from the C++ class HybridFileSystemSpec
+   * the future, HybridFileSystemSpec_cxx can directly inherit from the C++ class HybridFileSystemSpec
    * to simplify the whole structure and memory management.
    */
   class HybridFileSystemSpecSwift: public virtual HybridFileSystemSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridFileSystemSpecSwift(const FastIO::HybridFileSystemSpecCxx& swiftPart):
+    explicit HybridFileSystemSpecSwift(const FastIO::HybridFileSystemSpec_cxx& swiftPart):
       HybridObject(HybridFileSystemSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline FastIO::HybridFileSystemSpecCxx getSwiftPart() noexcept { return _swiftPart; }
+    inline FastIO::HybridFileSystemSpec_cxx getSwiftPart() noexcept { return _swiftPart; }
 
   public:
     // Get memory pressure
@@ -72,19 +66,31 @@ namespace margelo::nitro::fastio {
     // Methods
     inline Metadata getMetadata(const std::string& path) override {
       auto __result = _swiftPart.getMetadata(path);
-      return __result;
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
     inline std::string getWellKnownDirectoryPath(WellKnownDirectory directory) override {
       auto __result = _swiftPart.getWellKnownDirectoryPath(static_cast<int>(directory));
-      return __result;
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
     inline std::shared_ptr<Promise<std::vector<std::string>>> showOpenFilePicker(const std::optional<NativeFilePickerOptions>& options) override {
       auto __result = _swiftPart.showOpenFilePicker(options);
-      return __result;
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
 
   private:
-    FastIO::HybridFileSystemSpecCxx _swiftPart;
+    FastIO::HybridFileSystemSpec_cxx _swiftPart;
   };
 
 } // namespace margelo::nitro::fastio

@@ -28,26 +28,28 @@ namespace margelo::nitro::fastio { class HybridStreamFactorySpec; }
 namespace margelo::nitro::fastio { class HybridWebSocketManagerSpec; }
 // Forward declaration of `HybridWebSocketSpec` to properly resolve imports.
 namespace margelo::nitro::fastio { class HybridWebSocketSpec; }
+// Forward declaration of `Metadata` to properly resolve imports.
+namespace margelo::nitro::fastio { struct Metadata; }
 // Forward declaration of `NativeFilePickerOptions` to properly resolve imports.
 namespace margelo::nitro::fastio { struct NativeFilePickerOptions; }
 
 // Forward declarations of Swift defined types
-// Forward declaration of `HybridDuplexStreamSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridDuplexStreamSpecCxx; }
-// Forward declaration of `HybridFileSystemSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridFileSystemSpecCxx; }
-// Forward declaration of `HybridInputStreamSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridInputStreamSpecCxx; }
-// Forward declaration of `HybridNetworkSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridNetworkSpecCxx; }
-// Forward declaration of `HybridOutputStreamSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridOutputStreamSpecCxx; }
-// Forward declaration of `HybridStreamFactorySpecCxx` to properly resolve imports.
-namespace FastIO { class HybridStreamFactorySpecCxx; }
-// Forward declaration of `HybridWebSocketManagerSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridWebSocketManagerSpecCxx; }
-// Forward declaration of `HybridWebSocketSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridWebSocketSpecCxx; }
+// Forward declaration of `HybridDuplexStreamSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridDuplexStreamSpec_cxx; }
+// Forward declaration of `HybridFileSystemSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridFileSystemSpec_cxx; }
+// Forward declaration of `HybridInputStreamSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridInputStreamSpec_cxx; }
+// Forward declaration of `HybridNetworkSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridNetworkSpec_cxx; }
+// Forward declaration of `HybridOutputStreamSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridOutputStreamSpec_cxx; }
+// Forward declaration of `HybridStreamFactorySpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridStreamFactorySpec_cxx; }
+// Forward declaration of `HybridWebSocketManagerSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridWebSocketManagerSpec_cxx; }
+// Forward declaration of `HybridWebSocketSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridWebSocketSpec_cxx; }
 
 // Include C++ defined types
 #include "HybridDuplexStreamSpec.hpp"
@@ -58,10 +60,13 @@ namespace FastIO { class HybridWebSocketSpecCxx; }
 #include "HybridStreamFactorySpec.hpp"
 #include "HybridWebSocketManagerSpec.hpp"
 #include "HybridWebSocketSpec.hpp"
+#include "Metadata.hpp"
 #include "NativeFilePickerOptions.hpp"
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/ArrayBufferHolder.hpp>
 #include <NitroModules/Promise.hpp>
+#include <NitroModules/PromiseHolder.hpp>
+#include <NitroModules/Result.hpp>
 #include <exception>
 #include <functional>
 #include <memory>
@@ -94,6 +99,9 @@ namespace margelo::nitro::fastio::bridge::swift {
   inline std::shared_ptr<Promise<std::vector<std::string>>> create_std__shared_ptr_Promise_std__vector_std__string___() {
     return Promise<std::vector<std::string>>::create();
   }
+  inline PromiseHolder<std::vector<std::string>> wrap_std__shared_ptr_Promise_std__vector_std__string___(std::shared_ptr<Promise<std::vector<std::string>>> promise) {
+    return PromiseHolder<std::vector<std::string>>(std::move(promise));
+  }
   
   // pragma MARK: std::function<void(const std::vector<std::string>& /* result */)>
   /**
@@ -105,22 +113,16 @@ namespace margelo::nitro::fastio::bridge::swift {
    */
   class Func_void_std__vector_std__string__Wrapper final {
   public:
-    explicit Func_void_std__vector_std__string__Wrapper(const std::function<void(const std::vector<std::string>& /* result */)>& func): _function(func) {}
-    explicit Func_void_std__vector_std__string__Wrapper(std::function<void(const std::vector<std::string>& /* result */)>&& func): _function(std::move(func)) {}
+    explicit Func_void_std__vector_std__string__Wrapper(std::function<void(const std::vector<std::string>& /* result */)>&& func): _function(std::make_shared<std::function<void(const std::vector<std::string>& /* result */)>>(std::move(func))) {}
     inline void call(std::vector<std::string> result) const {
-      _function(result);
+      _function->operator()(result);
     }
   private:
-    std::function<void(const std::vector<std::string>& /* result */)> _function;
+    std::shared_ptr<std::function<void(const std::vector<std::string>& /* result */)>> _function;
   };
-  inline Func_void_std__vector_std__string_ create_Func_void_std__vector_std__string_(void* _Nonnull closureHolder, void(* _Nonnull call)(void* _Nonnull /* closureHolder */, std::vector<std::string>), void(* _Nonnull destroy)(void* _Nonnull)) {
-    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
-    return Func_void_std__vector_std__string_([sharedClosureHolder, call](const std::vector<std::string>& result) -> void {
-      call(sharedClosureHolder.get(), result);
-    });
-  }
-  inline std::shared_ptr<Func_void_std__vector_std__string__Wrapper> share_Func_void_std__vector_std__string_(const Func_void_std__vector_std__string_& value) {
-    return std::make_shared<Func_void_std__vector_std__string__Wrapper>(value);
+  Func_void_std__vector_std__string_ create_Func_void_std__vector_std__string_(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__vector_std__string__Wrapper wrap_Func_void_std__vector_std__string_(Func_void_std__vector_std__string_ value) {
+    return Func_void_std__vector_std__string__Wrapper(std::move(value));
   }
   
   // pragma MARK: std::function<void(const std::exception_ptr& /* error */)>
@@ -133,22 +135,16 @@ namespace margelo::nitro::fastio::bridge::swift {
    */
   class Func_void_std__exception_ptr_Wrapper final {
   public:
-    explicit Func_void_std__exception_ptr_Wrapper(const std::function<void(const std::exception_ptr& /* error */)>& func): _function(func) {}
-    explicit Func_void_std__exception_ptr_Wrapper(std::function<void(const std::exception_ptr& /* error */)>&& func): _function(std::move(func)) {}
+    explicit Func_void_std__exception_ptr_Wrapper(std::function<void(const std::exception_ptr& /* error */)>&& func): _function(std::make_shared<std::function<void(const std::exception_ptr& /* error */)>>(std::move(func))) {}
     inline void call(std::exception_ptr error) const {
-      _function(error);
+      _function->operator()(error);
     }
   private:
-    std::function<void(const std::exception_ptr& /* error */)> _function;
+    std::shared_ptr<std::function<void(const std::exception_ptr& /* error */)>> _function;
   };
-  inline Func_void_std__exception_ptr create_Func_void_std__exception_ptr(void* _Nonnull closureHolder, void(* _Nonnull call)(void* _Nonnull /* closureHolder */, std::exception_ptr), void(* _Nonnull destroy)(void* _Nonnull)) {
-    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
-    return Func_void_std__exception_ptr([sharedClosureHolder, call](const std::exception_ptr& error) -> void {
-      call(sharedClosureHolder.get(), error);
-    });
-  }
-  inline std::shared_ptr<Func_void_std__exception_ptr_Wrapper> share_Func_void_std__exception_ptr(const Func_void_std__exception_ptr& value) {
-    return std::make_shared<Func_void_std__exception_ptr_Wrapper>(value);
+  Func_void_std__exception_ptr create_Func_void_std__exception_ptr(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__exception_ptr_Wrapper wrap_Func_void_std__exception_ptr(Func_void_std__exception_ptr value) {
+    return Func_void_std__exception_ptr_Wrapper(std::move(value));
   }
   
   // pragma MARK: std::optional<bool>
@@ -195,6 +191,37 @@ namespace margelo::nitro::fastio::bridge::swift {
   std::shared_ptr<margelo::nitro::fastio::HybridFileSystemSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridFileSystemSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridFileSystemSpec_(std__shared_ptr_margelo__nitro__fastio__HybridFileSystemSpec_ cppType);
   
+  // pragma MARK: std::weak_ptr<margelo::nitro::fastio::HybridFileSystemSpec>
+  using std__weak_ptr_margelo__nitro__fastio__HybridFileSystemSpec_ = std::weak_ptr<margelo::nitro::fastio::HybridFileSystemSpec>;
+  inline std__weak_ptr_margelo__nitro__fastio__HybridFileSystemSpec_ weakify_std__shared_ptr_margelo__nitro__fastio__HybridFileSystemSpec_(const std::shared_ptr<margelo::nitro::fastio::HybridFileSystemSpec>& strong) { return strong; }
+  
+  // pragma MARK: Result<Metadata>
+  using Result_Metadata_ = Result<Metadata>;
+  inline Result_Metadata_ create_Result_Metadata_(const Metadata& value) {
+    return Result<Metadata>::withValue(value);
+  }
+  inline Result_Metadata_ create_Result_Metadata_(const std::exception_ptr& error) {
+    return Result<Metadata>::withError(error);
+  }
+  
+  // pragma MARK: Result<std::string>
+  using Result_std__string_ = Result<std::string>;
+  inline Result_std__string_ create_Result_std__string_(const std::string& value) {
+    return Result<std::string>::withValue(value);
+  }
+  inline Result_std__string_ create_Result_std__string_(const std::exception_ptr& error) {
+    return Result<std::string>::withError(error);
+  }
+  
+  // pragma MARK: Result<std::shared_ptr<Promise<std::vector<std::string>>>>
+  using Result_std__shared_ptr_Promise_std__vector_std__string____ = Result<std::shared_ptr<Promise<std::vector<std::string>>>>;
+  inline Result_std__shared_ptr_Promise_std__vector_std__string____ create_Result_std__shared_ptr_Promise_std__vector_std__string____(const std::shared_ptr<Promise<std::vector<std::string>>>& value) {
+    return Result<std::shared_ptr<Promise<std::vector<std::string>>>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_Promise_std__vector_std__string____ create_Result_std__shared_ptr_Promise_std__vector_std__string____(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<Promise<std::vector<std::string>>>>::withError(error);
+  }
+  
   // pragma MARK: std::shared_ptr<Promise<void>>
   /**
    * Specialized version of `std::shared_ptr<Promise<void>>`.
@@ -202,6 +229,9 @@ namespace margelo::nitro::fastio::bridge::swift {
   using std__shared_ptr_Promise_void__ = std::shared_ptr<Promise<void>>;
   inline std::shared_ptr<Promise<void>> create_std__shared_ptr_Promise_void__() {
     return Promise<void>::create();
+  }
+  inline PromiseHolder<void> wrap_std__shared_ptr_Promise_void__(std::shared_ptr<Promise<void>> promise) {
+    return PromiseHolder<void>(std::move(promise));
   }
   
   // pragma MARK: std::function<void()>
@@ -214,22 +244,16 @@ namespace margelo::nitro::fastio::bridge::swift {
    */
   class Func_void_Wrapper final {
   public:
-    explicit Func_void_Wrapper(const std::function<void()>& func): _function(func) {}
-    explicit Func_void_Wrapper(std::function<void()>&& func): _function(std::move(func)) {}
+    explicit Func_void_Wrapper(std::function<void()>&& func): _function(std::make_shared<std::function<void()>>(std::move(func))) {}
     inline void call() const {
-      _function();
+      _function->operator()();
     }
   private:
-    std::function<void()> _function;
+    std::shared_ptr<std::function<void()>> _function;
   };
-  inline Func_void create_Func_void(void* _Nonnull closureHolder, void(* _Nonnull call)(void* _Nonnull /* closureHolder */), void(* _Nonnull destroy)(void* _Nonnull)) {
-    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
-    return Func_void([sharedClosureHolder, call]() -> void {
-      call(sharedClosureHolder.get());
-    });
-  }
-  inline std::shared_ptr<Func_void_Wrapper> share_Func_void(const Func_void& value) {
-    return std::make_shared<Func_void_Wrapper>(value);
+  Func_void create_Func_void(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_Wrapper wrap_Func_void(Func_void value) {
+    return Func_void_Wrapper(std::move(value));
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>
@@ -239,6 +263,10 @@ namespace margelo::nitro::fastio::bridge::swift {
   using std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ = std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>;
   std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ cppType);
+  
+  // pragma MARK: std::weak_ptr<margelo::nitro::fastio::HybridInputStreamSpec>
+  using std__weak_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ = std::weak_ptr<margelo::nitro::fastio::HybridInputStreamSpec>;
+  inline std__weak_ptr_margelo__nitro__fastio__HybridInputStreamSpec_ weakify_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec_(const std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>& strong) { return strong; }
   
   // pragma MARK: std::optional<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>
   /**
@@ -257,6 +285,19 @@ namespace margelo::nitro::fastio::bridge::swift {
   std::shared_ptr<margelo::nitro::fastio::HybridNetworkSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridNetworkSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridNetworkSpec_(std__shared_ptr_margelo__nitro__fastio__HybridNetworkSpec_ cppType);
   
+  // pragma MARK: std::weak_ptr<margelo::nitro::fastio::HybridNetworkSpec>
+  using std__weak_ptr_margelo__nitro__fastio__HybridNetworkSpec_ = std::weak_ptr<margelo::nitro::fastio::HybridNetworkSpec>;
+  inline std__weak_ptr_margelo__nitro__fastio__HybridNetworkSpec_ weakify_std__shared_ptr_margelo__nitro__fastio__HybridNetworkSpec_(const std::shared_ptr<margelo::nitro::fastio::HybridNetworkSpec>& strong) { return strong; }
+  
+  // pragma MARK: Result<std::shared_ptr<Promise<void>>>
+  using Result_std__shared_ptr_Promise_void___ = Result<std::shared_ptr<Promise<void>>>;
+  inline Result_std__shared_ptr_Promise_void___ create_Result_std__shared_ptr_Promise_void___(const std::shared_ptr<Promise<void>>& value) {
+    return Result<std::shared_ptr<Promise<void>>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_Promise_void___ create_Result_std__shared_ptr_Promise_void___(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<Promise<void>>>::withError(error);
+  }
+  
   // pragma MARK: std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>>
   /**
    * Specialized version of `std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>>`.
@@ -264,6 +305,9 @@ namespace margelo::nitro::fastio::bridge::swift {
   using std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer___ = std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>>;
   inline std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>> create_std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer___() {
     return Promise<std::shared_ptr<ArrayBuffer>>::create();
+  }
+  inline PromiseHolder<std::shared_ptr<ArrayBuffer>> wrap_std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer___(std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>> promise) {
+    return PromiseHolder<std::shared_ptr<ArrayBuffer>>(std::move(promise));
   }
   
   // pragma MARK: std::function<void(const std::shared_ptr<ArrayBuffer>& /* result */)>
@@ -276,22 +320,34 @@ namespace margelo::nitro::fastio::bridge::swift {
    */
   class Func_void_std__shared_ptr_ArrayBuffer__Wrapper final {
   public:
-    explicit Func_void_std__shared_ptr_ArrayBuffer__Wrapper(const std::function<void(const std::shared_ptr<ArrayBuffer>& /* result */)>& func): _function(func) {}
-    explicit Func_void_std__shared_ptr_ArrayBuffer__Wrapper(std::function<void(const std::shared_ptr<ArrayBuffer>& /* result */)>&& func): _function(std::move(func)) {}
+    explicit Func_void_std__shared_ptr_ArrayBuffer__Wrapper(std::function<void(const std::shared_ptr<ArrayBuffer>& /* result */)>&& func): _function(std::make_shared<std::function<void(const std::shared_ptr<ArrayBuffer>& /* result */)>>(std::move(func))) {}
     inline void call(ArrayBufferHolder result) const {
-      _function(result.getArrayBuffer());
+      _function->operator()(result.getArrayBuffer());
     }
   private:
-    std::function<void(const std::shared_ptr<ArrayBuffer>& /* result */)> _function;
+    std::shared_ptr<std::function<void(const std::shared_ptr<ArrayBuffer>& /* result */)>> _function;
   };
-  inline Func_void_std__shared_ptr_ArrayBuffer_ create_Func_void_std__shared_ptr_ArrayBuffer_(void* _Nonnull closureHolder, void(* _Nonnull call)(void* _Nonnull /* closureHolder */, ArrayBufferHolder), void(* _Nonnull destroy)(void* _Nonnull)) {
-    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
-    return Func_void_std__shared_ptr_ArrayBuffer_([sharedClosureHolder, call](const std::shared_ptr<ArrayBuffer>& result) -> void {
-      call(sharedClosureHolder.get(), ArrayBufferHolder(result));
-    });
+  Func_void_std__shared_ptr_ArrayBuffer_ create_Func_void_std__shared_ptr_ArrayBuffer_(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__shared_ptr_ArrayBuffer__Wrapper wrap_Func_void_std__shared_ptr_ArrayBuffer_(Func_void_std__shared_ptr_ArrayBuffer_ value) {
+    return Func_void_std__shared_ptr_ArrayBuffer__Wrapper(std::move(value));
   }
-  inline std::shared_ptr<Func_void_std__shared_ptr_ArrayBuffer__Wrapper> share_Func_void_std__shared_ptr_ArrayBuffer_(const Func_void_std__shared_ptr_ArrayBuffer_& value) {
-    return std::make_shared<Func_void_std__shared_ptr_ArrayBuffer__Wrapper>(value);
+  
+  // pragma MARK: Result<std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>>>
+  using Result_std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer____ = Result<std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>>>;
+  inline Result_std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer____ create_Result_std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer____(const std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>>& value) {
+    return Result<std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer____ create_Result_std__shared_ptr_Promise_std__shared_ptr_ArrayBuffer____(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<Promise<std::shared_ptr<ArrayBuffer>>>>::withError(error);
+  }
+  
+  // pragma MARK: Result<void>
+  using Result_void_ = Result<void>;
+  inline Result_void_ create_Result_void_() {
+    return Result<void>::withValue();
+  }
+  inline Result_void_ create_Result_void_(const std::exception_ptr& error) {
+    return Result<void>::withError(error);
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridOutputStreamSpec>
@@ -302,6 +358,10 @@ namespace margelo::nitro::fastio::bridge::swift {
   std::shared_ptr<margelo::nitro::fastio::HybridOutputStreamSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridOutputStreamSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridOutputStreamSpec_(std__shared_ptr_margelo__nitro__fastio__HybridOutputStreamSpec_ cppType);
   
+  // pragma MARK: std::weak_ptr<margelo::nitro::fastio::HybridOutputStreamSpec>
+  using std__weak_ptr_margelo__nitro__fastio__HybridOutputStreamSpec_ = std::weak_ptr<margelo::nitro::fastio::HybridOutputStreamSpec>;
+  inline std__weak_ptr_margelo__nitro__fastio__HybridOutputStreamSpec_ weakify_std__shared_ptr_margelo__nitro__fastio__HybridOutputStreamSpec_(const std::shared_ptr<margelo::nitro::fastio::HybridOutputStreamSpec>& strong) { return strong; }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridDuplexStreamSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::fastio::HybridDuplexStreamSpec>`.
@@ -310,6 +370,10 @@ namespace margelo::nitro::fastio::bridge::swift {
   std::shared_ptr<margelo::nitro::fastio::HybridDuplexStreamSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridDuplexStreamSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridDuplexStreamSpec_(std__shared_ptr_margelo__nitro__fastio__HybridDuplexStreamSpec_ cppType);
   
+  // pragma MARK: std::weak_ptr<margelo::nitro::fastio::HybridDuplexStreamSpec>
+  using std__weak_ptr_margelo__nitro__fastio__HybridDuplexStreamSpec_ = std::weak_ptr<margelo::nitro::fastio::HybridDuplexStreamSpec>;
+  inline std__weak_ptr_margelo__nitro__fastio__HybridDuplexStreamSpec_ weakify_std__shared_ptr_margelo__nitro__fastio__HybridDuplexStreamSpec_(const std::shared_ptr<margelo::nitro::fastio::HybridDuplexStreamSpec>& strong) { return strong; }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridStreamFactorySpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::fastio::HybridStreamFactorySpec>`.
@@ -317,6 +381,19 @@ namespace margelo::nitro::fastio::bridge::swift {
   using std__shared_ptr_margelo__nitro__fastio__HybridStreamFactorySpec_ = std::shared_ptr<margelo::nitro::fastio::HybridStreamFactorySpec>;
   std::shared_ptr<margelo::nitro::fastio::HybridStreamFactorySpec> create_std__shared_ptr_margelo__nitro__fastio__HybridStreamFactorySpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridStreamFactorySpec_(std__shared_ptr_margelo__nitro__fastio__HybridStreamFactorySpec_ cppType);
+  
+  // pragma MARK: std::weak_ptr<margelo::nitro::fastio::HybridStreamFactorySpec>
+  using std__weak_ptr_margelo__nitro__fastio__HybridStreamFactorySpec_ = std::weak_ptr<margelo::nitro::fastio::HybridStreamFactorySpec>;
+  inline std__weak_ptr_margelo__nitro__fastio__HybridStreamFactorySpec_ weakify_std__shared_ptr_margelo__nitro__fastio__HybridStreamFactorySpec_(const std::shared_ptr<margelo::nitro::fastio::HybridStreamFactorySpec>& strong) { return strong; }
+  
+  // pragma MARK: Result<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>
+  using Result_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__ = Result<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>;
+  inline Result_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__ create_Result_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__(const std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>& value) {
+    return Result<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__ create_Result_std__shared_ptr_margelo__nitro__fastio__HybridInputStreamSpec__(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<margelo::nitro::fastio::HybridInputStreamSpec>>::withError(error);
+  }
   
   // pragma MARK: std::function<void(const std::string& /* selectedProtocol */)>
   /**
@@ -328,22 +405,16 @@ namespace margelo::nitro::fastio::bridge::swift {
    */
   class Func_void_std__string_Wrapper final {
   public:
-    explicit Func_void_std__string_Wrapper(const std::function<void(const std::string& /* selectedProtocol */)>& func): _function(func) {}
-    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* selectedProtocol */)>&& func): _function(std::move(func)) {}
+    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* selectedProtocol */)>&& func): _function(std::make_shared<std::function<void(const std::string& /* selectedProtocol */)>>(std::move(func))) {}
     inline void call(std::string selectedProtocol) const {
-      _function(selectedProtocol);
+      _function->operator()(selectedProtocol);
     }
   private:
-    std::function<void(const std::string& /* selectedProtocol */)> _function;
+    std::shared_ptr<std::function<void(const std::string& /* selectedProtocol */)>> _function;
   };
-  inline Func_void_std__string create_Func_void_std__string(void* _Nonnull closureHolder, void(* _Nonnull call)(void* _Nonnull /* closureHolder */, std::string), void(* _Nonnull destroy)(void* _Nonnull)) {
-    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
-    return Func_void_std__string([sharedClosureHolder, call](const std::string& selectedProtocol) -> void {
-      call(sharedClosureHolder.get(), selectedProtocol);
-    });
-  }
-  inline std::shared_ptr<Func_void_std__string_Wrapper> share_Func_void_std__string(const Func_void_std__string& value) {
-    return std::make_shared<Func_void_std__string_Wrapper>(value);
+  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_std__string_Wrapper wrap_Func_void_std__string(Func_void_std__string value) {
+    return Func_void_std__string_Wrapper(std::move(value));
   }
   
   // pragma MARK: std::function<void(double /* code */, const std::string& /* reason */)>
@@ -356,22 +427,16 @@ namespace margelo::nitro::fastio::bridge::swift {
    */
   class Func_void_double_std__string_Wrapper final {
   public:
-    explicit Func_void_double_std__string_Wrapper(const std::function<void(double /* code */, const std::string& /* reason */)>& func): _function(func) {}
-    explicit Func_void_double_std__string_Wrapper(std::function<void(double /* code */, const std::string& /* reason */)>&& func): _function(std::move(func)) {}
+    explicit Func_void_double_std__string_Wrapper(std::function<void(double /* code */, const std::string& /* reason */)>&& func): _function(std::make_shared<std::function<void(double /* code */, const std::string& /* reason */)>>(std::move(func))) {}
     inline void call(double code, std::string reason) const {
-      _function(code, reason);
+      _function->operator()(code, reason);
     }
   private:
-    std::function<void(double /* code */, const std::string& /* reason */)> _function;
+    std::shared_ptr<std::function<void(double /* code */, const std::string& /* reason */)>> _function;
   };
-  inline Func_void_double_std__string create_Func_void_double_std__string(void* _Nonnull closureHolder, void(* _Nonnull call)(void* _Nonnull /* closureHolder */, double, std::string), void(* _Nonnull destroy)(void* _Nonnull)) {
-    std::shared_ptr<void> sharedClosureHolder(closureHolder, destroy);
-    return Func_void_double_std__string([sharedClosureHolder, call](double code, const std::string& reason) -> void {
-      call(sharedClosureHolder.get(), code, reason);
-    });
-  }
-  inline std::shared_ptr<Func_void_double_std__string_Wrapper> share_Func_void_double_std__string(const Func_void_double_std__string& value) {
-    return std::make_shared<Func_void_double_std__string_Wrapper>(value);
+  Func_void_double_std__string create_Func_void_double_std__string(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_double_std__string_Wrapper wrap_Func_void_double_std__string(Func_void_double_std__string value) {
+    return Func_void_double_std__string_Wrapper(std::move(value));
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec>
@@ -382,6 +447,10 @@ namespace margelo::nitro::fastio::bridge::swift {
   std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec_(std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec_ cppType);
   
+  // pragma MARK: std::weak_ptr<margelo::nitro::fastio::HybridWebSocketSpec>
+  using std__weak_ptr_margelo__nitro__fastio__HybridWebSocketSpec_ = std::weak_ptr<margelo::nitro::fastio::HybridWebSocketSpec>;
+  inline std__weak_ptr_margelo__nitro__fastio__HybridWebSocketSpec_ weakify_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec_(const std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec>& strong) { return strong; }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::fastio::HybridWebSocketManagerSpec>
   /**
    * Specialized version of `std::shared_ptr<margelo::nitro::fastio::HybridWebSocketManagerSpec>`.
@@ -389,5 +458,18 @@ namespace margelo::nitro::fastio::bridge::swift {
   using std__shared_ptr_margelo__nitro__fastio__HybridWebSocketManagerSpec_ = std::shared_ptr<margelo::nitro::fastio::HybridWebSocketManagerSpec>;
   std::shared_ptr<margelo::nitro::fastio::HybridWebSocketManagerSpec> create_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketManagerSpec_(void* _Nonnull swiftUnsafePointer);
   void* _Nonnull get_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketManagerSpec_(std__shared_ptr_margelo__nitro__fastio__HybridWebSocketManagerSpec_ cppType);
+  
+  // pragma MARK: std::weak_ptr<margelo::nitro::fastio::HybridWebSocketManagerSpec>
+  using std__weak_ptr_margelo__nitro__fastio__HybridWebSocketManagerSpec_ = std::weak_ptr<margelo::nitro::fastio::HybridWebSocketManagerSpec>;
+  inline std__weak_ptr_margelo__nitro__fastio__HybridWebSocketManagerSpec_ weakify_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketManagerSpec_(const std::shared_ptr<margelo::nitro::fastio::HybridWebSocketManagerSpec>& strong) { return strong; }
+  
+  // pragma MARK: Result<std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec>>
+  using Result_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec__ = Result<std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec>>;
+  inline Result_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec__ create_Result_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec__(const std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec>& value) {
+    return Result<std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec__ create_Result_std__shared_ptr_margelo__nitro__fastio__HybridWebSocketSpec__(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<margelo::nitro::fastio::HybridWebSocketSpec>>::withError(error);
+  }
 
 } // namespace margelo::nitro::fastio::bridge::swift

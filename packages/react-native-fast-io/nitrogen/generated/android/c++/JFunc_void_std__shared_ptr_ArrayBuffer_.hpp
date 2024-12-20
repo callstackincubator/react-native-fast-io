@@ -31,7 +31,7 @@ namespace margelo::nitro::fastio {
 
   public:
     void call(jni::alias_ref<JArrayBuffer::javaobject> buffer) {
-      return _func(buffer->cthis()->getArrayBuffer());
+      _func(buffer->cthis()->getArrayBuffer());
     }
 
   public:

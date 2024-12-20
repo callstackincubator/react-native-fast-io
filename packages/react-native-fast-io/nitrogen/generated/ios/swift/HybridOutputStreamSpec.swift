@@ -8,26 +8,8 @@
 import Foundation
 import NitroModules
 
-/**
- * A Swift protocol representing the OutputStream HybridObject.
- * Implement this protocol to create Swift-based instances of OutputStream.
- *
- * When implementing this protocol, make sure to initialize `hybridContext` - example:
- * ```
- * public class HybridOutputStream : HybridOutputStreamSpec {
- *   // Initialize HybridContext
- *   var hybridContext = margelo.nitro.HybridContext()
- *
- *   // Return size of the instance to inform JS GC about memory pressure
- *   var memorySize: Int {
- *     return getSizeOf(self)
- *   }
- *
- *   // ...
- * }
- * ```
- */
-public protocol HybridOutputStreamSpec: AnyObject, HybridObjectSpec {
+/// See ``HybridOutputStreamSpec``
+public protocol HybridOutputStreamSpec_protocol: AnyObject {
   // Properties
   
 
@@ -36,3 +18,34 @@ public protocol HybridOutputStreamSpec: AnyObject, HybridObjectSpec {
   func open() throws -> Void
   func close() throws -> Void
 }
+
+/// See ``HybridOutputStreamSpec``
+public class HybridOutputStreamSpec_base: HybridObjectSpec {
+  private weak var cxxWrapper: HybridOutputStreamSpec_cxx? = nil
+  public func getCxxWrapper() -> HybridOutputStreamSpec_cxx {
+  #if DEBUG
+    guard self is HybridOutputStreamSpec else {
+      fatalError("`self` is not a `HybridOutputStreamSpec`! Did you accidentally inherit from `HybridOutputStreamSpec_base` instead of `HybridOutputStreamSpec`?")
+    }
+  #endif
+    if let cxxWrapper = self.cxxWrapper {
+      return cxxWrapper
+    } else {
+      let cxxWrapper = HybridOutputStreamSpec_cxx(self as! HybridOutputStreamSpec)
+      self.cxxWrapper = cxxWrapper
+      return cxxWrapper
+    }
+  }
+  public var memorySize: Int { return 0 }
+}
+
+/**
+ * A Swift base-protocol representing the OutputStream HybridObject.
+ * Implement this protocol to create Swift-based instances of OutputStream.
+ * ```swift
+ * class HybridOutputStream : HybridOutputStreamSpec {
+ *   // ...
+ * }
+ * ```
+ */
+public typealias HybridOutputStreamSpec = HybridOutputStreamSpec_protocol & HybridOutputStreamSpec_base

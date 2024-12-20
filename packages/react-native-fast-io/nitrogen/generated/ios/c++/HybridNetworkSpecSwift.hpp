@@ -9,8 +9,8 @@
 
 #include "HybridNetworkSpec.hpp"
 
-// Forward declaration of `HybridNetworkSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridNetworkSpecCxx; }
+// Forward declaration of `HybridNetworkSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridNetworkSpec_cxx; }
 
 // Forward declaration of `RequestOptions` to properly resolve imports.
 namespace margelo::nitro::fastio { struct RequestOptions; }
@@ -27,36 +27,30 @@ namespace margelo::nitro::fastio { class HybridInputStreamSpec; }
 #include <memory>
 #include "HybridInputStreamSpec.hpp"
 
-#if __has_include(<NitroModules/HybridContext.hpp>)
-#include <NitroModules/HybridContext.hpp>
-#else
-#error NitroModules cannot be found! Are you sure you installed NitroModules properly?
-#endif
-
 #include "FastIO-Swift-Cxx-Umbrella.hpp"
 
 namespace margelo::nitro::fastio {
 
   /**
-   * The C++ part of HybridNetworkSpecCxx.swift.
+   * The C++ part of HybridNetworkSpec_cxx.swift.
    *
-   * HybridNetworkSpecSwift (C++) accesses HybridNetworkSpecCxx (Swift), and might
+   * HybridNetworkSpecSwift (C++) accesses HybridNetworkSpec_cxx (Swift), and might
    * contain some additional bridging code for C++ <> Swift interop.
    *
    * Since this obviously introduces an overhead, I hope at some point in
-   * the future, HybridNetworkSpecCxx can directly inherit from the C++ class HybridNetworkSpec
+   * the future, HybridNetworkSpec_cxx can directly inherit from the C++ class HybridNetworkSpec
    * to simplify the whole structure and memory management.
    */
   class HybridNetworkSpecSwift: public virtual HybridNetworkSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridNetworkSpecSwift(const FastIO::HybridNetworkSpecCxx& swiftPart):
+    explicit HybridNetworkSpecSwift(const FastIO::HybridNetworkSpec_cxx& swiftPart):
       HybridObject(HybridNetworkSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline FastIO::HybridNetworkSpecCxx getSwiftPart() noexcept { return _swiftPart; }
+    inline FastIO::HybridNetworkSpec_cxx getSwiftPart() noexcept { return _swiftPart; }
 
   public:
     // Get memory pressure
@@ -72,11 +66,15 @@ namespace margelo::nitro::fastio {
     // Methods
     inline std::shared_ptr<Promise<void>> request(const RequestOptions& opts) override {
       auto __result = _swiftPart.request(opts);
-      return __result;
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
     }
 
   private:
-    FastIO::HybridNetworkSpecCxx _swiftPart;
+    FastIO::HybridNetworkSpec_cxx _swiftPart;
   };
 
 } // namespace margelo::nitro::fastio

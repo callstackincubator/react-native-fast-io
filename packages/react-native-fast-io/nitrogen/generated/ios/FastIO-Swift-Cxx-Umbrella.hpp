@@ -53,6 +53,8 @@ namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 #include "WellKnownDirectory.hpp"
 #include <NitroModules/ArrayBuffer.hpp>
 #include <NitroModules/Promise.hpp>
+#include <NitroModules/Result.hpp>
+#include <exception>
 #include <functional>
 #include <memory>
 #include <optional>
@@ -69,22 +71,22 @@ namespace margelo::nitro::fastio { enum class WellKnownDirectory; }
 #include <NitroModules/RuntimeError.hpp>
 
 // Forward declarations of Swift defined types
-// Forward declaration of `HybridDuplexStreamSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridDuplexStreamSpecCxx; }
-// Forward declaration of `HybridFileSystemSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridFileSystemSpecCxx; }
-// Forward declaration of `HybridInputStreamSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridInputStreamSpecCxx; }
-// Forward declaration of `HybridNetworkSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridNetworkSpecCxx; }
-// Forward declaration of `HybridOutputStreamSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridOutputStreamSpecCxx; }
-// Forward declaration of `HybridStreamFactorySpecCxx` to properly resolve imports.
-namespace FastIO { class HybridStreamFactorySpecCxx; }
-// Forward declaration of `HybridWebSocketManagerSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridWebSocketManagerSpecCxx; }
-// Forward declaration of `HybridWebSocketSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridWebSocketSpecCxx; }
+// Forward declaration of `HybridDuplexStreamSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridDuplexStreamSpec_cxx; }
+// Forward declaration of `HybridFileSystemSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridFileSystemSpec_cxx; }
+// Forward declaration of `HybridInputStreamSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridInputStreamSpec_cxx; }
+// Forward declaration of `HybridNetworkSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridNetworkSpec_cxx; }
+// Forward declaration of `HybridOutputStreamSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridOutputStreamSpec_cxx; }
+// Forward declaration of `HybridStreamFactorySpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridStreamFactorySpec_cxx; }
+// Forward declaration of `HybridWebSocketManagerSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridWebSocketManagerSpec_cxx; }
+// Forward declaration of `HybridWebSocketSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridWebSocketSpec_cxx; }
 
 // Include Swift defined types
 #if __has_include("FastIO-Swift.h")

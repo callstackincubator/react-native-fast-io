@@ -9,8 +9,8 @@
 
 #include "HybridWebSocketSpec.hpp"
 
-// Forward declaration of `HybridWebSocketSpecCxx` to properly resolve imports.
-namespace FastIO { class HybridWebSocketSpecCxx; }
+// Forward declaration of `HybridWebSocketSpec_cxx` to properly resolve imports.
+namespace FastIO { class HybridWebSocketSpec_cxx; }
 
 // Forward declaration of `ArrayBuffer` to properly resolve imports.
 namespace NitroModules { class ArrayBuffer; }
@@ -22,36 +22,30 @@ namespace NitroModules { class ArrayBufferHolder; }
 #include <NitroModules/ArrayBufferHolder.hpp>
 #include <functional>
 
-#if __has_include(<NitroModules/HybridContext.hpp>)
-#include <NitroModules/HybridContext.hpp>
-#else
-#error NitroModules cannot be found! Are you sure you installed NitroModules properly?
-#endif
-
 #include "FastIO-Swift-Cxx-Umbrella.hpp"
 
 namespace margelo::nitro::fastio {
 
   /**
-   * The C++ part of HybridWebSocketSpecCxx.swift.
+   * The C++ part of HybridWebSocketSpec_cxx.swift.
    *
-   * HybridWebSocketSpecSwift (C++) accesses HybridWebSocketSpecCxx (Swift), and might
+   * HybridWebSocketSpecSwift (C++) accesses HybridWebSocketSpec_cxx (Swift), and might
    * contain some additional bridging code for C++ <> Swift interop.
    *
    * Since this obviously introduces an overhead, I hope at some point in
-   * the future, HybridWebSocketSpecCxx can directly inherit from the C++ class HybridWebSocketSpec
+   * the future, HybridWebSocketSpec_cxx can directly inherit from the C++ class HybridWebSocketSpec
    * to simplify the whole structure and memory management.
    */
   class HybridWebSocketSpecSwift: public virtual HybridWebSocketSpec {
   public:
     // Constructor from a Swift instance
-    explicit HybridWebSocketSpecSwift(const FastIO::HybridWebSocketSpecCxx& swiftPart):
+    explicit HybridWebSocketSpecSwift(const FastIO::HybridWebSocketSpec_cxx& swiftPart):
       HybridObject(HybridWebSocketSpec::TAG),
       _swiftPart(swiftPart) { }
 
   public:
     // Get the Swift part
-    inline FastIO::HybridWebSocketSpecCxx getSwiftPart() noexcept { return _swiftPart; }
+    inline FastIO::HybridWebSocketSpec_cxx getSwiftPart() noexcept { return _swiftPart; }
 
   public:
     // Get memory pressure
@@ -66,38 +60,68 @@ namespace margelo::nitro::fastio {
   public:
     // Methods
     inline void send(const std::string& message) override {
-      _swiftPart.send(message);
+      auto __result = _swiftPart.send(message);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void sendArrayBuffer(const std::shared_ptr<ArrayBuffer>& buffer) override {
-      _swiftPart.sendArrayBuffer(ArrayBufferHolder(buffer));
+      auto __result = _swiftPart.sendArrayBuffer(ArrayBufferHolder(buffer));
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void connect() override {
-      _swiftPart.connect();
+      auto __result = _swiftPart.connect();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void close(double code, const std::string& reason) override {
-      _swiftPart.close(std::forward<decltype(code)>(code), reason);
+      auto __result = _swiftPart.close(std::forward<decltype(code)>(code), reason);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void ping() override {
-      _swiftPart.ping();
+      auto __result = _swiftPart.ping();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void onOpen(const std::function<void(const std::string& /* selectedProtocol */)>& callback) override {
-      _swiftPart.onOpen(callback);
+      auto __result = _swiftPart.onOpen(callback);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void onClose(const std::function<void(double /* code */, const std::string& /* reason */)>& callback) override {
-      _swiftPart.onClose(callback);
+      auto __result = _swiftPart.onClose(callback);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void onError(const std::function<void(const std::string& /* error */)>& callback) override {
-      _swiftPart.onError(callback);
+      auto __result = _swiftPart.onError(callback);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void onMessage(const std::function<void(const std::string& /* message */)>& callback) override {
-      _swiftPart.onMessage(callback);
+      auto __result = _swiftPart.onMessage(callback);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void onArrayBuffer(const std::function<void(const std::shared_ptr<ArrayBuffer>& /* buffer */)>& callback) override {
-      _swiftPart.onArrayBuffer(callback);
+      auto __result = _swiftPart.onArrayBuffer(callback);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
 
   private:
-    FastIO::HybridWebSocketSpecCxx _swiftPart;
+    FastIO::HybridWebSocketSpec_cxx _swiftPart;
   };
 
 } // namespace margelo::nitro::fastio

@@ -2,11 +2,11 @@
   "name": "react-native-fast-io",
   "version": "0.1.0",
   "description": "Modern IO for React Native, built on top of Nitro and Web standards",
-  "main": "lib/commonjs/index",
-  "module": "lib/module/index",
+  "main": "./lib/commonjs/index",
+  "module": "./lib/module/index",
   "types": "./lib/typescript/commonjs/src/index.d.ts",
-  "react-native": "src/index",
-  "source": "src/index",
+  "react-native": "./src/index",
+  "source": "./src/index",
   "exports": {
     ".": {
       "import": "./lib/module/index.js",
@@ -43,15 +43,15 @@
   "author": "Mike Grabowski <grabbou@gmail.com>",
   "peerDependencies": {
     "react-native": "^0.76.0",
-    "react-native-nitro-modules": "^0.18.0"
+    "react-native-nitro-modules": "^0.20.0"
   },
   "dependencies": {
-    "event-target-shim": "^6.0.2",
     "@bacons/text-decoder": "^0.0.0",
+    "event-target-shim": "^6.0.2",
     "web-streams-polyfill": "^4.0.0"
   },
   "devDependencies": {
-    "nitro-codegen": "^0.18.0",
+    "nitro-codegen": "^0.20.0",
     "react-native-builder-bob": "^0.32.1"
   },
   "keywords": [

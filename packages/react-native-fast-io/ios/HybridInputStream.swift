@@ -46,11 +46,4 @@ class HybridInputStream : HybridInputStreamSpec {
   func close() {
     stream.close()
   }
-  
-  var hybridContext = margelo.nitro.HybridContext()
-  
-  // Return size of the instance to inform JS GC about memory pressure
-  var memorySize: Int {
-    return getSizeOf(self)
-  }
 }
