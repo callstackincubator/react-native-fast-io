@@ -22,7 +22,7 @@
       "import": {
         "types": "./lib/typescript/module/src/w3c/*.d.ts",
         "default": "./lib/module/w3c/*.js"
-       },
+      },
       "require": {
         "types": "./lib/typescript/commonjs/src/w3c/*.d.ts",
         "default": "./lib/commonjs/w3c/*.js"
@@ -48,20 +48,22 @@
     "cpp",
     "nitrogen",
     "ios",
-    "FastIO.podspec"
+    "FastIO.podspec",
+    "FastIO-notification.podspec"
   ],
   "author": "Mike Grabowski <grabbou@gmail.com>",
   "peerDependencies": {
     "react-native": "^0.76.0",
-    "react-native-nitro-modules": "^0.20.0"
+    "react-native-nitro-modules": "^0.22.0"
   },
   "dependencies": {
     "@bacons/text-decoder": "^0.0.0",
     "event-target-shim": "^6.0.2",
+    "react-native-nitro-modules": "^0.22.0",
     "web-streams-polyfill": "^4.0.0"
   },
   "devDependencies": {
-    "nitro-codegen": "^0.20.0",
+    "nitro-codegen": "^0.21.0",
     "react-native-builder-bob": "^0.32.1"
   },
   "keywords": [

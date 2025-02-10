@@ -77,43 +77,8 @@ class HybridFileSystem : HybridFileSystemSpec {
   
   private var filePicker: (promise: Promise<[String]>, vc: UIDocumentPickerViewController)?
   func showOpenFilePicker(options: NativeFilePickerOptions?) throws -> Promise<[String]> {
-    if filePicker != nil {
-      return Promise.rejected(withError: RuntimeError.error(withMessage: "File picker already open"))
-    }
+    return Promise.rejected(withError: RuntimeError.error(withMessage: "File picker already open"))
     
-    let promise = Promise<[String]>()
-    
-    DispatchQueue.main.async {
-      let utTypes: [UTType] = options?.extensions?
-        .compactMap { ext in
-          let cleanExt = ext.hasPrefix(".") ? String(ext.dropFirst()) : ext
-          return UTType(filenameExtension: cleanExt)
-        } ?? [.item]
-      
-
-      let documentPicker = UIDocumentPickerViewController(
-        forOpeningContentTypes: utTypes,
-        asCopy: true
-      )
-      documentPicker.delegate = self.pickerDelegate
-
-      documentPicker.allowsMultipleSelection = options?.multiple ?? false
-
-      if let startIn = options?.startIn {
-        documentPicker.directoryURL = URL(fileURLWithPath: startIn, isDirectory: true)
-      }
-      
-      guard let vc = RCTPresentedViewController() else {
-        promise.reject(withError: RuntimeError.error(withMessage: "Cannot present file picker"))
-        return
-      }
-      
-      vc.present(documentPicker, animated: true)
-      
-      self.filePicker = (promise, documentPicker)
-    }
-    
-    return promise
   }
   
   deinit {

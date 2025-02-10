@@ -7,28 +7,40 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class HybridNetwork : HybridNetworkSpec() {
-    override fun request(opts: RequestOptions): Promise<Unit> {
-       Promise.async(CoroutineScope(Dispatchers.IO)) {
+    override fun request(opts: RequestOptions): Promise<com.margelo.nitro.fastio.Response> {
+        return Promise.async(CoroutineScope(Dispatchers.IO)) {
             val connection = URL(opts.url).openConnection() as HttpURLConnection
-            connection.apply {
-                requestMethod = opts.method.name.uppercase()
-                doInput = true
-                doOutput = opts.body != null
+
+            try {
+                connection.requestMethod = opts.method.name.uppercase()
+                connection.doInput = true
+                connection.doOutput = opts.body != null
+
+                opts.headers.forEach { (key, value) ->
+                    connection.setRequestProperty(key, value)
+                }
 
                 opts.body?.let { hybridStream ->
                     (hybridStream as HybridInputStream).stream.use { input ->
-                        outputStream.buffered().use { output ->
+                        connection.outputStream.buffered().use { output ->
                             input.copyTo(output, HybridStreamFactory.BUFFER_SIZE)
                         }
                     }
                 }
 
-                if (responseCode !in 200..299) {
-                    throw Error("HTTP Error: $responseCode")
-                }
+
+                val statusCode = connection.responseCode.toDouble()
+                val responseBody =
+                    HybridInputStream(connection.inputStream)
+                val responseHeaders: HashMap<String, String> =  HashMap(connection.headerFields
+                    .filterKeys { it != null }
+                    .mapValues { (_, value) -> value.joinToString(", ") })
+
+                Response(statusCode, responseBody, responseHeaders)
+            } finally {
+                // connection.disconnect()
             }
         }
-        return Promise.resolved(Unit)
     }
 
     override val memorySize: Long

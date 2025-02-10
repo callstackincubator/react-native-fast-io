@@ -20,7 +20,7 @@ class HybridWebSocket(url: String, protocols: Array<String>) : HybridWebSocketSp
     private var webSocket: WebSocket? = null
 
     private val listener = object : WebSocketListener() {
-        override fun onOpen(webSocket: WebSocket, response: Response) {
+        override fun onOpen(webSocket: WebSocket, response: okhttp3.Response) {
             val protocol = response.header("Sec-WebSocket-Protocol") ?: ""
             onOpenCallback?.invoke(protocol)
         }
@@ -43,7 +43,7 @@ class HybridWebSocket(url: String, protocols: Array<String>) : HybridWebSocketSp
             webSocket.close(code, reason)
         }
 
-        override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+        override fun onFailure(webSocket: WebSocket, t: Throwable, response: okhttp3.Response?) {
             onErrorCallback?.invoke(t.message ?: "WebSocket error")
         }
     }

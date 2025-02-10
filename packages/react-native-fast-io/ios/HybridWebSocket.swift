@@ -81,7 +81,7 @@ class HybridWebSocket : HybridWebSocketSpec {
       data.deallocate()
     }
     
-    self.onArrayBuffer?(ArrayBufferHolder.makeBuffer(data, other.count, deleteFunc))
+    self.onArrayBuffer?(ArrayBufferHolder.wrap(data, other.count, deleteFunc))
   }
   
   func send(message: String) {

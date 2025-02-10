@@ -54,6 +54,19 @@ export const fromReadableStream = (stream: ReadableStream): InputStream => {
   return duplexStream.inputStream
 }
 
+const encoder = new TextEncoder()
+
+export const stringToStream = (str: string): ReadableStream => {
+  const buffer = encoder.encode(str)
+
+  return new ReadableStream({
+    start(controller) {
+      controller.enqueue(buffer)
+      controller.close()
+    },
+  })
+}
+
 export class CompressionStream implements globalThis.CompressionStream {
   readonly readable: ReadableStream<Uint8Array>
   readonly writable: WritableStream<Uint8Array>

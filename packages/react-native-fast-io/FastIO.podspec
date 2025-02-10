@@ -25,5 +25,7 @@ Pod::Spec.new do |s|
   load 'nitrogen/generated/ios/FastIO+autolinking.rb'
   add_nitrogen_files(s)
 
-  install_modules_dependencies(s)
+  # install_modules_dependencies(s)
+  s.libraries        = 'z'
+
 end
