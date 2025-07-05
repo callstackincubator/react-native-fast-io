@@ -9,7 +9,7 @@ import {
 import { Blob } from './blob'
 import { toReadableStream } from './streams'
 
-export class File extends Blob {
+export class File extends Blob implements globalThis.File {
   name: string
   lastModified: number
 
@@ -41,7 +41,7 @@ class NativeFile extends File {
     this._size = size
   }
 
-  stream(): any {
+  stream() {
     const nativeStream = StreamFactory.createInputStream(this.#path)
     return toReadableStream(nativeStream)
   }
@@ -64,7 +64,7 @@ class FileSystemFileHandle implements globalThis.FileSystemFileHandle {
     this.#metadata = FileSystem.getMetadata(path)
   }
 
-  async getFile(): Promise<any> {
+  async getFile() {
     return new NativeFile(this.#metadata)
   }
 
