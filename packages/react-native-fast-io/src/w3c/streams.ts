@@ -74,8 +74,8 @@ export class CompressionStream implements globalThis.CompressionStream {
       },
     })
 
-    this.readable = readable as unknown as globalThis.ReadableStream<Uint8Array>
-    this.writable = writable as unknown as globalThis.WritableStream<Uint8Array>
+    this.readable = readable as globalThis.ReadableStream<Uint8Array>
+    this.writable = writable as globalThis.WritableStream<Uint8Array>
   }
 }
 
