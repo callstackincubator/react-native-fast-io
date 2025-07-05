@@ -55,8 +55,8 @@ export const fromReadableStream = (stream: ReadableStream): InputStream => {
 }
 
 export class CompressionStream implements globalThis.CompressionStream {
-  readonly readable: ReadableStream<Uint8Array>
-  readonly writable: WritableStream<Uint8Array>
+  readonly readable: globalThis.ReadableStream<Uint8Array>
+  readonly writable: globalThis.WritableStream<Uint8Array>
 
   constructor(format: CompressionFormat) {
     const compressor = CompressorFactory.create(format)
@@ -74,8 +74,8 @@ export class CompressionStream implements globalThis.CompressionStream {
       },
     })
 
-    this.readable = readable
-    this.writable = writable
+    this.readable = readable as globalThis.ReadableStream<Uint8Array>
+    this.writable = writable as globalThis.WritableStream<Uint8Array>
   }
 }
 

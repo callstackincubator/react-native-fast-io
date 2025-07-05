@@ -10,21 +10,21 @@
   "dependencies": {
     "@azure/core-asynciterator-polyfill": "^1.0.2",
     "cli-table3": "^0.6.5",
-    "react": "18.3.1",
-    "react-native": "0.76.0",
-    "react-native-nitro-modules": "^0.20.0"
+    "react": "19.1.0",
+    "react-native": "0.80.1",
+    "react-native-nitro-modules": "^0.26.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@babel/preset-env": "^7.20.0",
-    "@babel/runtime": "^7.20.0",
-    "@react-native-community/cli": "^15.0.1",
-    "@react-native-community/cli-platform-android": "^15.0.1",
-    "@react-native-community/cli-platform-ios": "^15.0.1",
-    "@react-native/babel-preset": "0.76.0",
-    "@react-native/metro-config": "0.76.0",
-    "@types/react": "^18.2.6",
-    "eslint": "^8.19.0"
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/runtime": "^7.26.0",
+    "@react-native-community/cli": "^15.1.0",
+    "@react-native-community/cli-platform-android": "^15.1.0",
+    "@react-native-community/cli-platform-ios": "^15.1.0",
+    "@react-native/babel-preset": "0.80.1",
+    "@react-native/metro-config": "0.80.1",
+    "@types/react": "^18.3.0",
+    "eslint": "^8.57.1"
   },
   "engines": {
     "node": ">=18"

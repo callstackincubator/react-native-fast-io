@@ -17,10 +17,11 @@ export class Blob implements globalThis.Blob {
     this._size = calculateSize(parts)
   }
 
-  slice(): Blob {
+  slice(): globalThis.Blob {
     throw new Error('Not implemented')
   }
 
+  // @ts-ignore: fix later
   stream() {
     const streams = this.parts.map((part) => {
       if (part instanceof Blob) {
