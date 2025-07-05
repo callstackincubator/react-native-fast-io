@@ -54,9 +54,9 @@ export const fromReadableStream = (stream: ReadableStream): InputStream => {
   return duplexStream.inputStream
 }
 
-export class CompressionStream implements globalThis.CompressionStream {
-  readonly readable: ReadableStream<Uint8Array>
-  readonly writable: WritableStream<Uint8Array>
+export class CompressionStream {
+  readonly readable: any
+  readonly writable: any
 
   constructor(format: CompressionFormat) {
     const compressor = CompressorFactory.create(format)

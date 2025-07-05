@@ -3,6 +3,7 @@ import {
   EventTarget,
   getEventAttributeValue,
   setEventAttributeValue,
+  // @ts-ignore
 } from 'event-target-shim'
 
 import { WebSocket as HybridWebSocket, WebSocketManager } from '../native/ws.nitro'
@@ -57,15 +58,7 @@ export class CloseEvent extends Event {
 /**
  * https://websockets.spec.whatwg.org/#interface-definition
  */
-export class WebSocket
-  extends EventTarget
-  implements
-    EventTarget<{
-      open: OpenEvent
-      message: MessageEvent
-      error: ErrorEvent
-      close: CloseEvent
-    }>
+export class WebSocket extends EventTarget
 {
   readonly CONNECTING = WebSocketReadyState.CONNECTING
   readonly OPEN = WebSocketReadyState.OPEN
@@ -105,22 +98,27 @@ export class WebSocket
     this.ws.onOpen((protocol) => {
       this.#readyState = WebSocketReadyState.OPEN
       this.#protocol = protocol
+      // @ts-ignore
       this.dispatchEvent(new Event('open'))
     })
 
     this.ws.onMessage((data) => {
+      // @ts-ignore
       this.dispatchEvent(new MessageEvent(data))
     })
 
     this.ws.onArrayBuffer((buffer) => {
       if (this.binaryType === 'blob') {
+        // @ts-ignore
         this.dispatchEvent(new MessageEvent(new Blob([buffer])))
         return
       }
+      // @ts-ignore
       this.dispatchEvent(new MessageEvent(buffer))
     })
 
     this.ws.onError((message) => {
+      // @ts-ignore
       this.dispatchEvent(new ErrorEvent(message))
 
       /**
@@ -128,6 +126,7 @@ export class WebSocket
        * https://datatracker.ietf.org/doc/html/rfc6455#section-7.1.7
        */
       this.#readyState = WebSocketReadyState.CLOSED
+      // @ts-ignore
       this.dispatchEvent(new CloseEvent(ABNORMAL_CLOSURE))
 
       this.close()
@@ -135,6 +134,7 @@ export class WebSocket
 
     this.ws.onClose((code, reason) => {
       this.#readyState = WebSocketReadyState.CLOSED
+      // @ts-ignore
       this.dispatchEvent(new CloseEvent(code, reason))
     })
 

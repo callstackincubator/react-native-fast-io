@@ -21,7 +21,7 @@ export class Blob implements globalThis.Blob {
     throw new Error('Not implemented')
   }
 
-  stream() {
+  stream(): any {
     const streams = this.parts.map((part) => {
       if (part instanceof Blob) {
         return part.stream()
